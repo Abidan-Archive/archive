@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-    // Check if deleted_at is auto cast to Carbon date
-    protected $dates = ['date'];
+    protected $casts = ['date' => 'date'];
+
     protected $fillable = ['name', 'date', 'location'];
 
     public function reports() {
@@ -20,6 +19,6 @@ class Event extends Model
     }
 
     public function sources() {
-        return $this->hasMany(Sources::class);
+        return $this->hasMany(Source::class);
     }
 }

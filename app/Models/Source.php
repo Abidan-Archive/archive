@@ -13,6 +13,6 @@ class Source extends Model
     protected $fillable = ['name', 'path'];
 
     public function event() {
-        $this->belongsTo(Event::class);
+        return $this->belongsTo(Event::class);
     }
 }

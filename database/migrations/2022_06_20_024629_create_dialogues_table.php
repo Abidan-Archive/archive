@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('speaker');
             $table->longText('line');
+            $table->integer('order')->unsigned();
 
             $table->foreignIdFor(Report::class);
 

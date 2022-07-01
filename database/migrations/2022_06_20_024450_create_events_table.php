@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('date');
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
