@@ -49,14 +49,13 @@ class Report extends Model
         return $out;
     }
 
-    /**
-     * Get the indexable data for the model.
-     *
-     * @return array
-     */
-    public function toSearachableArray() {
-        dd($this->toArray());
-        return $this->toArray();
+    public function toSearchableArray() {
+        return [
+            'date' => $this->date,
+            'footnote' => $this->footnote,
+            'dialogues' => $this->dialogues->map->only(['speaker', 'line'])->all(),
+            'tags' => $this->tags->map->only('name')->all()
+        ];
     }
 
 }
