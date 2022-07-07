@@ -39,3 +39,14 @@ if(!function_exists('htmlDiff')) {
     }
 }
 
+// https://www.codexworld.com/how-to/get-domain-name-from-url-php/
+if(!function_exists('getDomain')) {
+    function getDomain($url){
+        $pieces = parse_url($url);
+        $domain = isset($pieces['host']) ? $pieces['host'] : '';
+        if(preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)){
+            return $regs['domain'];
+        }
+        return null;
+    }
+}
