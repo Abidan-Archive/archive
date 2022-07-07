@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
@@ -14,18 +15,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/stars', fn() => view('stars'));
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('events', EventController::class)
-    ->middleware('auth', ['except' => ['index', 'show']]);
-Route::resource('events.reports', ReportController::class)->shallow()
-    ->middleware('auth', ['except' => ['index', 'show']]);
+Route::resource('event', EventController::class);
+Route::resource('event.report', ReportController::class)->shallow();
 
 require __DIR__.'/auth.php';

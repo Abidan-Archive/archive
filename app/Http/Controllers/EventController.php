@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->middleware('auth')
+             ->except('index', 'show');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +57,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('event.show', compact('event'));
     }
 
     /**

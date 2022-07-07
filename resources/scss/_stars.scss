@@ -1,0 +1,54 @@
+@function multiple-box-shadow($n) {
+    $value: '#{random(2000)}px #{random(2000)}px #FFF';
+    @for $i from 2 through $n {
+        $value: '#{$value}, #{random(2000)}px #{random(2000)}px #FFF';
+    }
+
+    @return unquote($value);
+}
+
+$shadows-sm: multiple-box-shadow(700);
+$shadows-md: multiple-box-shadow(200);
+$shadows-lg: multiple-box-shadow(100);
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+@mixin stars($size, $speed, $shadows) {
+    z-index: -1;
+    width: $size;
+    height: $size;
+    background: transparent;
+    animation: animStar $speed linear infinite;
+    box-shadow: $shadows;
+
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 2000px;
+        width: $size;
+        height: $size;
+        background: transparent;
+        box-shadow: $shadows;
+    }
+}
+
+#stars {
+    @apply overflow-hidden h-screen;
+    background: radial-gradient(ellipse at center, #1B2735 0%, #090A0F 90%);
+}
+#stars-sm {
+    @include stars(1px, 50s, $shadows-sm);
+}
+#stars-md {
+    @include stars(2px, 100s, $shadows-md);
+}
+#stars-lg {
+    @include stars(3px, 150s, $shadows-lg);
+}

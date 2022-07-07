@@ -7,12 +7,16 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "http-interop/http-factory-guzzle": "^1.2",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
+        "laravel/scout": "^9.4",
         "laravel/tinker": "^2.7",
-        "league/commonmark": "^2.3"
+        "league/commonmark": "^2.3",
+        "meilisearch/meilisearch-php": "^0.23.3"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.9",
         "laravel/sail": "^1.0.1",

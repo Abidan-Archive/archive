@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 
 trait HasLikes {
 
+    /**
+     * Gets a lowercase class name sans any namespace
+     *
+     * @return string
+     */
     private function getClassName() {
         $class = strrchr(get_class(), '\\');
         if ($class[0] == '\\') $class = substr($class, 1);

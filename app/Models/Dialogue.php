@@ -22,12 +22,11 @@ class Dialogue extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function html(): Attribute {
-        $converter = new CommonMarkConverter();
+    public function lineHtml(): Attribute {
+        $converter = new CommonMarkConverter(config('commonmark'));
         return Attribute::make(
             get: fn ($value, $attributes) => $converter->convert($attributes['line'])
         );
     }
-
 
 }

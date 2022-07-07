@@ -4,4 +4,5 @@ Events Index
     <p>{{ $event->name }}</p>
     <p>{{ $event->date }}</p>
     <p>{{ $event->location }}</p>
+    <hr />
 @endforeach

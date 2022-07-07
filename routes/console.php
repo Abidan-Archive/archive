@@ -24,7 +24,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Artisan::command('eatReport {jsonPath}', function(String $jsonPath) {
-
     $data = json_decode(file_get_contents($jsonPath), true);
 
     foreach($data as $i => $e) {
@@ -47,12 +46,12 @@ Artisan::command('eatReport {jsonPath}', function(String $jsonPath) {
                     $report->tags()->attach($tag);
                 }
             } catch (Exception $e) {
+                $this->newLine();
                 $this->error("Error on ".$r['id']);
+                $this->newLine();
             }
         });
-
     }
-
 })->purpose('Import all the scraped web data');
 
 Artisan::command('killReports', function() {

@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use App\Models\Traits\HasLikes;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Report extends Model
 {
-    use HasFactory, HasLikes, SoftDeletes;
+    use HasFactory, HasLikes, SoftDeletes, Searchable;
 
     protected $appends = ['likes'];
+
+    protected $with = ['dialogues'];
 
     protected $casts = ['date' => 'date'];
 
@@ -30,4 +32,31 @@ class Report extends Model
     public function tags() {
         return $this->belongsToMany(Tag::class);
     }
+
+    protected function permalink(): Attribute {
+        return Attribute::make(
+            get: fn($value, $attr) => route('report.show', $this)
+        );
+    }
+
+    public function copyText(): string {
+        $out = $this->dialogues->reduce(
+            fn($acc, $d) => $acc .= $d->speaker . '\n\n' . $d->line . '\n\n', '');
+        if($this->footnote)
+            $out .= 'Footnote: ' . $this->footnote . '\n\n';
+        $out .= $this->permalink;
+
+        return $out;
+    }
+
+    /**
+     * Get the indexable data for the model.
+     *
+     * @return array
+     */
+    public function toSearachableArray() {
+        dd($this->toArray());
+        return $this->toArray();
+    }
+
 }
