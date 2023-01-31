@@ -219,8 +219,8 @@ return [
     */
 
     'links' => [
-        'discord' => ENV('DISCORD_LINK'),
-        'wiki' => ENV('WIKI_LINK'),
+        'discord' => 'https://discord.gg/tCg94qy',
+        'wiki' => 'https://wiki.abidanarchive.com',
     ],
 
 ];
