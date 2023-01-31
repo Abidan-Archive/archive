@@ -14,7 +14,7 @@
         "laravel/tinker": "^2.7",
         "league/commonmark": "^2.3",
         "marvinlabs/laravel-discord-logger": "^1.2",
-        "meilisearch/meilisearch-php": "^0.23.3"
+        "meilisearch/meilisearch-php": "^0.27.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
