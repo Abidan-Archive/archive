@@ -4,8 +4,8 @@ use App\Models\Event;
 use App\Models\Report;
 use App\Models\Dialogue;
 use App\Models\Tag;
+use App\Inspiring;
 
-use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -61,4 +61,4 @@ Artisan::command('killReports', function() {
     Dialogue::truncate();
     Tag::truncate();
     $this->info('All dead :)');
-});
+})->purpose('Truncate all tables for scraped data import.');

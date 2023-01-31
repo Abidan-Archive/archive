@@ -212,4 +212,15 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Configs
+    |--------------------------------------------------------------------------
+    */
+
+    'links' => [
+        'discord' => ENV('DISCORD_LINK'),
+        'wiki' => ENV('WIKI_LINK'),
+    ],
+
 ];

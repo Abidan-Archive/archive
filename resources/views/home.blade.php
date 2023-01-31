@@ -1,44 +1,63 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Home') }}
-        </h2>
-    </x-slot>
-
-    <div class="w-full flex justify-center items-center h-screen -mt-[75px] -mb-[65px]">
-        <form method="GET" action="/search" class="w-full max-w-md">
-            <div class="w-full mx-auto relative flex items-center mx-auto text-gray-400 focus-within:text-gray-600">
-                <div class="absolute ml-3 pointer-events-none">
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
-                <input
-                    id="search"
-                    type="text"
-                    name="q"
-                    placeholder="Information Requested..."
-                    autocomplete="off"
-                    aria-label="Search"
-                    class="pl-3 pl-10 px-3 py-2 font-semibold placeholder-gray-500 text-black rounded-2xl border-none ring-2 ring-gray-300 focus:ring-gray-500 focus:ring-2"
-                />
-            </div>
-        </form>
-    </div>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @foreach($events as $event)
-                        <a class="block text-lg font-bold" href="{{ route('event.show', $event) }}">{{ $event->name }}</a>
-                        {{ $event->date->diffForHumans() }}
-                        {{ $event->location ? ' | ' . $event->location : '' }}<br />
-                        {{ 'Reports: ' . $event->reports->count() }}
-                        <hr />
-                    @endforeach
-                </div>
-            </div>
+    <section class="overflow-hidden lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto shadow-md"
+        style="background-image: radial-gradient(ellipse at center, #1B2735 0%, #090A0F 90%)">
+        <div id="stars-lg"></div>
+        <div id="stars-md"></div>
+        <div id="stars-sm"></div>
+        <div class="w-full h-full flex justify-center items-center container mx-auto">
+            <x-search />
+        </div>
+    </section>
+    <div class="py-8 bg-midnight">
+        <div class="container mx-auto flex flex-row">
+            <section class="">
+                <h2 class="text-4xl">Welcome to the Archive</h2>
+                <p>This is a fan run site and is not meant to be official in any context.</p>
+                <p>Everything on this site is <b>subject to change</b>. Will can and will change anything to suit the story better.</p>
+            </section>
+            @guest
+                <aside class="text-right flex-1">
+                    <h3>Want to contribute?</h3>
+                    We are always looking for chroniclers to transcribe audio into new Reports.
+                </aside>
+            @endguest
         </div>
     </div>
+    <div class="container mx-auto">
+        <div class="flex flex-row">
+            <section class="w-4/5">
+                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
+                @foreach($events as $event)
+                    {{$event->name}}<br />
+                @endforeach
+            </section>
+        </div>
+        <div class="flex flex-row">
+            <section class="w-4/5">
+                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
+                @foreach($events as $event)
+                    {{$event->name}}<br />
+                @endforeach
+            </section>
+        </div>
+        <div class="flex flex-row">
+            <section class="w-4/5">
+                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
+                @foreach($events as $event)
+                    {{$event->name}}<br />
+                @endforeach
+            </section>
+        </div>
+        <div class="flex flex-row">
+            <section class="w-4/5">
+                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
+                @foreach($events as $event)
+                    {{$event->name}}<br />
+                @endforeach
+            </section>
+        </div>
+
+
+    </div>
+
 </x-app-layout>

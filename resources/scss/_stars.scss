@@ -1,22 +1,23 @@
-@function multiple-box-shadow($n) {
-    $value: '#{random(2000)}px #{random(2000)}px #FFF';
+$stars-width: 2000;
+@function multiple-box-shadow($n, $c) {
+    $value: '#{random($stars-width)}px #{random($stars-width)}px #{$c}';
     @for $i from 2 through $n {
-        $value: '#{$value}, #{random(2000)}px #{random(2000)}px #FFF';
+        $value: '#{$value}, #{random($stars-width)}px #{random($stars-width)}px #{$c}';
     }
 
     @return unquote($value);
 }
 
-$shadows-sm: multiple-box-shadow(700);
-$shadows-md: multiple-box-shadow(200);
-$shadows-lg: multiple-box-shadow(100);
+$shadows-sm: multiple-box-shadow(700, '#FFF');
+$shadows-md: multiple-box-shadow(200, '#FFF');
+$shadows-lg: multiple-box-shadow(100, '#FFF');
 
 @keyframes animStar {
     from {
         transform: translateY(0px);
     }
     to {
-        transform: translateY(-2000px);
+        transform: translateY(#{-1 * $stars-width}px);
     }
 }
 
@@ -31,7 +32,7 @@ $shadows-lg: multiple-box-shadow(100);
     &:after {
         content: " ";
         position: absolute;
-        top: 2000px;
+        top: '#{$stars-width}px';
         width: $size;
         height: $size;
         background: transparent;
@@ -39,10 +40,6 @@ $shadows-lg: multiple-box-shadow(100);
     }
 }
 
-#stars {
-    @apply overflow-hidden h-screen;
-    background: radial-gradient(ellipse at center, #1B2735 0%, #090A0F 90%);
-}
 #stars-sm {
     @include stars(1px, 50s, $shadows-sm);
 }

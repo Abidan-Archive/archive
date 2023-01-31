@@ -18,32 +18,7 @@
                 {{ $event->location }}
             @endif
         @endif
-        @foreach($event->reports as $report)
-            <section id="{{ $report->id }}"
-                class="border rounded-lg my-4 mx-1 p-2">
-                <div class="flex flex-row justify-between">
-                    <div>
-                        <a href="{{ $report->permalink }}">&#35;{{ $report->id }}</a>
-                        @if($report->date)
-                            &middot; {{ $report->date->diffForHumans() }}
-                        @endif
-                        &middot; &hearts; {{ $report->likes }}
-                    </div>
-                    <div class="hidden flex-none">
-                        <a href="#">Copy</a>
-                        <a href="#">Share</a>
-                    </div>
-                </div>
-
-                <div class="dialogues">
-                    @foreach($report->dialogues as $dialogue)
-                        <dl>
-                            <dt>{{ $dialogue->speaker }}</dt>
-                            <dd>{!! $dialogue->lineHtml !!}</dd>
-                        </dl>
-                    @endforeach
-                </div>
-            </section>
-        @endforeach
+        <hr />
+        @each('components.report', $event->reports, 'report')
     </div>
 </x-app-layout>
