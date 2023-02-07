@@ -8,6 +8,7 @@
     @inertiaHead
   </head>
   <body>
+    @include('gnome')
     @inertia
   </body>
 </html>
