@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function home(): Response {
-        $events = Event::with('reports')
+        $events = Event::select('id', 'name')
             ->orderBy('date', 'desc')
             ->take(5)
             ->get();
