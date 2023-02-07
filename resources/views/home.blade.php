@@ -16,48 +16,25 @@
                 <p>Everything on this site is <b>subject to change</b>. Will can and will change anything to suit the story better.</p>
             </section>
             @guest
-                <aside class="text-right flex-1">
-                    <h3>Want to contribute?</h3>
-                    We are always looking for chroniclers to transcribe audio into new Reports.
-                </aside>
+            <aside class="block text-right flex-1">
+                <h3>Want to contribute?</h3>
+                We are always looking for chroniclers to transcribe audio into new Reports.
+                <a class="block" href="{{route('register')}}">Join us!</a>
+            </aside>
             @endguest
         </div>
     </div>
+
     <div class="container mx-auto">
         <div class="flex flex-row">
             <section class="w-4/5">
                 <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
-                @foreach($events as $event)
-                    {{$event->name}}<br />
-                @endforeach
+                <ul>
+                    @foreach($events as $event)
+                    <li><a href="{{route('event.show', $event)}}">{{$event->name}}</a></li>
+                    @endforeach
+                </ul>
             </section>
         </div>
-        <div class="flex flex-row">
-            <section class="w-4/5">
-                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
-                @foreach($events as $event)
-                    {{$event->name}}<br />
-                @endforeach
-            </section>
-        </div>
-        <div class="flex flex-row">
-            <section class="w-4/5">
-                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
-                @foreach($events as $event)
-                    {{$event->name}}<br />
-                @endforeach
-            </section>
-        </div>
-        <div class="flex flex-row">
-            <section class="w-4/5">
-                <h2 class="uppercase font-thin text-3xl pb-4">Most Recent Events</h2>
-                @foreach($events as $event)
-                    {{$event->name}}<br />
-                @endforeach
-            </section>
-        </div>
-
-
     </div>
-
 </x-app-layout>

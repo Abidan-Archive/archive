@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Report;
-use App\Models\Dialogue;
 use Illuminate\Http\Request;
-use MeiliSearch\MeiliSearch\Indexes;
+use Illuminate\View\View;
+// use MeiliSearch\MeiliSearch\Indexes;
 
 class HomeController extends Controller
 {
-    public function home() {
+    public function home(): View {
         $events = Event::with('reports')
             ->orderBy('date', 'desc')
             ->take(5)
@@ -19,18 +19,17 @@ class HomeController extends Controller
         return view('home', compact('events'));
     }
 
-    public function search(Request $request) {
-
+    public function search(Request $request): View {
         $reports = Report::search(
             query: trim($request->input('q'))
             // query: trim($request->input('q')),
             // callback: function(Indexes $meilisearch, string $query, array $options) use ($request) {
-                // if ($request->has(key: 'tags')) {
-                    // $options['filter'] = "tags = {$request->get('tags')}";
-                // }
-                // return $meilisearch->search($query, $options);
+            //     if ($request->has(key: 'tags')) {
+            //         $options['filter'] = "tags = {$request->get('tags')}";
+            //     }
+            //     return $meilisearch->search($query, $options);
             // }
-        )->paginate(5);
+        )->get();
         return view('search', compact('reports'));
     }
 

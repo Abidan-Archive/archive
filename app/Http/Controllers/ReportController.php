@@ -44,9 +44,9 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show(Report $report)
+    public function show(Report $report): View
     {
-        //
+        return view('report.show', compact('report'));
     }
 
     /**

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <a href="{{ route('home') }}">
                     <div class="flex flex-row h-full justify-start items-center">
-                        <img src="/images/skysworn.png" alt="Logo" class="block h-10 w-auto"/>
+                        @include('components.application-logo')
                         <h1 class="shrink-0 text-3xl px-2">Abidan Archive</h1>
                     </div>
                 </a>

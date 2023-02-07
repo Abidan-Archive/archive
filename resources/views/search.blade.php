@@ -5,10 +5,14 @@
         </h2>
     </x-slot>
 
-    <section class="container mx-auto">
-        @each('components.report', $reports, 'report')
-        @empty($reports)
+    <section>
+        <x-search class="mx-auto"/>
+    </section>
+    <section class="container mx-auto py-5 h-screen">
+        @forelse($reports as $report)
+            @include('components.report', $report)
+        @empty
             No reports found on the searched topic.
-        @endempty
+        @endforelse
     </section>
 </x-app-layout>
