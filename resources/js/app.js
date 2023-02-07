@@ -5,21 +5,11 @@ import Layout from './Layouts/Layout.svelte';
 // import './darkmode'; // Custom vanilla js darkmode switcher, let's decide if and when we want to use this..
 
 import { createInertiaApp } from '@inertiajs/svelte';
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 
 async function resolve(name) {
-    let component;
-    const pagesWithoutLayout = [
-
-    ];
-    const page = resolvePageComponent(`./Pages/${name}.svelte`, import.meta.glob('./Pages/**/*.svelte'));
-    await page.then(module => {
-        component = pagesWithoutLayout.includes(name)
-            ? module
-            : Object.assign({layout: Layout}, module);
-    });
-
-    return component;
+    const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true })
+    let page = pages[`./Pages/${name}.svelte`]
+    return { default: page.default, layout: page.layout || Layout }
 }
 
 createInertiaApp({
