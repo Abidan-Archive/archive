@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\TagController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +18,6 @@ use App\Http\Controllers\ReportController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();

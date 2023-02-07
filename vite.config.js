@@ -4,9 +4,8 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
-
-// let host = 'laravel-breeze-svelte.test';
 const projectRoot = resolve(__dirname);
+const routeWarning = `'route' is not defined`;
 
 export default defineConfig({
     plugins: [
@@ -14,7 +13,13 @@ export default defineConfig({
             input: [ 'resources/scss/app.scss', 'resources/js/app.js', ],
             refresh: true
         }),
-        svelte({ preprocess: preprocess({postcss: {}})}),
+        svelte({
+            preprocess: preprocess({postcss: true}),
+            onwarn(warning, defaultHandler) {
+                if (warning.message === routeWarning) return;
+                defaultHandler(warning);
+            }
+        }),
     ],
     optimizeDeps: {
         include: [
