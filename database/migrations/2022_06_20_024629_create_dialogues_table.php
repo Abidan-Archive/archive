@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('order')->unsigned();
 
             $table->foreignIdFor(Report::class);
-            // $table->fullText('line')->language('english');
+            $table->fullText('line')->language('english');
 
             $table->timestamps();
         });
