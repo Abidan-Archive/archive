@@ -7,7 +7,6 @@ module.exports = {
         './resources/views/**/*.blade.php',
         './resources/js/**/*.{js,svelte}'
     ],
-    darkMode: 'class',
     theme: {
         borderWidth: {
             ...defaultTheme.borderWidth,
