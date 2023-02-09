@@ -1,0 +1,59 @@
+#!/usr/bin/env zsh
+
+set -e
+
+# ------------------------------------------------------------------------------
+# @desc Prints an error and exits this script
+# @param the error message you want printed
+# ------------------------------------------------------------------------------
+err() {
+  echo "🚫 [$(date +'%Y-%m-%dT%H:%M:%S%z')]: $1" >&2 && \
+  exit 1
+}
+
+
+# ------------------------------------------------------------------------------
+# @desc Prints a line of content and a newline
+# @param 1 - the message
+# @param 2 - an optional leading emoji
+# ------------------------------------------------------------------------------
+print() {
+  if [ -z "$2" ]; then
+    echo "$1 \n"
+  else
+    echo "$2 $1 \n"
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc checks if a command is installed using which
+# @param $1 - the name of the command
+# ------------------------------------------------------------------------------
+has_cmd() {
+  local has_cmd=`which $1 | sed -e 's/^[[:space:]]*//'`
+
+  if [ -z "$has_cmd" ]; then
+    print "Command $1 is not installed." "🔎"
+    return 1
+  elif [ $has_cmd = "$1 not found" ]; then
+    print "Command $1 is not installed." "🔎"
+    return 1
+  else
+    print "Command $1 is already installed." "🔎"
+    return 0
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc checks if a file exists
+# @param $1 - the name of the file
+# ------------------------------------------------------------------------------
+has_file() {
+  if [ -f $1 ]; then
+    print "File $1 exists already." "🔎"
+    return 0
+  else
+    print "File $1 does not exist." "🔎"
+    return 1
+  fi
+}
