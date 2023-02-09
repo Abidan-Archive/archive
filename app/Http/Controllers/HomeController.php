@@ -22,9 +22,8 @@ class HomeController extends Controller
     }
 
     public function search(Request $request): Response {
-        $reports = Report::search(
-            query: trim($request->input('q'))
-        );
+        $reports = Report::search(query: trim($request->input('q')))
+            ->get();
         return Inertia::render('Search', compact('reports'));
     }
 
