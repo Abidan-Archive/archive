@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ReportController extends Controller
 {
@@ -42,11 +44,11 @@ class ReportController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
-    public function show(Report $report)
+    public function show(Report $report): Response
     {
-        //
+        return Inertia::render('Report/Show', compact('report'));
     }
 
     /**

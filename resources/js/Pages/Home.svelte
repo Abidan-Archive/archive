@@ -1,6 +1,7 @@
 <script>
     import { inertia } from "@inertiajs/svelte";
     import Star from "@components/Star.svelte";
+
     export let events;
     export let quote;
 </script>
