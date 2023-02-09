@@ -1,18 +1,17 @@
 <script>
     import { inertia } from "@inertiajs/svelte";
-    import Star from "@components/Star.svelte";
+    import StarrySky from "@components/StarrySky.svelte";
+    import SearchForm from "@components/SearchForm.svelte";
     export let events;
     export let quote;
 </script>
 
 <section
-    class="overflow-hidden bg-radial lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto shadow-md"
+    class="relative overflow-hidden bg-radial lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto shadow-md"
 >
-    <Star>
-        <div class="flex w-full h-full justify-center items-center mx-auto">
-            <!-- Search -->
-        </div>
-    </Star>
+    <StarrySky>
+        <SearchForm/>
+    </StarrySky>
 </section>
 
 <div class="relative z-10 py-8 bg-midnight text-white">

@@ -13,13 +13,14 @@
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
-<div class="lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto">
+<div class="flex h-full items-center justify-center mx-auto">
     <div class="sky-container overflow-hidden w-full h-full top-0 left-0">
         {#each Array(5) as _}
             <div class="shootingstar" />
         {/each}
     </div>
-    <svg {width} {height}>
+    <slot />
+    <svg class=" w-full h-full absolute">
         {#each Array(num) as _}
             <circle
                 cx={getRandom(width)}
@@ -29,6 +30,7 @@
             />
         {/each}
     </svg>
+    
 </div>
 
 <style lang="scss">
