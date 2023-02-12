@@ -9,8 +9,13 @@
     function likeClicked() {
         console.log('I like that.');
     }
-    function copyClicked() {
-        console.log('I copied? that.');
+
+    async function copyClicked() {
+        let out = report.dialogues.reduce((acc, {speaker, line}) => acc+speaker+'\n'+line+'\n\n', '');
+        if (!!report.footnote) out += `Footnote: ${report.footnote}\n\n`;
+        out += report.permalink;
+
+        await navigator.clipboard.writeText(out);
     }
 </script>
 
@@ -25,13 +30,13 @@
         <div>
             <a use:inertia href={route('report.show', report)}>#{report.id}</a>
         </div>
-        <div class="flex gap-1 items-center text-sm">
+        <div class="flex gap-1 items-center text-sm hover:underline-offset-4 hover:underline">
             <button class="flex" on:click={copyClicked} >
                 <Copy class="inline" />
                 <span class="pl-1">Copy</span>
             </button>
             <button
-                class="flex"
+                class="flex hidden"
                 on:click={likeClicked}
             >
                 <Heart variant='outline' />
@@ -43,7 +48,7 @@
         {#each report.dialogues as dialogue}
             <dl class="mb-2">
                 <dt class="text-lg font-bold">{dialogue.speaker}</dt>
-                <dd>{dialogue.line}</dd>
+                <dd>{@html dialogue.lineHtml}</dd>
             </dl>
         {/each}
     </section>
