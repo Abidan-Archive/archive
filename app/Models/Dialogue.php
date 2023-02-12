@@ -12,9 +12,9 @@ class Dialogue extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['speaker', 'line', 'order'];
-
     // protected $appends = ['lineHtml'];
+
+    protected $fillable = ['speaker', 'line', 'order'];
 
     public function report(): BelongsTo {
         return $this->belongsTo(Report::class);
@@ -25,7 +25,7 @@ class Dialogue extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function lineHtml(): Attribute {
+    protected function lineHtml(): Attribute {
         $converter = new CommonMarkConverter(config('commonmark'));
         return Attribute::make(
             get: fn ($value, $attributes) => $converter->convert($attributes['line'])->getContent()
