@@ -13,8 +13,8 @@
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
 
-<div class="lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto">
-    <div class="sky-container overflow-hidden w-full h-full top-0 left-0">
+<div class="w-full h-full">
+    <div class="sky-container overflow-hidden">
         {#each Array(5) as _}
             <div class="shootingstar" />
         {/each}
