@@ -16,13 +16,13 @@ class Report extends Model
 {
     use HasFactory, HasLikes, SoftDeletes, Searchable;
 
-    protected $appends = ['likes'];
-
-    protected $with = ['dialogues'];
+    protected $appends = ['likes', 'permalink'];
 
     protected $casts = ['date' => 'date'];
 
     protected $fillable = ['footnote', 'date', 'source_label', 'source_href'];
+
+    protected $with = ['dialogues'];
 
     public function event(): BelongsTo {
         return $this->belongsTo(Event::class);
@@ -40,16 +40,6 @@ class Report extends Model
         return Attribute::make(
             get: fn($value, $attr) => route('report.show', $this)
         );
-    }
-
-    public function copyText(): string {
-        $out = $this->dialogues->reduce(
-            fn($acc, $d) => $acc .= $d->speaker . '\n\n' . $d->line . '\n\n', '');
-        if($this->footnote)
-            $out .= 'Footnote: ' . $this->footnote . '\n\n';
-        $out .= $this->permalink;
-
-        return $out;
     }
 
     public function toSearchableArray(): Array {
