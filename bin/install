@@ -123,6 +123,7 @@ setup_laravel() {
         ./vendor/bin/sail art key:generate && \
         ./vendor/bin/sail art migrate:install && \
         ./vendor/bin/sail art migrate && \
+        ./vendor/bin/sail art scount:import "App\Models\Report" && \
         ./vendor/bin/sail stop
     else
         print "APP_KEY detected. Assuming first time setup complete."
@@ -132,7 +133,7 @@ setup_laravel() {
 # ------------------------------------------------------------------------------
 # Installations
 # ------------------------------------------------------------------------------
-require_zsh
+#require_zsh
 setup_env
 setup_nodejs
 setup_docker
