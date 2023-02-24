@@ -7,7 +7,7 @@
 </script>
 
 <section
-    class="overflow-hidden bg-radial lg:h-4/6 md:h-3/5 sm:h-1/2 h-auto shadow-md"
+    class="overflow-hidden bg-radial shadow-md lg:h-[66vh] md:h-[60vh] h-[33vh]"
 >
     <Star>
         <div class="flex w-full h-full justify-center items-center mx-auto">
@@ -16,10 +16,10 @@
     </Star>
 </section>
 
-<div class="relative z-10 py-8 bg-midnight text-white">
+<div class="bg-midnight py-8 px-4 text-white">
     <div class="container mx-auto flex flew-row">
-        <section>
-            <h2 class="text-4xl">Welcome to the Archive</h2>
+        <section class="md:p-0 pt-2 px-8">
+            <h2 class="text-4xl md:text-left text-center md:m-0 mb-8">Welcome to the Archive</h2>
             <p>
                 This is a fan run site and is not meant to be official in any
                 context.
@@ -35,23 +35,26 @@
             <a use:inertia href={route('register')}>Join us!</a>
         </aside> -->
     </div>
-    <div class="relative py-12 mx-20">
-        <div class="container flex flex-row">
-            <section class="w-4/5">
-                <h2 class="uppercase font-thin text-3xl pb-4">
-                    Most Recent Events
-                </h2>
-                <ul>
-                    {#each events as event}
-                        <li>
-                            <a use:inertia href={route("event.show", event)}
-                                >{event.name}</a
-                            >
-                        </li>
-                    {/each}
-                </ul>
-            </section>
-        </div>
+</div>
+<div class="relative py-12 mx-20">
+    <div class="container flex flex-row">
+        <section class="w-4/5">
+            <h2 class="uppercase font-thin text-3xl pb-4">
+                Most Recent Events
+            </h2>
+            <ul>
+                {#each events as event}
+                    <li>
+                        <a
+                            use:inertia
+                            href={route("event.show", event)}
+                        >
+                            {event.name}
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </section>
     </div>
 </div>
 <style>
