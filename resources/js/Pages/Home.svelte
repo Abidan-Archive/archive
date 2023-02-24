@@ -10,14 +10,15 @@
     class="overflow-hidden bg-radial shadow-md lg:h-[66vh] md:h-[60vh] h-[33vh]"
 >
     <Star>
-        <div class="flex w-full h-full justify-center items-center mx-auto">
+        <div class="flex flex-col h-full justify-center items-center mx-auto">
+            <section>{quote}</section>
             <!-- Search -->
         </div>
     </Star>
 </section>
 
-<div class="bg-midnight py-8 px-4 text-white">
-    <div class="container mx-auto flex flew-row">
+<div class="bg-midnight ">
+    <div class="container mx-auto flex flew-row py-8 md:px-0 px-4">
         <section class="md:p-0 pt-2 px-8">
             <h2 class="text-4xl md:text-left text-center md:m-0 mb-8">Welcome to the Archive</h2>
             <p>
@@ -36,9 +37,9 @@
         </aside> -->
     </div>
 </div>
-<div class="relative py-12 mx-20">
-    <div class="container flex flex-row">
-        <section class="w-4/5">
+<div class="py-12">
+    <div class="container mx-auto flex flex-row">
+        <section>
             <h2 class="uppercase font-thin text-3xl pb-4">
                 Most Recent Events
             </h2>

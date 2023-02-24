@@ -3,7 +3,6 @@
 </script>
 
 <Navigation />
-
 <main class="mt-16 h-full">
     <slot />
 </main>
