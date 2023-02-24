@@ -9,6 +9,6 @@
 
 <style @global lang="postcss">
     :global(body) {
-        @apply bg-zinc-900 h-full font-sans antialiased text-white;
+        @apply bg-midnight-900 h-full font-sans antialiased text-enkai-500;
     }
 </style>
