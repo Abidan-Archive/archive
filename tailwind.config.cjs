@@ -15,7 +15,15 @@ module.exports = {
         },
         extend: {
             colors: {
-                'midnight': '#1B2735',
+                'enkai': {
+                    500: '#e8e6e3',
+                    600: '#c3beb6'
+                },
+                'midnight': {
+                    500: '#1b2735',
+                    700: '#25282a',
+                    900: '#181a1b'
+                },
                 'abidan': {
                     50:  '#ccd9e4',
                     100: '#99b3ca',

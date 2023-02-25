@@ -4,6 +4,6 @@
     export let report;
 </script>
 
-<section class="py-8 container mx-auto">
+<section class="container mx-auto p-5">
     <Report {report} />
 </section>
