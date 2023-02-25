@@ -1,20 +1,20 @@
 <script>
+    import { fade } from 'svelte/transition';
     import Report from '@components/Report.svelte';
-    import SortIcon from '@components/icons/Sort.svelte';
+    //import { Sort } from '@components/icons';
 
     export let reports;
 </script>
 
-<div class="container mx-auto">
+<div class="container mx-auto" transition:fade>
     <section class="mb-5">
         <div class="p-5">
-            <!-- Search -->
-            <p class="text-center">Search box box</p>
+            Search box box
         </div>
-        <div class="flex items-center">
-            <span title="hi"><SortIcon /></span>
-            <span class="px-2">Sort By</span>
-        </div>
+        <!-- <div class="flex items-center"> -->
+        <!--     <span title="Sort By"><Sort /></span> -->
+        <!--     <span class="px-2">Relevance</span> -->
+        <!-- </div> -->
     </section>
     <section class="flex flex-col gap-5">
         {#if !reports.length}

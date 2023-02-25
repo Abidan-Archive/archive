@@ -17,7 +17,7 @@
     </Star>
 </section>
 
-<div class="bg-midnight ">
+<div class="bg-midnight-500">
     <div class="container mx-auto flex flew-row py-8 md:px-0 px-4">
         <section class="md:p-0 pt-2 px-8">
             <h2 class="text-4xl md:text-left text-center md:m-0 mb-8">Welcome to the Archive</h2>
@@ -47,6 +47,7 @@
                 {#each events as event}
                     <li>
                         <a
+                            class="text-lg hover:underline"
                             use:inertia
                             href={route("event.show", event)}
                         >
