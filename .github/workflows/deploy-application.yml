@@ -47,6 +47,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: app-build
+
       - name: Upload
         uses: appleboy/scp-action@master
         with:
@@ -55,4 +56,17 @@ jobs:
           key: ${{ secrets.HOST_KEY }}
           source: ${{ github.sha }}.tar.gz
           target: ${{ vars.HOST_PATH }}/artifacts
+
+      - name: Extract archive and create directories
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          envs: GITHUB_SHA
+          script: |
+            mkdir -p "${{ vars.HOST_PATH }}/releases/${GITHUB_SHA}"
+            tar -xzf ${{ vars.HOST_PATH }}/artifacts/${GITHUB_SHA}.tar.gz -C "${{ vars.HOST_PATH}}/releases/${GITHUB_SHA}"
 
