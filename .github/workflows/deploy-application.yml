@@ -24,10 +24,35 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO session, tokenizer, xml
+          extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO, session, tokenizer, xml
 
       - name: Install Composer dependencies
         run: composer install --no-dev --no-interaction --prefer-dist
-
+      
       - name: Create deployment artifact
-        run: tar -czf app.tar.gz --exclude=*.git --exclude=node_modules *
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
+
+      - name: Store artifact for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: ${{ github.sha }}.tar.gz
+
+  prepare-release-on-sever:
+    runs-on: ubuntu-latest  
+    needs: create-deployment-artifacts
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: app-build
+      - name: Upload
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          source: ${{ github.sha }}.tar.gz
+          target: ${{ vars.HOST_PATH }}/artifacts
+
