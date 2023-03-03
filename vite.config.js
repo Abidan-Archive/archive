@@ -21,12 +21,6 @@ export default defineConfig({
             }
         }),
     ],
-    optimizeDeps: {
-        include: [
-            '@inertiajs/inertia',
-            '@inertiajs/inertia-svelte',
-        ]
-    },
     resolve: {
         alias: {
             '@': resolve(projectRoot, 'resources/js'),

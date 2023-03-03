@@ -1,24 +1,29 @@
 <script>
     import { inertia } from "@inertiajs/svelte";
-    import StarrySky from "@components/StarrySky.svelte";
-    import SearchForm from "@components/SearchForm.svelte";
+    import Star from "@components/Star.svelte";
+    import Searchform from "../Components/Searchform.svelte";
+
     export let events;
     export let quote;
 </script>
 
 <section
-    class="relative overflow-hidden bg-radial lg:h-3/4 md:h-4/6 sm:h-1/2 h-1/2 shadow-md"
+    class="overflow-hidden bg-radial shadow-md lg:h-[66vh] md:h-[60vh] h-[50vh]"
 >
-    <StarrySky>
-        <SearchForm />
-    </StarrySky>
+    <Star>
+        <div class="flex flex-col h-full justify-center items-center mx-auto px-8">
+            <section class="lg:text-4xl md:text-3xl my-8 w-1/2 md:w-2/3 text-center">{quote}</section>
+            <!-- Search -->
+            <Searchform/>
+        </div>
+    </Star>
 </section>
 
-<div class="relative z-10 py-8 bg-midnight text-white px-8">
-    <div class="container mx-auto flex flew-row">
-        <section>
-            <h2 class="md:text-4xl text-3xl">Welcome to the Archive</h2>
-            <p class="md:py-2 py-4">
+<div class="bg-midnight-500">
+    <div class="container mx-auto flex flew-row py-8 md:px-0 px-4">
+        <section class="md:p-0 pt-2 px-8">
+            <h2 class="text-4xl md:text-left text-center md:m-0 mb-8">Welcome to the Archive</h2>
+            <p>
                 This is a fan run site and is not meant to be official in any
                 context.
             </p>
@@ -33,26 +38,29 @@
             <a use:inertia href={route('register')}>Join us!</a>
         </aside> -->
     </div>
-    <div class="relative md:mx-12 py-12">
-        <div class="container flex flex-row">
-            <section class="md:w-4/5">
-                <h2 class="uppercase font-thin md:text-3xl text-2xl pb-4">
-                    Most Recent Events
-                </h2>
-                <ul>
-                    {#each events as event}
-                        <li>
-                            <a use:inertia href={route("event.show", event)}
-                                >{event.name}</a
-                            >
-                        </li>
-                    {/each}
-                </ul>
-            </section>
-        </div>
+</div>
+<div class="py-12">
+    <div class="container mx-auto flex flex-row">
+        <section>
+            <h2 class="uppercase font-thin text-3xl pb-4">
+                Most Recent Events
+            </h2>
+            <ul>
+                {#each events as event}
+                    <li>
+                        <a
+                            class="text-lg hover:underline"
+                            use:inertia
+                            href={route("event.show", event)}
+                        >
+                            {event.name}
+                        </a>
+                    </li>
+                {/each}
+            </ul>
+        </section>
     </div>
 </div>
-
 <style>
     .bg-radial {
         background-image: radial-gradient(

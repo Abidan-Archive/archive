@@ -1,0 +1,143 @@
+#!/bin/bash
+
+set -e
+
+# ------------------------------------------------------------------------------
+# @desc sources helpers file to "import" them and expose them to this script
+# ------------------------------------------------------------------------------
+source ./bin/_helpers
+
+# ------------------------------------------------------------------------------
+# @desc require zsh because bash3 doesnt have associative arrays
+# ------------------------------------------------------------------------------
+require_zsh() {
+  local shell=$SHELL
+
+  if [ $shell != '/bin/zsh' ]; then
+    err "
+    This script requires /bin/zsh as the default shell but youre running $shell.
+    Try running the command below to change youre default shell to zsh:
+
+    $> chsh -s /bin/zsh
+
+    If you see errors related to compinit and compaudit, you may need to run the
+    following commands:
+
+    $> chmod g-w /usr/local/share/zsh
+    $> chmod g-w /usr/local/share/zsh/site-functions
+
+    For more information see: https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories
+    "
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc create new .env file from example to be able to run the application
+# ------------------------------------------------------------------------------
+setup_env() {
+  print "Setting up .env file" "💾"
+
+  if ! has_file ./.env; then
+        print "You don't have an .env file. Creating from .env.example.
+
+        This will likely require additional configuration."
+      cp .env.example .env
+  else
+    print "You have an .env file. Continuing" "🔎"
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc sets up nodejs via node version manager (NVM)
+# ------------------------------------------------------------------------------
+setup_nodejs() {
+  print "Installing nodejs" "💾"
+
+  # if has_file ~/.nvm/nvm.sh; then
+  #   print "You already have NVM installed. Sourcing into your shell." "💾" && \
+  #   source ~/.nvm/nvm.sh && nvm install
+  # else
+  #   print "You do not have NVM installed. Installing now." "💾" && \
+  #   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash && \
+  #   nvm install
+  # fi
+  if has_cmd 'npm'; then
+      print "NPM found. Installing packages from package-lock.json."
+      npm ci
+  else
+      err "You don't have node installed. This is required for local development."
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc sets up docker and creates our container
+# ------------------------------------------------------------------------------
+setup_docker() {
+  print "Setting up Docker" "🐳"
+
+  if ! has_cmd 'docker'; then
+      err "You don't have docker installed. This is required for local development."
+  fi
+  if has_file ./docker-compose.override.yml; then
+      print "Docker override detected."
+      cat docker-compose.override.yml
+  fi
+  if has_file ./docker-compose.yml; then
+    docker run --rm \
+        -u "$(id -u):$(id -g)" \
+        -v "$(pwd):/var/www/html" \
+        -w /var/www/html \
+        laravelsail/php82-composer:latest \
+        composer install --ignore-platform-reqs
+  else
+      err "You don't have the docker-compose.yml file. Docker cannot setup with out it."
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc sets up docker and creates our container
+# ------------------------------------------------------------------------------
+setup_sail() {
+    print "Setting up Sail" "⛵"
+    if $(alias | grep sail); then
+        print "You haven't created an alias for sail within your shell. Example:
+
+        alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
+        Creating temporary alias."
+
+        alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+    else
+        print "You have sail aliased. Continuing" "🔎"
+    fi
+}
+
+# ------------------------------------------------------------------------------
+# @desc sets up laravel database for the first time, ensuring migrations are ran
+# ------------------------------------------------------------------------------
+setup_laravel() {
+    print "Setting up Laravel DB" "🔥"
+    export $(grep -v '^#' .env | xargs)
+    if [[ -z ${APP_KEY} ]]; then
+        ./vendor/bin/sail up -d && \
+        ./vendor/bin/sail art key:generate && \
+        ./vendor/bin/sail art migrate:install && \
+        ./vendor/bin/sail art migrate && \
+        ./vendor/bin/sail art scount:import "App\Models\Report" && \
+        ./vendor/bin/sail stop
+    else
+        print "APP_KEY detected. Assuming first time setup complete."
+    fi
+}
+
+# ------------------------------------------------------------------------------
+# Installations
+# ------------------------------------------------------------------------------
+#require_zsh
+setup_env
+setup_nodejs
+setup_docker
+setup_sail
+setup_laravel
+
+print "Jobs done. Thatlladolad."

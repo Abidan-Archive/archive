@@ -2,12 +2,13 @@
     import Navigation from "@components/Navigation.svelte";
 </script>
 
-<div class="font-sans antialiased bg-zinc-900 text-white">
-    <div class="min-h-screen">
-        <Navigation />
+<Navigation />
+<main class="mt-16 h-full">
+    <slot />
+</main>
 
-        <main class="mt-16 h-screen">
-            <slot />
-        </main>
-    </div>
-</div>
+<style @global lang="postcss">
+    :global(body) {
+        @apply bg-midnight-900 h-full font-sans antialiased text-enkai-500;
+    }
+</style>

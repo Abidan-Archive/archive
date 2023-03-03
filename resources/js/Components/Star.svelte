@@ -3,40 +3,39 @@
     let width = 0;
     let height = 0;
 
-    const randomRadius = () => {
-        return Math.random() * 0.8 + 0.6;
+    function randomRadius() {
+        return (Math.random() * 0.8) + 0.6;
     };
-    const getRandom = (x) => {
+    function getRandom(x) {
         return Math.floor(Math.random() * Math.floor(parseFloat(x)));
     };
 </script>
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} />
-
-<div class="flex h-full items-center justify-center mx-auto">
-    <div class="sky-container overflow-hidden w-full h-full top-0 left-0">
+<div class="relative w-full h-full overflow-hidden"
+    bind:offsetWidth={width}
+    bind:offsetHeight={height}
+>
+    <div class="sky-container">
         {#each Array(5) as _}
             <div class="shootingstar" />
         {/each}
     </div>
-    <slot />
-    <svg class=" w-full h-full absolute">
+    <svg class="absolute fill-white stroke-white"
+        {width}
+        {height}  
+        >
         {#each Array(num) as _}
             <circle
                 cx={getRandom(width)}
                 cy={getRandom(height)}
                 r={randomRadius()}
-                class="star"
             />
         {/each}
     </svg>
+    <slot />
 </div>
 
 <style lang="scss">
-    .star {
-        fill: white;
-        stroke: none;
-    }
     @function randomNum($min, $max) {
         $rand: random();
         $randomNum: $min + floor($rand * (($max - $min) + 1));
@@ -56,6 +55,8 @@
     }
     .sky-container {
         transform: rotateZ(45deg);
+        width: 100%;
+        height: 100%;
         position: absolute;
         overflow: hidden;
     }
