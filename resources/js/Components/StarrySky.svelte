@@ -30,7 +30,6 @@
             />
         {/each}
     </svg>
-    
 </div>
 
 <style lang="scss">
@@ -126,7 +125,8 @@
         left: calc(50% - 10%);
         animation-delay: 1600ms;
     }
-    .shootingstar:nth-child(1)::before, .shootingstar:nth-child(1)::after {
+    .shootingstar:nth-child(1)::before,
+    .shootingstar:nth-child(1)::after {
         animation-delay: 1600ms;
     }
 
@@ -135,7 +135,8 @@
         left: calc(50% - 15%);
         animation-delay: 1250ms;
     }
-    .shootingstar:nth-child(2)::before, .shootingstar:nth-child(2)::after {
+    .shootingstar:nth-child(2)::before,
+    .shootingstar:nth-child(2)::after {
         animation-delay: 1250ms;
     }
 
@@ -144,7 +145,8 @@
         left: calc(50% - -30%);
         animation-delay: 2600ms;
     }
-    .shootingstar:nth-child(3)::before, .shootingstar:nth-child(3)::after {
+    .shootingstar:nth-child(3)::before,
+    .shootingstar:nth-child(3)::after {
         animation-delay: 2600ms;
     }
 
@@ -153,7 +155,8 @@
         left: calc(50% - 10%);
         animation-delay: 9700ms;
     }
-    .shootingstar:nth-child(4)::before, .shootingstar:nth-child(4)::after {
+    .shootingstar:nth-child(4)::before,
+    .shootingstar:nth-child(4)::after {
         animation-delay: 9700ms;
     }
 
@@ -162,8 +165,8 @@
         left: calc(50% - 45%);
         animation-delay: 5100ms;
     }
-    .shootingstar:nth-child(5)::before, .shootingstar:nth-child(5)::after {
+    .shootingstar:nth-child(5)::before,
+    .shootingstar:nth-child(5)::after {
         animation-delay: 5100ms;
     }
-    
 </style>
