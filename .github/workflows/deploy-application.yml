@@ -10,7 +10,7 @@ jobs:
     name: Create deployment artifacts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
@@ -18,3 +18,9 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Configure PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: ctype, curl, DOM, fileinfo, filter, hash, mbstring, openssl, PCRE, PDO session, tokenizer, xml
+
