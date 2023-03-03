@@ -22,5 +22,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          extensions: ctype, curl, DOM, fileinfo, filter, hash, mbstring, openssl, PCRE, PDO session, tokenizer, xml
+          extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO session, tokenizer, xml
+      - name: Install Composer dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist
 
