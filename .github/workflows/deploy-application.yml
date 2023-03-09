@@ -110,10 +110,9 @@ jobs:
           BASE_PATH: ${{ vars.HOST_PATH }}
           LARAVEL_ENV: ${{ secrets.LARAVEL_ENV }}
         with:
-          host: ${{ matrix.server.ip }}
-          username: ${{ matrix.server.username }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ matrix.server.port }}
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
           envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,ENV_PATH,LARAVEL_ENV
           script: |
             printf "%s" "$LARAVEL_ENV" > "${BASE_PATH}/.env"
