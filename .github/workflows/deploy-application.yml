@@ -121,3 +121,42 @@ jobs:
             ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
             sudo systemctl reload php8.1-fpm
 
+  run-after-hooks:
+    name: After hook
+    runs-on: ubuntu-latest
+    needs: [ create-deployment-artifacts, prepare-release-on-server, run-before-hooks, activate-release ]
+    steps:
+      - name: Run after hooks
+        uses: appleboy/ssh-action@master
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          RELEASE_PATH: ${{ vars.HOST_PATH }}/releases/${{ github.sha }}
+          ACTIVE_RELEASE_PATH: ${{ vars.HOST_PATH }}/current
+          STORAGE_PATH: ${{ vars.HOST_PATH }}/storage
+          BASE_PATH: ${{ vars.HOST_PATH }}
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,ENV_PATH
+          script: |
+            ${{ vars.afterHooks }}
+
+  clean-up:
+    name: Clean up
+    runs-on: ubuntu-latest
+    needs: [ create-deployment-artifacts, prepare-release-on-server, run-before-hooks, activate-release, run-after-hooks ]
+    steps:
+      - name: Removing old releases and artifacts
+        uses: appleboy/ssh-action@master
+        env:
+          RELEASES_PATH: ${{ vars.HOST_PATH }}/releases
+          ARTIFACTS_PATH: ${{ vars.HOST_PATH }}/artifacts
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          envs: RELEASES_PATH,ARTIFACTS_PATH
+          script: |
+            cd $RELEASE_PATH && ls -t -1 | tail -n +5 | xargs rm -rf
+            cd $ARTIFACTS_PATH && ls -t -1 | tail -n +5 | xargs rm -rf
