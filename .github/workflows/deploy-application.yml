@@ -93,6 +93,7 @@ jobs:
           key: ${{ secrets.HOST_KEY }}
           envs: GITHUB_SHA, BASE_PATH, RELEASE_PATH, ACTIVE_RELEASE_PATH, STORAGE_PATH
           script: |
+            cd $ACTIVE_RELEASE_PATH
             ${{ vars.beforeHooks }}
 
   activate-release:
@@ -140,6 +141,7 @@ jobs:
           key: ${{ secrets.HOST_KEY }}
           envs: GITHUB_SHA,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,ENV_PATH
           script: |
+            cd $ACTIVE_RELEASE_PATH
             ${{ vars.afterHooks }}
 
   clean-up:
