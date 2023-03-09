@@ -27,7 +27,7 @@ jobs:
           extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO, session, tokenizer, xml
 
       - name: Install Composer dependencies
-        run: composer install --no-dev --no-interaction --prefer-dist
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Create deployment artifact
         env:
