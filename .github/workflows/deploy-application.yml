@@ -41,6 +41,7 @@ jobs:
           path: ${{ github.sha }}.tar.gz
 
   prepare-release-on-server:
+    name: Prepare release
     runs-on: ubuntu-latest  
     needs: create-deployment-artifacts
     steps:
