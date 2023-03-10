@@ -6,7 +6,8 @@
         "build": "vite build",
         "preview": "vite preview",
         "format": "prettier --write 'resources/**/*.{css,html,js,svelte}'",
-        "lint": "eslint --fix --quiet resources --ext .js,.svelte"
+        "lint": "eslint --fix --quiet resources --ext .js,.svelte",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@sveltejs/vite-plugin-svelte": "^2.0.2",
@@ -17,7 +18,9 @@
         "eslint-config-prettier": "^8.7.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-svelte3": "^4.0.0",
+        "husky": "^8.0.3",
         "laravel-vite-plugin": "^0.7.3",
+        "lint-staged": "^13.2.0",
         "lodash": "^4.17.19",
         "postcss": "^8.4.21",
         "prettier": "2.8.4",
@@ -34,5 +37,8 @@
     "dependencies": {
         "@inertiajs/svelte": "^1.0.0",
         "clsx": "^1.2.1"
+    },
+    "lint-staged": {
+        "*.{js,svelte}": "eslint --cache --fix"
     }
 }
