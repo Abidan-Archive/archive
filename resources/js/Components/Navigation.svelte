@@ -1,17 +1,16 @@
 <script>
-    import { inertia } from "@inertiajs/svelte";
-    import Logo from "@components/Logo.svelte";
+    import { inertia } from '@inertiajs/svelte';
+    import Logo from '@components/Logo.svelte';
 </script>
 
 <nav
-    class="fixed z-50 top-0 left-0 h-16 w-full bg-midnight-500 border-l-5 border-abidan-400 text-white drop-shadow-md"
->
+    class="fixed top-0 left-0 z-50 h-16 w-full border-l-5 border-abidan-400 bg-midnight-500 text-white drop-shadow-md">
     <div class="px-4 sm:px-6">
-        <div class="flex justify-between h-16 w-full">
-            <a use:inertia href={route("home")}>
-                <div class="flex flex-row h-full justify-start items-center">
+        <div class="flex h-16 w-full justify-between">
+            <a use:inertia href={route('home')}>
+                <div class="flex h-full flex-row items-center justify-start">
                     <Logo />
-                    <h1 class="shrink-0 text-3xl px-2">Abidan Archive</h1>
+                    <h1 class="shrink-0 px-2 text-3xl">Abidan Archive</h1>
                 </div>
             </a>
         </div>
