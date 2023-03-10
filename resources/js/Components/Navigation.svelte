@@ -7,6 +7,7 @@
     class="fixed top-0 left-0 z-50 h-16 w-full border-l-5 border-abidan-400 bg-midnight-500 text-white drop-shadow-md">
     <div class="px-4 sm:px-6">
         <div class="flex h-16 w-full justify-between">
+            <!-- svelte-ignore missing-declaration -->
             <a use:inertia href={route('home')}>
                 <div class="flex h-full flex-row items-center justify-start">
                     <Logo />

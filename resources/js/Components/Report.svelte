@@ -31,6 +31,7 @@
     <section class="flex justify-between">
         <div>
             <h3>
+                <!-- svelte-ignore missing-declaration -->
                 <a
                     class="font-bold"
                     use:inertia

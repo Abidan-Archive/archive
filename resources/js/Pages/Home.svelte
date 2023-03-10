@@ -47,6 +47,7 @@
             <ul>
                 {#each events as event}
                     <li>
+                        <!-- svelte-ignore missing-declaration -->
                         <a
                             class="text-lg hover:underline"
                             use:inertia
