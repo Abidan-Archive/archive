@@ -4,32 +4,28 @@
     let height = 0;
 
     function randomRadius() {
-        return (Math.random() * 0.8) + 0.6;
-    };
+        return Math.random() * 0.8 + 0.6;
+    }
     function getRandom(x) {
         return Math.floor(Math.random() * Math.floor(parseFloat(x)));
-    };
+    }
 </script>
 
-<div class="relative w-full h-full overflow-hidden"
+<div
+    class="relative h-full w-full overflow-hidden"
     bind:offsetWidth={width}
-    bind:offsetHeight={height}
->
+    bind:offsetHeight={height}>
     <div class="sky-container">
         {#each Array(5) as _}
             <div class="shootingstar" />
         {/each}
     </div>
-    <svg class="absolute fill-white stroke-white"
-        {width}
-        {height}  
-        >
+    <svg class="absolute fill-white stroke-white" {width} {height}>
         {#each Array(num) as _}
             <circle
                 cx={getRandom(width)}
                 cy={getRandom(height)}
-                r={randomRadius()}
-            />
+                r={randomRadius()} />
         {/each}
     </svg>
     <slot />
@@ -64,7 +60,7 @@
     .shootingstar::before,
     .shootingstar::after {
         position: absolute;
-        content: "";
+        content: '';
         top: calc(50% - 1px);
         right: 0;
         height: 1.5px;
@@ -126,7 +122,8 @@
         left: calc(50% - 10%);
         animation-delay: 1600ms;
     }
-    .shootingstar:nth-child(1)::before, .shootingstar:nth-child(1)::after {
+    .shootingstar:nth-child(1)::before,
+    .shootingstar:nth-child(1)::after {
         animation-delay: 1600ms;
     }
 
@@ -135,7 +132,8 @@
         left: calc(50% - 15%);
         animation-delay: 1250ms;
     }
-    .shootingstar:nth-child(2)::before, .shootingstar:nth-child(2)::after {
+    .shootingstar:nth-child(2)::before,
+    .shootingstar:nth-child(2)::after {
         animation-delay: 1250ms;
     }
 
@@ -144,7 +142,8 @@
         left: calc(50% - -30%);
         animation-delay: 2600ms;
     }
-    .shootingstar:nth-child(3)::before, .shootingstar:nth-child(3)::after {
+    .shootingstar:nth-child(3)::before,
+    .shootingstar:nth-child(3)::after {
         animation-delay: 2600ms;
     }
 
@@ -153,7 +152,8 @@
         left: calc(50% - 10%);
         animation-delay: 9700ms;
     }
-    .shootingstar:nth-child(4)::before, .shootingstar:nth-child(4)::after {
+    .shootingstar:nth-child(4)::before,
+    .shootingstar:nth-child(4)::after {
         animation-delay: 9700ms;
     }
 
@@ -162,8 +162,8 @@
         left: calc(50% - 45%);
         animation-delay: 5100ms;
     }
-    .shootingstar:nth-child(5)::before, .shootingstar:nth-child(5)::after {
+    .shootingstar:nth-child(5)::before,
+    .shootingstar:nth-child(5)::after {
         animation-delay: 5100ms;
     }
-    
 </style>

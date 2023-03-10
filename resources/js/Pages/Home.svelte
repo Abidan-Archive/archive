@@ -1,16 +1,15 @@
 <script>
-    import { inertia } from "@inertiajs/svelte";
-    import Star from "@components/Star.svelte";
+    import { inertia } from '@inertiajs/svelte';
+    import Star from '@components/Star.svelte';
 
     export let events;
     export let quote;
 </script>
 
 <section
-    class="overflow-hidden bg-radial shadow-md lg:h-[66vh] md:h-[60vh] h-[33vh]"
->
+    class="bg-radial h-[33vh] overflow-hidden shadow-md md:h-[60vh] lg:h-[66vh]">
     <Star>
-        <div class="flex flex-col h-full justify-center items-center mx-auto">
+        <div class="mx-auto flex h-full flex-col items-center justify-center">
             <section>{quote}</section>
             <!-- Search -->
         </div>
@@ -18,9 +17,11 @@
 </section>
 
 <div class="bg-midnight-500">
-    <div class="container mx-auto flex flew-row py-8 md:px-0 px-4">
-        <section class="md:p-0 pt-2 px-8">
-            <h2 class="text-4xl md:text-left text-center md:m-0 mb-8">Welcome to the Archive</h2>
+    <div class="flew-row container mx-auto flex py-8 px-4 md:px-0">
+        <section class="px-8 pt-2 md:p-0">
+            <h2 class="mb-8 text-center text-4xl md:m-0 md:text-left">
+                Welcome to the Archive
+            </h2>
             <p>
                 This is a fan run site and is not meant to be official in any
                 context.
@@ -40,17 +41,17 @@
 <div class="py-12">
     <div class="container mx-auto flex flex-row">
         <section>
-            <h2 class="uppercase font-thin text-3xl pb-4">
+            <h2 class="pb-4 text-3xl font-thin uppercase">
                 Most Recent Events
             </h2>
             <ul>
                 {#each events as event}
                     <li>
+                        <!-- svelte-ignore missing-declaration -->
                         <a
                             class="text-lg hover:underline"
                             use:inertia
-                            href={route("event.show", event)}
-                        >
+                            href={route('event.show', event)}>
                             {event.name}
                         </a>
                     </li>
@@ -59,6 +60,7 @@
         </section>
     </div>
 </div>
+
 <style>
     .bg-radial {
         background-image: radial-gradient(
