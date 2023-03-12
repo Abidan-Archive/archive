@@ -10,15 +10,15 @@ const routeWarning = `'route' is not defined`;
 export default defineConfig({
     plugins: [
         laravel.default({
-            input: [ 'resources/scss/app.scss', 'resources/js/app.js', ],
-            refresh: true
+            input: ['resources/scss/app.scss', 'resources/js/app.js'],
+            refresh: true,
         }),
         svelte({
-            preprocess: preprocess({postcss: true}),
+            preprocess: preprocess({ postcss: true }),
             onwarn(warning, defaultHandler) {
                 if (warning.message === routeWarning) return;
                 defaultHandler(warning);
-            }
+            },
         }),
     ],
     resolve: {
@@ -27,9 +27,9 @@ export default defineConfig({
             '@components': resolve(projectRoot, 'resources/js/Components'),
             '@layouts': resolve(projectRoot, 'resources/js/Layouts'),
         },
-        extensions: ['.js', '.svelte', '.json']
+        extensions: ['.js', '.svelte', '.json'],
     },
-    resolveFn: name => {
+    resolveFn: (name) => {
         const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true });
         return pages[`./Pages/${name}.svelte`];
     },

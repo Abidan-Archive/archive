@@ -4,32 +4,28 @@
     let height = 0;
 
     function randomRadius() {
-        return (Math.random() * 0.8) + 0.6;
-    };
+        return Math.random() * 0.8 + 0.6;
+    }
     function getRandom(x) {
         return Math.floor(Math.random() * Math.floor(parseFloat(x)));
-    };
+    }
 </script>
 
-<div class="relative w-full h-full overflow-hidden"
+<div
+    class="relative h-full w-full overflow-hidden"
     bind:offsetWidth={width}
-    bind:offsetHeight={height}
->
+    bind:offsetHeight={height}>
     <div class="sky-container">
         {#each Array(5) as _}
             <div class="shootingstar" />
         {/each}
     </div>
-    <svg class="absolute fill-white stroke-white"
-        {width}
-        {height}  
-        >
+    <svg class="absolute fill-white stroke-white" {width} {height}>
         {#each Array(num) as _}
             <circle
                 cx={getRandom(width)}
                 cy={getRandom(height)}
-                r={randomRadius()}
-            />
+                r={randomRadius()} />
         {/each}
     </svg>
     <slot />
@@ -64,7 +60,7 @@
     .shootingstar::before,
     .shootingstar::after {
         position: absolute;
-        content: "";
+        content: '';
         top: calc(50% - 1px);
         right: 0;
         height: 1.5px;
