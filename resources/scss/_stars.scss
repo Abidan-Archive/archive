@@ -30,7 +30,7 @@ $shadows-lg: multiple-box-shadow(100, '#FFF');
     box-shadow: $shadows;
 
     &:after {
-        content: " ";
+        content: ' ';
         position: absolute;
         top: '#{$stars-width}px';
         width: $size;
