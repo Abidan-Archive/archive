@@ -5,7 +5,6 @@ import { resolve } from 'path';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 const projectRoot = resolve(__dirname);
-const routeWarning = `'route' is not defined`;
 
 export default defineConfig({
     plugins: [
@@ -16,10 +15,6 @@ export default defineConfig({
         }),
         svelte({
             preprocess: preprocess({ postcss: true }),
-            onwarn(warning, defaultHandler) {
-                if (warning.message === routeWarning) return;
-                defaultHandler(warning);
-            },
             compilerOptions: { hydratable: true },
         }),
     ],
@@ -28,6 +23,7 @@ export default defineConfig({
             '@': resolve(projectRoot, 'resources/js'),
             '@components': resolve(projectRoot, 'resources/js/Components'),
             '@layouts': resolve(projectRoot, 'resources/js/Layouts'),
+            ziggy: resolve(projectRoot, 'vendor/tightenco/ziggy/dist/index.es'),
         },
         extensions: ['.js', '.svelte', '.json'],
     },

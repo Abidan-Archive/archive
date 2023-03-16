@@ -1,6 +1,7 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
     import Logo from '@components/Logo.svelte';
+    import route from '@/route';
 </script>
 
 <nav
