@@ -8,9 +8,7 @@
 
 <div class="container mx-auto" transition:fade>
     <section class="mb-5">
-        <div class="p-5">
-            Search box box
-        </div>
+        <div class="p-5">Search box box</div>
         <!-- <div class="flex items-center"> -->
         <!--     <span title="Sort By"><Sort /></span> -->
         <!--     <span class="px-2">Relevance</span> -->
