@@ -11,6 +11,7 @@ export default defineConfig({
     plugins: [
         laravel.default({
             input: ['resources/scss/app.scss', 'resources/js/app.js'],
+            ssr: 'resources/js/ssr.js',
             refresh: true,
         }),
         svelte({
@@ -19,6 +20,7 @@ export default defineConfig({
                 if (warning.message === routeWarning) return;
                 defaultHandler(warning);
             },
+            compilerOptions: { hydratable: true },
         }),
     ],
     resolve: {
