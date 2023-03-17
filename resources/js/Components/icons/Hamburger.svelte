@@ -4,7 +4,7 @@
     viewBox="0 0 24 24"
     stroke-width="1.5"
     stroke="currentColor"
-    class="h-8 w-8">
+    class={`h-8 w-8 ${$$props.class}`}>
     <path
         stroke-linecap="round"
         stroke-linejoin="round"
