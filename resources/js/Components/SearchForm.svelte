@@ -1,6 +1,6 @@
 <script>
-    import { useForm } from '@inertiajs/svelte';
-    import Lens from '@components/icons';
+    import { useForm } from "@inertiajs/svelte";
+    import Lens from "@components/icons/Lens";
     let form = useForm({
         q: '',
     });
@@ -31,7 +31,7 @@
         type="submit"
         disabled={$form.processing}
         class="ml-2 rounded-lg border border-abidan-700 bg-abidan-700 p-2.5 text-sm font-medium text-white hover:bg-abidan-800 focus:outline-none focus:ring-4 focus:ring-abidan-400 dark:bg-abidan-500 dark:hover:bg-abidan-700 dark:focus:ring-abidan-800">
-        <Lens />
+        <Lens class="w-5 h-5 text-white"/>
         <span class="sr-only">Search</span>
     </button>
 </form>

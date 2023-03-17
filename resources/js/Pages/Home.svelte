@@ -8,10 +8,10 @@
 </script>
 
 <section
-    class="bg-radial h-[33vh] overflow-hidden shadow-md md:h-[60vh] lg:h-[66vh]">
+    class="bg-radial h-[66vh] md:h-[73vh] overflow-hidden shadow-md lg:h-[80vh]">
     <Star>
-        <div class="mx-auto flex h-full flex-col items-center justify-center">
-            <section>{quote}</section>
+        <div class="flex flex-col h-full justify-center items-center mx-auto px-8">
+            <section class="lg:text-4xl md:text-3xl my-8 w-1/2 md:w-2/3 text-center">{quote}</section>
             <!-- Search -->
             <Searchform />
         </div>
@@ -19,9 +19,9 @@
 </section>
 
 <div class="bg-midnight-500">
-    <div class="flew-row container mx-auto flex py-8 px-4 md:px-0">
-        <section class="px-8 pt-2 md:p-0">
-            <h2 class="mb-8 text-center text-4xl md:m-0 md:text-left">
+    <div class="flew-row container mx-auto flex py-4 px-4 md:px-0 lg:py-8">
+        <section class="px-6 pt-2 md:p-0">
+            <h2 class="mb-8 md:mb-2 text-center md:text-4xl text-3xl md:m-0 md:text-left">
                 Welcome to the Archive
             </h2>
             <p>

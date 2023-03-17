@@ -3,7 +3,7 @@
 </script>
 
 <Navigation />
-<main class="mt-16 h-full">
+<main class="mt-[60px] h-full">
     <slot />
 </main>
 
