@@ -5,20 +5,17 @@ import { resolve } from 'path';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 const projectRoot = resolve(__dirname);
-const routeWarning = `'route' is not defined`;
 
 export default defineConfig({
     plugins: [
         laravel.default({
             input: ['resources/scss/app.scss', 'resources/js/app.js'],
+            ssr: 'resources/js/ssr.js',
             refresh: true,
         }),
         svelte({
             preprocess: preprocess({ postcss: true }),
-            onwarn(warning, defaultHandler) {
-                if (warning.message === routeWarning) return;
-                defaultHandler(warning);
-            },
+            compilerOptions: { hydratable: true },
         }),
     ],
     resolve: {
@@ -26,6 +23,7 @@ export default defineConfig({
             '@': resolve(projectRoot, 'resources/js'),
             '@components': resolve(projectRoot, 'resources/js/Components'),
             '@layouts': resolve(projectRoot, 'resources/js/Layouts'),
+            ziggy: resolve(projectRoot, 'vendor/tightenco/ziggy/dist/index.es'),
         },
         extensions: ['.js', '.svelte', '.json'],
     },

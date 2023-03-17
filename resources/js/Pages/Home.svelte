@@ -2,16 +2,21 @@
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
     import Searchform from '../Components/Searchform.svelte';
+    import route from '@/route';
 
     export let events;
     export let quote;
 </script>
 
 <section
-    class="bg-radial h-[66vh] md:h-[73vh] overflow-hidden shadow-md lg:h-[80vh]">
+    class="bg-radial h-[66vh] overflow-hidden shadow-md md:h-[73vh] lg:h-[80vh]">
     <Star>
-        <div class="flex flex-col h-full justify-center items-center mx-auto px-8">
-            <section class="lg:text-4xl md:text-3xl my-8 w-1/2 md:w-2/3 text-center">{quote}</section>
+        <div
+            class="mx-auto flex h-full flex-col items-center justify-center px-8">
+            <section
+                class="my-8 w-1/2 text-center md:w-2/3 md:text-3xl lg:text-4xl">
+                {quote}
+            </section>
             <!-- Search -->
             <Searchform />
         </div>
@@ -21,7 +26,8 @@
 <div class="bg-midnight-500">
     <div class="flew-row container mx-auto flex py-4 px-4 md:px-0 lg:py-8">
         <section class="px-6 pt-2 md:p-0">
-            <h2 class="mb-8 md:mb-2 text-center md:text-4xl text-3xl md:m-0 md:text-left">
+            <h2
+                class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
                 Welcome to the Archive
             </h2>
             <p>
