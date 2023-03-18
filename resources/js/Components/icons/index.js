@@ -8,3 +8,8 @@ export { default as House } from '@components/icons/House.svelte';
 export { default as Discord } from '@components/icons/Discord.svelte';
 export { default as Hamburger } from '@components/icons/Hamburger.svelte';
 export { default as Lens } from '@components/icons/Lens.svelte';
+export { default as Facebook } from '@components/icons/Facebook.svelte';
+export { default as Instagram } from '@components/icons/Instagram.svelte';
+export { default as Github } from '@components/icons/Github.svelte';
+export { default as Twitter } from '@components/icons/Twitter.svelte';
+export { default as Reddit } from '@components/icons/Reddit.svelte';
