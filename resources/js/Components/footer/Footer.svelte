@@ -3,7 +3,6 @@
     import {
         Reddit,
         Facebook,
-        Instagram,
         Twitter,
         Github,
         Gnome,
@@ -13,7 +12,6 @@
         twitter: 'https://twitter.com/williamwight',
         reddit: 'https://www.reddit.com/r/Iteration110Cradle',
         github: 'https://github.com/Abidan-Archive/archive',
-        instagram: 'https://www.instagram.com/willwight110',
         willBlog: 'https://www.willwight.com',
     };
 </script>
@@ -44,13 +42,6 @@
                 rel="noreferrer"
                 class="text-gray-400  hover:text-abidan-400">
                 <Facebook />
-            </FooterIcon>
-            <FooterIcon
-                href={links['instagram']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Instagram />
             </FooterIcon>
             <FooterIcon
                 href={links['twitter']}
