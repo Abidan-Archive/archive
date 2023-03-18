@@ -7,7 +7,7 @@
 <main class="mt-[60px] h-full">
     <slot />
 </main>
-<Footer/>
+<Footer />
 
 <style @global lang="postcss">
     :global(body) {
