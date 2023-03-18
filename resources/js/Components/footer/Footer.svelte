@@ -16,12 +16,9 @@
     };
 </script>
 
-<footer
-    {...$$restProps}
-    class={`bg-white p-4 dark:bg-gray-800 sm:p-6 ${$$props.class}`}>
+<footer {...$$restProps} class={`bg-gray-800 p-4 sm:p-6 ${$$props.class}`}>
     <div class="sm:flex sm:items-center sm:justify-between">
-        <span
-            class="block text-sm text-gray-500 dark:text-gray-400 sm:text-center">
+        <span class="block text-sm text-gray-400 sm:text-center">
             Made and maintained by Telariel, the Spider
         </span>
         <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
@@ -29,35 +26,35 @@
                 href={links['facebook']}
                 target="_blank"
                 rel="noreferrer"
-                class="hover:text-abidan-30  text-gray-400">
+                class="text-gray-400  hover:text-abidan-400">
                 <Facebook />
             </FooterIcon>
             <FooterIcon
                 href={links['instagram']}
                 target="_blank"
                 rel="noreferrer"
-                class="hover:text-abidan-30  text-gray-400">
+                class="text-gray-400  hover:text-abidan-400">
                 <Instagram />
             </FooterIcon>
             <FooterIcon
                 href={links['twitter']}
                 target="_blank"
                 rel="noreferrer"
-                class="hover:text-abidan-30  text-gray-400">
+                class="text-gray-400  hover:text-abidan-400">
                 <Twitter />
             </FooterIcon>
             <FooterIcon
                 href={links['reddit']}
                 target="_blank"
                 rel="noreferrer"
-                class="hover:text-abidan-30  text-gray-400">
+                class="text-gray-400  hover:text-abidan-400">
                 <Reddit />
             </FooterIcon>
             <FooterIcon
                 href={links['github']}
                 target="_blank"
                 rel="noreferrer"
-                class="hover:text-abidan-30  text-gray-400">
+                class="text-gray-400  hover:text-abidan-400">
                 <Github />
             </FooterIcon>
         </div>
