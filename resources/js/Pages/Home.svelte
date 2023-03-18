@@ -1,7 +1,7 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
-    import Searchform from '@components/Searchform.svelte';
+    import SearchForm from '@components/SearchForm.svelte';
     import route from '@/route';
 
     export let events;
@@ -18,7 +18,7 @@
                 {quote}
             </section>
             <!-- Search -->
-            <Searchform />
+            <SearchForm />
         </div>
     </Star>
 </section>
