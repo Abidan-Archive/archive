@@ -9,7 +9,6 @@ export { default as Discord } from './Discord.svelte';
 export { default as Hamburger } from './Hamburger.svelte';
 export { default as Lens } from './Lens.svelte';
 export { default as Facebook } from './Facebook.svelte';
-export { default as Instagram } from './Instagram.svelte';
 export { default as Github } from './Github.svelte';
 export { default as Twitter } from './Twitter.svelte';
 export { default as Reddit } from './Reddit.svelte';
