@@ -48,6 +48,7 @@ class ReportController extends Controller
      */
     public function show(Report $report): Response
     {
+        $report->event;
         return Inertia::render('Report/Show', compact('report'));
     }
 

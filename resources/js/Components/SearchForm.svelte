@@ -1,4 +1,5 @@
 <script>
+    import clsx from 'clsx';
     import { useForm } from '@inertiajs/svelte';
     import Lens from '@components/icons/Lens';
     let form = useForm({
@@ -11,7 +12,7 @@
 </script>
 
 <form
-    class="z-10 flex sm:w-3/4 md:w-1/2 lg:w-1/3"
+    class={clsx('flex ', $$props.class)}
     on:submit|preventDefault={submit}>
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">

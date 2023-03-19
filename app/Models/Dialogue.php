@@ -12,7 +12,7 @@ class Dialogue extends Model
 {
     use HasFactory;
 
-    // protected $appends = ['lineHtml'];
+    protected $appends = ['line_html'];
 
     protected $fillable = ['speaker', 'line', 'order'];
 
@@ -22,14 +22,12 @@ class Dialogue extends Model
 
     /**
      * Get the html of the line in markdown format
-     *
-     * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
     protected function lineHtml(): Attribute {
         $converter = new CommonMarkConverter(config('commonmark'));
         return Attribute::make(
             get: fn ($value, $attributes) => $converter->convert($attributes['line'])->getContent()
         );
-    }
+     }
 
 }
