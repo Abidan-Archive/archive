@@ -20,7 +20,7 @@
     import route from '@/route';
 </script>
 
-<nav class="fixed top-0 left-0 z-50 h-16 w-full bg-gray-800">
+<nav class="fixed top-0 left-0 z-50 h-16 w-full bg-gray-800 border-l-5 border-abidan-400">
     <div
         class="mx-6 px-4 py-2 md:flex md:items-center md:justify-between md:px-0 md:py-1">
         <div class="flex items-center justify-between">
