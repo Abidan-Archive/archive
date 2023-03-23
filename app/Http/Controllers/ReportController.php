@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Inertia\Response;
 
 class ReportController extends Controller
@@ -49,7 +48,7 @@ class ReportController extends Controller
     public function show(Report $report): Response
     {
         $report->event;
-        return Inertia::render('Report/Show', compact('report'));
+        return inertia('Report/Show', compact('report'));
     }
 
     /**

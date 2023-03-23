@@ -8,7 +8,7 @@
     export let withEvent = true;
     export let report;
 
-    var formattedDate = (new Date(report.date)).toLocaleDateString('en-US');
+    const formattedDate = (new Date(report.date)).toLocaleDateString('en-US');
 
     async function copyClicked() {
         let out = `#${report.id}`;

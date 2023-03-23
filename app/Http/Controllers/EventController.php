@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Inertia\Response;
 
 class EventController extends Controller
@@ -25,7 +24,7 @@ class EventController extends Controller
      */
     public function index(): Response {
         $events = Event::with('reports')->get();
-        return Inertia::render('Event/Index', compact('events'));
+        return inertia('Event/Index', compact('events'));
     }
 
     /**
@@ -57,7 +56,7 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event->reports;
-        return Inertia::render('Event/Show', compact('event'));
+        return inertia('Event/Show', compact('event'));
     }
 
     /**
