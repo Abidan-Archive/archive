@@ -11,7 +11,6 @@
     <title>Search | Abidan Archive</title>
 </svelte:head>
 
-
 <div class="container mx-auto pt-5">
     <h2 class="text-2xl my-5">Search Results</h2>
     <SearchForm class="my-5 w-full"/>
