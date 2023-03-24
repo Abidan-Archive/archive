@@ -7,56 +7,37 @@
         Github,
         Gnome,
     } from '@components/icons';
-    const links = {
-        facebook: 'https://www.facebook.com/willwightauthor',
-        twitter: 'https://twitter.com/williamwight',
-        reddit: 'https://www.reddit.com/r/Iteration110Cradle',
-        github: 'https://github.com/Abidan-Archive/archive',
-        willBlog: 'https://www.willwight.com',
-    };
+    const links = [
+        {
+            icon: Gnome,
+            href: 'https://www.willwight.com',
+        },
+        {
+            icon: Reddit,
+            href: 'https://www.reddit.com/r/Iteration110Cradle',
+        },
+        {
+            icon: Facebook,
+            href: 'https://www.facebook.com/willwightauthor',
+        },
+        {
+            icon: Twitter,
+            href: 'https://twitter.com/williamwight',
+        },
+    ];
 </script>
 
 <footer {...$$restProps} class={`bg-gray-800 p-4 sm:p-6 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
-        <span class="block text-sm text-gray-400 sm:text-center">
-            Made and maintained by Telariel, the Spider
-        </span>
+        <div class="text-sm text-gray-400 sm:text-center">
+            This site is built and maintained by the Will Wight fanbase and community.
+        </div>
         <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <FooterIcon
-                href={links['willBlog']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Gnome />
-            </FooterIcon>
-            <FooterIcon
-                href={links['reddit']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Reddit />
-            </FooterIcon>
-            <FooterIcon
-                href={links['facebook']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Facebook />
-            </FooterIcon>
-            <FooterIcon
-                href={links['twitter']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Twitter />
-            </FooterIcon>
-            <FooterIcon
-                href={links['github']}
-                target="_blank"
-                rel="noreferrer"
-                class="text-gray-400  hover:text-abidan-400">
-                <Github />
-            </FooterIcon>
+            {#each links as link}
+                <FooterIcon href={link.href}>
+                    <svelte:component this={link.icon} />
+                </FooterIcon>
+            {/each}
         </div>
     </div>
 </footer>
