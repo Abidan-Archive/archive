@@ -11,7 +11,7 @@ createInertiaApp({
         return { default: page.default, layout: page.layout || Layout };
     },
     setup({ el, App, props }) {
-        new App({ target: el, props });
+        new App({ target: el, props, hydrate: true });
     },
     progress: {
         color: '#326695',
