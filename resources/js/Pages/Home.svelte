@@ -47,7 +47,7 @@
     </div>
 </div>
 <div class="py-12">
-    <div class="container mx-auto flex flex-row">
+    <div class="container mx-auto justify-center flex flex-row">
         <section>
             <h2 class="pb-4 text-3xl font-thin uppercase">
                 Most Recent Events
