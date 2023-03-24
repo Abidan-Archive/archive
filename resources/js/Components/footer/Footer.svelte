@@ -1,5 +1,5 @@
 <script>
-    import FooterIcon from '@components/Footer/FooterIcon.svelte';
+    import FooterIcon from '@components/footer/FooterIcon.svelte';
     import {
         Reddit,
         Facebook,
