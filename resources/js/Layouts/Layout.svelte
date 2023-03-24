@@ -10,13 +10,13 @@
 
 
 <Navigation />
-<main class="mt-[60px] h-full">
+<main class="mt-[64px] md:px-5 px-2">
     <slot />
 </main>
 <Footer />
 
 <style @global lang="postcss">
     :global(body) {
-        @apply h-full bg-midnight-900 font-sans text-enkai-500 antialiased;
+        @apply flex flex-col bg-midnight-900 font-sans text-enkai-500 antialiased;
     }
 </style>

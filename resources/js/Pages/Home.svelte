@@ -3,13 +3,12 @@
     import Star from '@components/Star.svelte';
     import SearchForm from '@components/SearchForm.svelte';
     import route from '@/route';
-
     export let events;
     export let quote;
 </script>
 
 <section
-    class="bg-radial h-[66vh] overflow-hidden shadow-md md:h-[73vh] lg:h-[80vh]">
+    class="bg-radial h-[66vh] overflow-hidden shadow-md md:h-[73vh] lg:h-[80vh] md:-mx-5 -mx-2">
     <Star>
         <div
             class="mx-auto flex h-full flex-col items-center justify-center px-8">
@@ -17,15 +16,14 @@
                 class="my-8 w-1/2 text-center md:w-2/3 md:text-3xl lg:text-4xl">
                 {quote}
             </section>
-            <!-- Search -->
             <SearchForm class="z-10 sm:w-3/4 md:w-1/2 lg:w-1/3"/>
         </div>
     </Star>
 </section>
 
-<div class="bg-midnight-500">
+<div class="bg-midnight-500 -mx-5">
     <div class="flew-row container mx-auto flex py-4 px-4 md:px-0 lg:py-8">
-        <section class="px-6 pt-2 md:p-0">
+        <section class="px-6 pt-2"> 
             <h2
                 class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
                 Welcome to the Archive
