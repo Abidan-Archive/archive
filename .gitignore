@@ -1,4 +1,5 @@
 _ide_helper*
+.DS_Store
 /.phpunit.cache
 /node_modules
 /public/hot

@@ -23,14 +23,14 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('eatReport {jsonPath}', function(String $jsonPath) {
+Artisan::command('consume {jsonPath}', function(String $jsonPath) {
     $data = json_decode(file_get_contents($jsonPath), true);
 
     foreach($data as $i => $e) {
         $event = Event::create($e);
 
         if ($i > 0) $this->newLine();
-        $this->line("Eating $event->name ");
+        $this->line("Consuming $event->name ");
         $this->withProgressBar($e['reports'], function ($r) use ($event) {
             try {
                 $report = $event->reports()->create($r);

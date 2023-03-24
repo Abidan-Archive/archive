@@ -27,8 +27,4 @@ export default defineConfig({
         },
         extensions: ['.js', '.svelte', '.json'],
     },
-    resolveFn: (name) => {
-        const pages = import.meta.glob('./Pages/**/*.svelte', { eager: true });
-        return pages[`./Pages/${name}.svelte`];
-    },
 });

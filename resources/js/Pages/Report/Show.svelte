@@ -5,6 +5,7 @@
 </script>
 
 <svelte:head>
+    <title>Report {report.id} | Abidan Archive</title>
     <meta property="og:title" content={`#${report.id} | Abidan Archive`} />
     <meta property="og:type" content="article" />
     <meta property="og:url" content={report.permalink} />

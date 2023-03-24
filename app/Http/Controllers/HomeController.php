@@ -6,7 +6,6 @@ use App\Models\Event;
 use App\Models\Report;
 use App\Inspiring;
 
-use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 
@@ -18,13 +17,12 @@ class HomeController extends Controller
             ->take(5)
             ->get();
         $quote = Inspiring::quote();
-        return Inertia::render('Home', compact('events', 'quote'));
+        return inertia('Home', compact('events', 'quote'));
     }
 
     public function search(Request $request): Response {
-        $reports = Report::search(query: trim($request->input('q')))
-            ->get();
-        return Inertia::render('Search', compact('reports'));
+        $reports = Report::search(query: trim($request->input('q')) ?? '')->get();
+        return inertia('Search', compact('reports'));
     }
 
 }

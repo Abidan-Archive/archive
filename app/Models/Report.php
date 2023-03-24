@@ -16,13 +16,16 @@ class Report extends Model
 {
     use HasFactory, HasLikes, SoftDeletes, Searchable;
 
-    protected $appends = ['likes', 'permalink'];
+    protected $appends = [
+        // 'likes',
+        'permalink'
+    ];
 
     protected $casts = ['date' => 'date'];
 
     protected $fillable = ['footnote', 'date', 'source_label', 'source_href'];
 
-    protected $with = ['dialogues'];
+    protected $with = ['event', 'dialogues'];
 
     public function event(): BelongsTo {
         return $this->belongsTo(Event::class);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Inertia\Response;
 
 class EventController extends Controller
 {
@@ -20,12 +21,10 @@ class EventController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index() {
-        $events = Event::all();
-        return view('event.index', compact('events'));
+    public function index(): Response {
+        $events = Event::with('reports')->get();
+        return inertia('Event/Index', compact('events'));
     }
 
     /**
@@ -53,11 +52,11 @@ class EventController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
     public function show(Event $event)
     {
-        return view('event.show', compact('event'));
+        $event->reports;
+        return inertia('Event/Show', compact('event'));
     }
 
     /**

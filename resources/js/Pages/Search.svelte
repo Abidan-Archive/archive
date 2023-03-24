@@ -1,25 +1,31 @@
 <script>
-    import { fade } from 'svelte/transition';
     import Report from '@components/Report.svelte';
+    import SearchForm from '@components/SearchForm.svelte';
     //import { Sort } from '@components/icons';
+    //import { fade } from 'svelte/transition';
 
     export let reports;
 </script>
 
-<div class="container mx-auto" transition:fade>
-    <section class="mb-5">
-        <div class="p-5">Search box box</div>
-        <!-- <div class="flex items-center"> -->
-        <!--     <span title="Sort By"><Sort /></span> -->
-        <!--     <span class="px-2">Relevance</span> -->
-        <!-- </div> -->
-    </section>
+<svelte:head>
+    <title>Search | Abidan Archive</title>
+</svelte:head>
+
+<div class="container mx-auto pt-5">
+    <h2 class="text-2xl my-5">Search Results</h2>
+    <SearchForm class="my-5 w-full"/>
+    <hr class="my-5" />
     <section class="flex flex-col gap-5">
         {#if !reports.length}
             <div class="text-center">
                 <p>No reports found on your supplied query.</p>
             </div>
         {:else}
+            <section>
+                <div class="text-right">
+                    Reports Found: {reports.length}
+                </div>
+            </section>
             {#each reports as report}
                 <Report {report} />
             {/each}
