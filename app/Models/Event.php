@@ -22,8 +22,4 @@ class Event extends Model
     public function sources(): HasMany {
         return $this->hasMany(Source::class);
     }
-
-    public function isLocationLink(): bool {
-        return filter_var($this->location, FILTER_VALIDATE_URL);
-    }
 }
