@@ -5,27 +5,30 @@ module.exports = {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './resources/js/**/*.{js,svelte}'
+        './resources/js/**/*.{js,svelte}',
     ],
     theme: {
         borderWidth: {
             ...defaultTheme.borderWidth,
-            '3': '3px',
-            '5': '5px',
+            3: '3px',
+            5: '5px',
         },
         extend: {
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            },
             colors: {
-                'enkai': {
+                enkai: {
                     500: '#e8e6e3',
-                    600: '#c3beb6'
+                    600: '#c3beb6',
                 },
-                'midnight': {
+                midnight: {
                     500: '#1b2735',
                     700: '#25282a',
-                    900: '#181a1b'
+                    900: '#181a1b',
                 },
-                'abidan': {
-                    50:  '#ccd9e4',
+                abidan: {
+                    50: '#ccd9e4',
                     100: '#99b3ca',
                     200: '#668daf',
                     300: '#4c7aa2',
@@ -34,9 +37,8 @@ module.exports = {
                     600: '#003a6e',
                     700: '#003462',
                     800: '#002d56',
-                    900: '#00203d'
-
-                }
+                    900: '#00203d',
+                },
             },
             fontFamily: {
                 sans: ['Roboto', ...defaultTheme.fontFamily.sans],

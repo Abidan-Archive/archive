@@ -30,7 +30,7 @@
 <article
     id={report.id}
     class={clsx(
-        'border-muenkai md-shadow rounded-lg border bg-midnight-700 p-4',
+        'border-enkai-500 bg-midnight-700 rounded-lg border p-4 shadow-md',
         $$props.class
     )}>
     <section class="flex justify-between">
