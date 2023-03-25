@@ -48,7 +48,7 @@
         </div>
 
         <div
-            class="hidden sm:flex sm:flex-col sm:gap-y-2 sm:flex-1 sm:items-center sm:justify-between">
+            class="hidden sm:flex sm:flex-1 sm:flex-col sm:items-center sm:justify-between sm:gap-y-2">
             <div>
                 <p class="text-sm leading-5 text-gray-300">
                     Showing
@@ -86,7 +86,7 @@
                         </a>
                     {/if}
 
-                    {#each links.slice(1, links.length-1) as link}
+                    {#each links.slice(1, links.length - 1) as link}
                         {#if link.label === '...'}
                             <span aria-disabled="true">
                                 <span

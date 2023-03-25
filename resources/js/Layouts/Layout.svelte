@@ -11,13 +11,16 @@
 </svelte:head>
 
 <Navigation />
-<main class="mt-[64px] px-2 md:px-5">
+<main class="mt-16 grow px-2 sm:px-5">
     <slot />
 </main>
 <Footer />
 
 <style @global lang="postcss">
     :global(body) {
-        @apply flex flex-col bg-midnight-900 font-sans text-enkai-500 antialiased;
+        @apply h-full bg-midnight-900 font-sans text-enkai-500 antialiased;
+    }
+    :global(#app) {
+        @apply flex min-h-screen flex-col;
     }
 </style>

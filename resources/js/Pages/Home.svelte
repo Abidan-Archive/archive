@@ -1,14 +1,20 @@
 <script>
+    import clsx from 'clsx';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
     import SearchForm from '@components/SearchForm.svelte';
     import route from '@/route';
+
     export let events;
     export let quote;
 </script>
 
 <section
-    class="bg-radial -mx-2 h-[66vh] overflow-hidden shadow-md md:-mx-5 md:h-[73vh] lg:h-[80vh]">
+    class={clsx(
+        'bg-radial overflow-hidden shadow-md',
+        '-mx-2 sm:-mx-5',
+        'h-[66vh] md:h-[73vh] lg:h-[80vh]'
+    )}>
     <Star>
         <div
             class="mx-auto flex h-full flex-col items-center justify-center px-8">

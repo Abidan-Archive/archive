@@ -2,13 +2,11 @@
     import Report from '@components/Report.svelte';
     import SearchForm from '@components/SearchForm.svelte';
     import Paginator from '@components/Paginator.svelte';
-    import PaginatorSimple from '@components/PaginatorSimple.svelte';
     //import { Sort } from '@components/icons';
     //import { fade } from 'svelte/transition';
 
     export let paginate;
     export let reports;
-    console.log(paginate);
 </script>
 
 <svelte:head>

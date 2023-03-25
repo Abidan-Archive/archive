@@ -15,7 +15,9 @@
 </script>
 
 {#if total > per_page}
-    <nav aria-label="Pagination Navigation" class="flex items-center justify-between">
+    <nav
+        aria-label="Pagination Navigation"
+        class="flex items-center justify-between">
         {#if current_page <= 1}
             <span
                 class="relative inline-flex cursor-default items-center rounded-md border border-gray-300 bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-500">
