@@ -16,17 +16,14 @@
     const next_page_label = 'Next &raquo;';
 </script>
 
-<!-- <p> -->
-<!--     Page <code>{current_page}</code> of <code>{last_page}</code> -->
-<!-- </p> -->
 {#if total > per_page}
     <nav
         aria-label="Pagination Navigation"
         class="flex items-center justify-between">
         <div class="flex flex-1 justify-between sm:hidden">
-            {#if current_page === 0}
+            {#if current_page <= 1}
                 <span
-                    class="border-muenkai relative inline-flex cursor-default items-center rounded-md border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-100">
+                    class="border-muenkai relative inline-flex cursor-default items-center rounded-md border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-500">
                     {@html prev_page_label}
                 </span>
             {:else}
@@ -51,11 +48,11 @@
         </div>
 
         <div
-            class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+            class="hidden sm:flex sm:flex-col sm:gap-y-2 sm:flex-1 sm:items-center sm:justify-between">
             <div>
                 <p class="text-sm leading-5 text-gray-300">
                     Showing
-                    {#if current_page === 0}
+                    {#if current_page > 1}
                         <span class="font-medium">{from}</span>
                         to
                         <span class="font-medium">{to}</span>
@@ -70,7 +67,7 @@
 
             <div>
                 <span class="relative z-0 inline-flex rounded-md shadow-sm">
-                    {#if current_page === 0}
+                    {#if current_page <= 1}
                         <span aria-disabled="true" aria-label={prev_page_label}>
                             <span
                                 class="border-muenkai relative inline-flex cursor-default items-center rounded-l-md border bg-midnight-700 px-2 py-2 text-sm font-medium leading-5 text-gray-500"
@@ -84,12 +81,12 @@
                             href={prev_page_url}
                             rel="prev"
                             aria-label={prev_page_label}
-                            class="border-muenkai relative inline-flex items-center rounded-l-md border bg-midnight-700 px-2 py-2 text-sm font-medium leading-5 text-gray-500 ring-gray-300 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-blue-300 focus:outline-none focus:ring active:bg-gray-100 active:text-gray-500">
+                            class="border-muenkai relative -ml-px inline-flex items-center rounded-l-md border bg-midnight-700 px-2 py-2 text-sm font-medium leading-5 text-gray-200 ring-gray-300 transition duration-150 ease-in-out hover:text-gray-400 focus:z-10 focus:border-blue-300 focus:outline-none focus:ring active:bg-gray-500 active:text-gray-100">
                             <Previous />
                         </a>
                     {/if}
 
-                    {#each links as link}
+                    {#each links.slice(1, links.length-1) as link}
                         {#if link.label === '...'}
                             <span aria-disabled="true">
                                 <span
@@ -126,7 +123,7 @@
                     {:else}
                         <span aria-disabled="true" aria-label={next_page_label}>
                             <span
-                                class="border-muenkai relative -ml-px inline-flex cursor-default items-center rounded-r-md border bg-midnight-700 px-2 py-2 text-sm font-medium leading-5 text-gray-100"
+                                class="border-muenkai relative inline-flex cursor-default items-center rounded-r-md border bg-midnight-700 px-2 py-2 text-sm font-medium leading-5 text-gray-500"
                                 aria-hidden="true">
                                 <Next />
                             </span>

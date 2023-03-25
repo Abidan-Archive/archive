@@ -2,14 +2,13 @@
     import Report from '@components/Report.svelte';
     import SearchForm from '@components/SearchForm.svelte';
     import Paginator from '@components/Paginator.svelte';
+    import PaginatorSimple from '@components/PaginatorSimple.svelte';
     //import { Sort } from '@components/icons';
     //import { fade } from 'svelte/transition';
 
-    // const urlParams = new URLSearchParams(window.location.search);
-    // console.log('what', urlParams.get('query'));
     export let paginate;
     export let reports;
-    $: console.log(paginate);
+    console.log(paginate);
 </script>
 
 <svelte:head>
@@ -26,20 +25,11 @@
                 <p>No reports found on your supplied query.</p>
             </div>
         {:else}
-            <section>
-                <div class="text-right">
-                    Reports Found: {paginate.total}
-                </div>
-            </section>
-            <section class="text-center">
-                <Paginator {...paginate} />
-            </section>
+            <Paginator {...paginate} />
             {#each reports as report}
                 <Report {report} />
             {/each}
-            <!-- <section class="text-center"> -->
-            <!--     <Paginator {...paginate} /> -->
-            <!-- </section> -->
+            <Paginator {...paginate} />
         {/if}
     </section>
 </div>
