@@ -1,10 +1,15 @@
 <script>
     import Report from '@components/Report.svelte';
     import SearchForm from '@components/SearchForm.svelte';
+    import Paginator from '@components/Paginator.svelte';
     //import { Sort } from '@components/icons';
     //import { fade } from 'svelte/transition';
 
+    // const urlParams = new URLSearchParams(window.location.search);
+    // console.log('what', urlParams.get('query'));
+    export let paginate;
     export let reports;
+    $: console.log(paginate);
 </script>
 
 <svelte:head>
@@ -12,8 +17,8 @@
 </svelte:head>
 
 <div class="container mx-auto pt-5">
-    <h2 class="text-2xl my-5">Search Results</h2>
-    <SearchForm class="my-5 w-full"/>
+    <h2 class="my-5 text-2xl">Search Results</h2>
+    <SearchForm class="my-5 w-full" />
     <hr class="my-5" />
     <section class="flex flex-col gap-5">
         {#if !reports.length}
@@ -23,12 +28,18 @@
         {:else}
             <section>
                 <div class="text-right">
-                    Reports Found: {reports.length}
+                    Reports Found: {paginate.total}
                 </div>
+            </section>
+            <section class="text-center">
+                <Paginator {...paginate} />
             </section>
             {#each reports as report}
                 <Report {report} />
             {/each}
+            <!-- <section class="text-center"> -->
+            <!--     <Paginator {...paginate} /> -->
+            <!-- </section> -->
         {/if}
     </section>
 </div>

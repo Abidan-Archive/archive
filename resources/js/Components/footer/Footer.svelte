@@ -27,10 +27,11 @@
     ];
 </script>
 
-<footer {...$$restProps} class={`bg-gray-800 mt-10 p-5 ${$$props.class}`}>
+<footer {...$$restProps} class={`mt-10 bg-gray-800 p-5 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
         <div class="text-sm text-gray-400 sm:text-center">
-            This site is built and maintained by the Will Wight fanbase and community.
+            This site is built and maintained by the Will Wight fanbase and
+            community.
         </div>
         <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             {#each links as link}

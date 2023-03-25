@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TagController;
 
@@ -17,7 +18,7 @@ use App\Http\Controllers\TagController;
 */
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();

@@ -8,7 +8,7 @@
     export let withEvent = true;
     export let report;
 
-    const formattedDate = (new Date(report.date)).toLocaleDateString('en-US');
+    const formattedDate = new Date(report.date).toLocaleDateString('en-US');
 
     async function copyClicked() {
         let out = `#${report.id}`;
@@ -32,8 +32,7 @@
     class={clsx(
         'border-muenkai md-shadow rounded-lg border bg-midnight-700 p-4',
         $$props.class
-    )}
-    >
+    )}>
     <section class="flex justify-between">
         <div>
             <h3>
