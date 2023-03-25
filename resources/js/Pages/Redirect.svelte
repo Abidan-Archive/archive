@@ -1,5 +1,5 @@
 <script>
-    import {inertia} from '@inertiajs/svelte';
+    import { inertia } from '@inertiajs/svelte';
     import route from '@/route';
 
     let redirect = route('home');
@@ -14,6 +14,8 @@
 </script>
 
 <p class="text-center">
-    You are currently being redirected. If this takes too long <a use:inertia href={redirect}>Click Here</a>.
+    You are currently being redirected. If this takes too long <a
+        use:inertia
+        href={redirect}>Click Here</a
+    >.
 </p>
-
