@@ -17,4 +17,8 @@ class HomeController extends Controller
         return inertia('Home', compact('events', 'quote'));
     }
 
+    public function redirect(): Response {
+        return inertia('Redirect');
+    }
+
 }
