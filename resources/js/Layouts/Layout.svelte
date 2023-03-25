@@ -5,12 +5,13 @@
 
 <svelte:head>
     <title>Abidan Archive</title>
-    <meta name="description" content="The Abidan Archive is website responsible for recording all of the Will Wight fanbase canon non-book external information on Will's various works." />
+    <meta
+        name="description"
+        content="The Abidan Archive is website responsible for recording all of the Will Wight fanbase canon non-book external information on Will's various works." />
 </svelte:head>
 
-
 <Navigation />
-<main class="mt-[64px] md:px-5 px-2">
+<main class="mt-[64px] px-2 md:px-5">
     <slot />
 </main>
 <Footer />

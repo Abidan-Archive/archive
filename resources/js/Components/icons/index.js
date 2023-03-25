@@ -13,3 +13,5 @@ export { default as Link } from './Link.svelte';
 export { default as Reddit } from './Reddit.svelte';
 export { default as Sort } from './Sort.svelte';
 export { default as Twitter } from './Twitter.svelte';
+export { default as Previous } from './Previous.svelte';
+export { default as Next } from './Next.svelte';

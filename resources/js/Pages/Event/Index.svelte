@@ -8,15 +8,17 @@
     <title>Events | Abidan Archive</title>
 </svelte:head>
 
-
 <div class="container mx-auto pt-5">
     <section>
-        <h2 class="text-2xl my-5">Events</h2>
+        <h2 class="my-5 text-2xl">Events</h2>
     </section>
-    <hr class="my-5"/>
+    <hr class="my-5" />
     <section>
         {#each events as event}
-            <a class="hover:underline" use:inertia href={route('event.show', event)}>
+            <a
+                class="hover:underline"
+                use:inertia
+                href={route('event.show', event)}>
                 <article>
                     {event.name}
                 </article>
