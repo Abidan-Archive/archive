@@ -1,4 +1,6 @@
 <script>
+    import { inertia } from '@inertiajs/svelte';
+    import route from '@/route';
     import FooterIcon from '@components/footer/FooterIcon.svelte';
     import {
         Reddit,
@@ -29,9 +31,13 @@
 
 <footer {...$$restProps} class={`mt-10 bg-gray-800 p-5 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
-        <div class="text-sm text-gray-400 sm:text-center">
-            This site is built and maintained by the Will Wight fanbase and
-            community.
+        <div
+            class="flex items-baseline justify-between gap-2 text-sm text-gray-400 sm:text-center">
+            <a use:inertia href={route('about')} class="hover:underline"
+                >About Site</a>
+            <FooterIcon href="https://github.com/Abidan-Archive/archive">
+                <Github class="inline" />
+            </FooterIcon>
         </div>
         <div class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             {#each links as link}

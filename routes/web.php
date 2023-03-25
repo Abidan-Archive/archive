@@ -18,9 +18,10 @@ use App\Http\Controllers\TagController;
 */
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/events/{event}', [HomeController::class, 'redirect']); // Old perma link redirect
+Route::get('/events/{event}', [HomeController::class, 'redirect']);
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();

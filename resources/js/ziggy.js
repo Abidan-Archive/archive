@@ -20,6 +20,7 @@ const Ziggy = {
             methods: ['POST'],
         },
         home: { uri: '/', methods: ['GET', 'HEAD'] },
+        about: { uri: 'about', methods: ['GET', 'HEAD'] },
         search: { uri: 'search', methods: ['GET', 'HEAD'] },
         'event.index': { uri: 'event', methods: ['GET', 'HEAD'] },
         'event.create': { uri: 'event/create', methods: ['GET', 'HEAD'] },
