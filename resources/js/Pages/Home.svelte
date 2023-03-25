@@ -28,13 +28,13 @@
 </section>
 
 <div class="-mx-5 bg-midnight-500">
-    <div class="flew-row container mx-auto flex py-4 px-4 md:px-0 lg:py-8">
-        <section class="px-6 pt-2">
+    <div class="flex px-6 py-8">
+        <section>
             <h2
                 class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
                 Welcome to the Archive
             </h2>
-            <p>
+            <p class="mb-2">
                 This is a fan run site and is not meant to be official in any
                 context.
             </p>
@@ -43,34 +43,32 @@
                 and will change anything to suit the story better.
             </p>
         </section>
-        <!-- <aside class="block text-right flex-1">
-            <h3>Want to contribute?</h3>
-            <p>We are always looking for chroniclers to transcribe audio into new Reports.</p>
-            <a use:inertia href={route('register')}>Join us!</a>
-        </aside> -->
+        <!-- <aside class="block text-right"> -->
+        <!--     <h3>Want to contribute?</h3> -->
+        <!--     <p>We are always looking for chroniclers to transcribe audio into new Reports.</p> -->
+        <!--     <a use:inertia href={route('register')}>Join us!</a> -->
+        <!-- </aside>  -->
     </div>
 </div>
-<div class="py-12">
-    <div class="container mx-auto flex flex-row justify-center">
-        <section>
-            <h2 class="pb-4 text-3xl font-thin uppercase">
-                Most Recent Events
-            </h2>
-            <ul>
-                {#each events as event}
-                    <li>
-                        <!-- svelte-ignore missing-declaration -->
-                        <a
-                            class="text-lg hover:underline"
-                            use:inertia
-                            href={route('event.show', event)}>
-                            {event.name}
-                        </a>
-                    </li>
-                {/each}
-            </ul>
-        </section>
-    </div>
+<div class="container mt-12 flex items-center justify-evenly">
+    <section class="flex-1">
+        <h2 class="text-3xl font-thin uppercase">
+            Most Recent Events
+        </h2>
+        <ul>
+            {#each events as event}
+                <li>
+                    <!-- svelte-ignore missing-declaration -->
+                    <a
+                        class="text-lg hover:underline"
+                        use:inertia
+                        href={route('event.show', event)}>
+                        {event.name}
+                    </a>
+                </li>
+            {/each}
+        </ul>
+    </section>
 </div>
 
 <style>
