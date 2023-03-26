@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('source_label')->nullable();
             $table->string('source_href')->nullable();
 
+            $table->string('legacy_permalink')->nullable();
+
             $table->foreignIdFor(Event::class);
 
             $table->softDeletes();
