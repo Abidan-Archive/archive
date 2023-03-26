@@ -23,7 +23,7 @@ class Report extends Model
 
     protected $casts = ['date' => 'date'];
 
-    protected $fillable = ['footnote', 'date', 'source_label', 'source_href'];
+    protected $fillable = ['footnote', 'date', 'source_label', 'source_href', 'legacy_permalink'];
 
     protected $with = ['event', 'dialogues'];
 
