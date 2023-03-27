@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Inspiring;
 use App\Models\Event;
 use App\Models\Report;
-use App\Inspiring;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 
 class HomeController extends Controller
@@ -23,12 +25,34 @@ class HomeController extends Controller
     }
 
     /**
-     * Redirects old permalinks to new route
-     * Url fragments aren't sent in by backend
-     * So using frontend redirect page
+     * The frontend Redirect page returns type and context params
+     * Use these parameters to figure out where to redirect them
+     * and with what data
+     */
+    public function handleRedirect(Request $request): RedirectResponse {
+        $type = $request->input('type');
+        $context = $request->input('context');
+
+        switch($type) {
+            case 'report':
+                $report = Report::where('legacy_permalink', $context)->first();
+                if ($report != null)
+                    return to_route('report.show', $report);
+                break;
+        }
+        return to_route('home');
+    }
+
+    /**
+     * Legacy application used URL fragments as part of its permalinks
+     * These can only be handled by the frontend
+     *
+     * This route catches all redirects to be handled by the frontend.
+     * It then determines the redirect type and context and redirects
+     * the user to the handleRedirect route where they are finally
+     * redirected to the appropriate location
      */
     public function redirect(): Response {
         return inertia('Redirect');
     }
-
 }

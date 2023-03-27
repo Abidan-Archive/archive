@@ -22,6 +22,7 @@ const Ziggy = {
         home: { uri: '/', methods: ['GET', 'HEAD'] },
         about: { uri: 'about', methods: ['GET', 'HEAD'] },
         search: { uri: 'search', methods: ['GET', 'HEAD'] },
+        handleRedirect: { uri: 'redirect', methods: ['GET', 'HEAD'] },
         'event.index': { uri: 'event', methods: ['GET', 'HEAD'] },
         'event.create': { uri: 'event/create', methods: ['GET', 'HEAD'] },
         'event.store': { uri: 'event', methods: ['POST'] },
