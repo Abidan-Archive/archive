@@ -1,4 +1,4 @@
-@include('gnome')
+@includeWhen(App::isProduction(), 'gnome')
 <!DOCTYPE html>
 <html>
   <head>
