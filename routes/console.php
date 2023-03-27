@@ -33,7 +33,6 @@ Artisan::command('consume {jsonPath}', function(String $jsonPath) {
         $this->line("Consuming $event->name");
         $this->withProgressBar($e['reports'], function ($r) use ($event) {
             try {
-                $r['legacy_permalink'] = $r['permalink'];
                 $report = $event->reports()->create($r);
                 $report->refresh();
 
