@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
 
 /*
@@ -21,7 +21,9 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
+// Redirects for legacy
 Route::get('/events/{event}', [HomeController::class, 'redirect']);
+Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handleRedirect');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
