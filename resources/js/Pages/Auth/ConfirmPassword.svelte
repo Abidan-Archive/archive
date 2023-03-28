@@ -31,6 +31,7 @@
             type="password"
             name="password"
             required
+            bind:value={$form.password}
             autocomplete="current-password" />
         <ErrorMessage message={$form.errors.password} class="mt-2" />
     </div>

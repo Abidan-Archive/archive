@@ -57,7 +57,11 @@
             <input
                 id="remember_me"
                 type="checkbox"
-                class={clsx('')}
+                class={clsx(
+                    'rounded border-gray-700 bg-gray-900 text-indigo-600 shadow-sm',
+                    'focus:ring-indigo-600 focus:ring-offset-gray-800'
+                )}
+                bind:checked={$form.remember}
                 name="remember" />
             <span class="ml-2 text-sm text-gray-400">Remember Me</span>
         </Label>

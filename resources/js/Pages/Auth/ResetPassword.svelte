@@ -6,19 +6,17 @@
         PrimaryButton,
         TextInput,
     } from '@components/forms';
-    import { useForm } from '@inertiajs/svelte';
-
-    export let token;
+    import { page, useForm } from '@inertiajs/svelte';
 
     let form = useForm('ResetPassword', {
-        token,
-        email: null,
+        token: route().params.token,
+        email: route().params.email,
         password: null,
         password_confirmation: null,
     });
 
     function submit() {
-        $form.post(route('password.store'));
+        $form.post(route('password.update'));
     }
 </script>
 
@@ -30,6 +28,7 @@
             class="mt-1 block w-full"
             type="email"
             name="email"
+            bind:value={$form.email}
             required
             autofocus />
         <ErrorMessage message={$form.errors.email} class="mt-2" />
@@ -41,6 +40,7 @@
             class="mt-1 block w-full"
             type="password"
             name="password"
+            bind:value={$form.password}
             required />
         <ErrorMessage message={$form.errors.password} class="mt-2" />
     </div>
@@ -51,6 +51,7 @@
             class="mt-1 block w-full"
             type="password"
             name="password_confirmation"
+            bind:value={$form.password_confirmation}
             required />
         <ErrorMessage
             message={$form.errors.password_confirmation}

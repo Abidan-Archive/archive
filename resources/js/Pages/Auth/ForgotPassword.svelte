@@ -30,13 +30,14 @@
 
 <form method="POST" on:submit|preventDefault={submit}>
     <div>
-        <Label for="email" value="email" />
+        <Label for="email" value="Email" />
         <TextInput
             id="email"
             class="mt-1 block w-full"
             type="email"
             name="email"
             required
+            bind:value={$form.email}
             autofocus />
         <ErrorMessage message={$form.errors.email} class="mt-2" />
     </div>
