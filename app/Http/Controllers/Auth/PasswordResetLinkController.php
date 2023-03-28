@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Inertia\Response;
 
 class PasswordResetLinkController extends Controller
 {
@@ -13,9 +14,9 @@ class PasswordResetLinkController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): Response
     {
-        return view('auth.forgot-password');
+        return inertia('Auth/ForgotPassword');
     }
 
     /**
