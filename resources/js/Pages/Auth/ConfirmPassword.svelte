@@ -1,5 +1,4 @@
 <script>
-    import clsx from 'clsx';
     import route from '@/route';
     import {
         ErrorMessage,
@@ -7,7 +6,7 @@
         PrimaryButton,
         TextInput,
     } from '@components/forms';
-    import { useForm, inertia } from '@inertiajs/svelte';
+    import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
         password: null,
@@ -19,7 +18,8 @@
 </script>
 
 <div class="mb-4 text-sm text-gray-400">
-    This is a secure area of the application. Please confirm password before continuing.
+    This is a secure area of the application. Please confirm password before
+    continuing.
 </div>
 
 <form method="POST" on:submit|preventDefault={submit}>
@@ -27,18 +27,15 @@
         <Label for="password" value="Password" />
         <TextInput
             id="password"
-            class="block mt-1 w-full"
+            class="mt-1 block w-full"
             type="password"
             name="password"
             required
-            autocomplete="current-password"
-            />
+            autocomplete="current-password" />
         <ErrorMessage message={$form.errors.password} class="mt-2" />
     </div>
 
-    <div class="flex justify-end mt-4">
-        <PrimaryButton>
-            Confirm
-        </PrimaryButton>
+    <div class="mt-4 flex justify-end">
+        <PrimaryButton>Confirm</PrimaryButton>
     </div>
 </form>

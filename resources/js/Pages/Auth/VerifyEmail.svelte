@@ -1,5 +1,4 @@
 <script>
-    import clsx from 'clsx';
     import route from '@/route';
     import {
         ErrorMessage,
@@ -7,7 +6,7 @@
         PrimaryButton,
         TextInput,
     } from '@components/forms';
-    import { inertia, page, router } from '@inertiajs/svelte';
+    import { page, router } from '@inertiajs/svelte';
 
     function resend() {
         router.post(route('verification.send'));

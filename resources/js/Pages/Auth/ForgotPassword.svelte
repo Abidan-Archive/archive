@@ -1,6 +1,5 @@
 <script>
     import Status from '@components/Status.svelte';
-    import clsx from 'clsx';
     import route from '@/route';
     import {
         ErrorMessage,
@@ -8,7 +7,7 @@
         PrimaryButton,
         TextInput,
     } from '@components/forms';
-    import { useForm, inertia } from '@inertiajs/svelte';
+    import { useForm } from '@inertiajs/svelte';
 
     export let status;
 
