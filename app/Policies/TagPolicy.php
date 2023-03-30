@@ -9,6 +9,14 @@ use Illuminate\Auth\Access\Response;
 class TagPolicy
 {
     /**
+     * Perofrm pre-authorization check for admin
+     */
+    public function before(User $user, string $ability): bool|null
+    {
+        return $user->hasRole('admin') ? true : null;
+    }
+
+    /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool

@@ -8,6 +8,16 @@ use Inertia\Response;
 
 class ReportController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->authorizeResource(Report::class, 'report');
+    }
+
     /**
      * Display a listing of the resource.
      *
