@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 class TagController extends Controller
 {
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->authorizeResource(Tag::class, 'tag');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
