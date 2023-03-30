@@ -10,6 +10,9 @@
 
     const formattedDate = new Date(report.date).toLocaleDateString('en-US');
 
+    async function linkClicked() {
+        await navigator.clipboard.writeText(report.permalink);
+    }
     async function copyClicked() {
         let out = `#${report.id}`;
         if (!!report.event) out += `- ${report.event.name}\n`;
@@ -22,8 +25,8 @@
 
         await navigator.clipboard.writeText(out);
     }
-    async function linkClicked() {
-        await navigator.clipboard.writeText(report.permalink);
+    function likeClicked() {
+        console.log('like clicked');
     }
 </script>
 
@@ -66,10 +69,12 @@
                 <Copy class="inline" />
                 <span class="pl-1">Copy</span>
             </button>
-            <!-- <button class="flex hidden" > -->
-            <!--     <Heart variant='outline' /> -->
-            <!--     <span class="pl-1 text-base">{report.likes}</span> -->
-            <!-- </button> -->
+            <button class="flex"
+                on:click={likeClicked}
+            >
+                <Heart variant='outline' />
+                <span class="pl-1 text-base">{report.likes}</span>
+            </button>
         </div>
     </div>
     <section class="my-5">
