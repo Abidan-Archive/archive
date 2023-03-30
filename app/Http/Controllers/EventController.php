@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -17,6 +18,7 @@ class EventController extends Controller
     public function __construct() {
         $this->middleware('auth')
              ->except('index', 'show');
+        $this->authorizeResource(Event::class, 'event');
     }
 
     /**
@@ -29,12 +31,9 @@ class EventController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(): Response {
+        return inertia('Event/Create');
     }
 
     /**
@@ -43,9 +42,8 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
-        //
     }
 
     /**
