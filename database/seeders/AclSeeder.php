@@ -56,10 +56,6 @@ class AclSeeder extends Seeder
             'name' => 'view_admin',
             'label' => 'View Administration Pages'
         ]);
-        $manageFlags = Permission::create([
-            'name' => 'manage_flags',
-            'label' => 'Manage Flags'
-        ]);
         $managePermissions = Permission::create([
             'name' => 'manage_permissions',
             'label' => 'Manage Permissions'
@@ -77,7 +73,6 @@ class AclSeeder extends Seeder
             $editReport,
             $reviewReport,
             $editTag,
-            $manageFlags
         ]);
         $admin->permissions()->saveMany(Permission::all());
     }
