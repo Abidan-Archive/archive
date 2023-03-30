@@ -1,5 +1,6 @@
 <script>
     import Status from '@components/Status.svelte';
+    import Card from '@components/Card.svelte';
     import clsx from 'clsx';
     import route from '@/route';
     import {
@@ -23,63 +24,79 @@
     }
 </script>
 
-<Status {status} />
+<section class="contianer mx-auto mt-10 w-1/2">
+    <h2 class="my-5 text-2xl">Login</h2>
+    <Card>
+        <Status {status} />
 
-<form method="POST" on:submit|preventDefault={submit}>
-    <div>
-        <Label for="email">Email</Label>
-        <!-- svelte-ignore a11y-autofocus -->
-        <TextInput
-            id="email"
-            name="email"
-            bind:value={$form.email}
-            class="mt-1 block w-full"
-            required
-            autofocus />
-        <ErrorMessage message={$form.errors.email} class="mt-2" />
-    </div>
+        <form method="POST" on:submit|preventDefault={submit}>
+            <div>
+                <Label for="email">Email</Label>
+                <!-- svelte-ignore a11y-autofocus -->
+                <TextInput
+                    id="email"
+                    name="email"
+                    bind:value={$form.email}
+                    class="mt-1 block w-full"
+                    required
+                    autofocus />
+                <ErrorMessage message={$form.errors.email} class="mt-2" />
+            </div>
 
-    <div class="mt">
-        <Label for="password">Password</Label>
-        <TextInput
-            id="password"
-            type="password"
-            name="password"
-            bind:value={$form.password}
-            class="mt-1 block w-full"
-            required
-            autocomplete="current-password" />
-        <ErrorMessage message={$form.errors.password} class="mt-2" />
-    </div>
+            <div class="mt">
+                <Label for="password">Password</Label>
+                <TextInput
+                    id="password"
+                    type="password"
+                    name="password"
+                    bind:value={$form.password}
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="current-password" />
+                <ErrorMessage message={$form.errors.password} class="mt-2" />
+            </div>
 
-    <div class="mt-4 block">
-        <Label for="remember_me" class="inline-flex items-center">
-            <input
-                id="remember_me"
-                type="checkbox"
-                class={clsx(
-                    'rounded border-gray-700 bg-gray-900 text-indigo-600 shadow-sm',
-                    'focus:ring-indigo-600 focus:ring-offset-gray-800'
-                )}
-                bind:checked={$form.remember}
-                name="remember" />
-            <span class="ml-2 text-sm text-gray-400">Remember Me</span>
-        </Label>
-    </div>
+            <div class="mt-4 block">
+                <Label for="remember_me" class="inline-flex items-center">
+                    <input
+                        id="remember_me"
+                        type="checkbox"
+                        class={clsx(
+                            'rounded border-gray-700 bg-gray-900 text-indigo-600 shadow-sm',
+                            'focus:ring-indigo-600 focus:ring-offset-gray-800'
+                        )}
+                        bind:checked={$form.remember}
+                        name="remember" />
+                    <span class="ml-2 text-sm text-gray-400">Remember Me</span>
+                </Label>
+            </div>
 
-    <div class="mt-4 flex items-center justify-end">
-        {#if route().has('password.request')}
-            <a
-                use:inertia
-                href={route('password.request')}
-                class={clsx(
-                    'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
-                    'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
-                )}>
-                Forgot your password?
-            </a>
-        {/if}
+            <div class="mt-4 flex items-baseline justify-between">
+                <a
+                    use:inertia
+                    href={route('register')}
+                    class={clsx(
+                        'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
+                        'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
+                    )}>
+                    Sign up
+                </a>
+                <div class="flex items-baseline justify-end">
+                    {#if route().has('password.request')}
+                        <a
+                            use:inertia
+                            href={route('password.request')}
+                            class={clsx(
+                                'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
+                                'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
+                            )}>
+                            Forgot your password?
+                        </a>
+                    {/if}
 
-        <PrimaryButton class="ml-3">Log in</PrimaryButton>
-    </div>
-</form>
+                    <PrimaryButton class="ml-3">Log in</PrimaryButton>
+                </div>
+            </div>
+        </form>
+    </Card>
+</section>

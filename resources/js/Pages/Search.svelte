@@ -13,11 +13,11 @@
     <title>Search | Abidan Archive</title>
 </svelte:head>
 
-<div class="container mx-auto pt-5">
+<section class="container mx-auto pt-5">
     <h2 class="my-5 text-2xl">Search Results</h2>
     <SearchForm class="my-5 w-full" />
     <hr class="my-5" />
-    <section class="flex flex-col gap-5">
+    <div class="flex flex-col gap-5">
         {#if !reports.length}
             <div class="text-center">
                 <p>No reports found on your supplied query.</p>
@@ -29,5 +29,5 @@
             {/each}
             <Paginator {...paginate} />
         {/if}
-    </section>
-</div>
+    </div>
+</section>

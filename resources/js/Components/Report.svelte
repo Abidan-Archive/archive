@@ -33,7 +33,7 @@
         'border-enkai-500 bg-midnight-700 rounded-lg border p-4 shadow-md',
         $$props.class
     )}>
-    <section class="flex justify-between">
+    <div class="flex justify-between">
         <div>
             <h3>
                 <a
@@ -71,7 +71,7 @@
             <!--     <span class="pl-1 text-base">{report.likes}</span> -->
             <!-- </button> -->
         </div>
-    </section>
+    </div>
     <section class="my-5">
         {#each report.dialogues as dialogue}
             <dl class="mb-2">

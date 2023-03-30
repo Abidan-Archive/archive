@@ -9,7 +9,7 @@
     export let quote;
 </script>
 
-<section
+<div
     class={clsx(
         'bg-radial overflow-hidden shadow-md',
         '-mx-2 sm:-mx-5',
@@ -18,14 +18,14 @@
     <Star>
         <div
             class="mx-auto flex h-full flex-col items-center justify-center px-8">
-            <section
+            <div
                 class="my-8 w-1/2 text-center md:w-2/3 md:text-3xl lg:text-4xl">
                 {quote}
-            </section>
+            </div>
             <SearchForm class="z-10 sm:w-3/4 md:w-1/2 lg:w-1/3" />
         </div>
     </Star>
-</section>
+</div>
 
 <div class="-mx-5 bg-midnight-500">
     <div class="flex px-6 py-8">

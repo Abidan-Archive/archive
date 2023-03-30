@@ -8,12 +8,10 @@
     <title>Events | Abidan Archive</title>
 </svelte:head>
 
-<div class="container mx-auto pt-5">
-    <section>
-        <h2 class="my-5 text-2xl">Events</h2>
-    </section>
+<section class="container mx-auto pt-5">
+    <h2 class="my-5 text-2xl">Events</h2>
     <hr class="my-5" />
-    <section>
+    <div>
         {#each events as event}
             <a
                 class="hover:underline"
@@ -24,5 +22,5 @@
                 </article>
             </a>
         {/each}
-    </section>
-</div>
+    </div>
+</section>
