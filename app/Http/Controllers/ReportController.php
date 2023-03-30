@@ -15,6 +15,8 @@ class ReportController extends Controller
      * @return void
      */
     public function __construct() {
+        $this->middleware('auth')
+             ->except('index', 'show');
         $this->authorizeResource(Report::class, 'report');
     }
 
