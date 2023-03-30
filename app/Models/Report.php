@@ -53,7 +53,7 @@ class Report extends Model
     use HasFactory, HasLikes, SoftDeletes, Searchable;
 
     protected $appends = [
-        // 'likes',
+        'likes',
         'permalink'
     ];
 
