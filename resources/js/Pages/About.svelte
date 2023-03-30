@@ -13,9 +13,9 @@
     const discord = 'https://discord.gg/tCg94qy';
 </script>
 
-<article class="container mx-auto w-2/3 pt-5">
+<article class="container mx-auto w-2/3 mt-10">
     <section class="mb-4">
-        <h2 class="py-5 text-2xl">About Site</h2>
+        <h2 class="pb-5 text-2xl">About Site</h2>
         <p>
             Whenever Will has a live event, stream, or socials post, should it
             contain relevant information about his works, it is recorded here
