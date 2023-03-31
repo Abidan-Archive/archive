@@ -43,7 +43,7 @@
                 <ErrorMessage message={$form.errors.email} class="mt-2" />
             </div>
 
-            <div class="mt">
+            <div class="mt-4">
                 <Label for="password">Password</Label>
                 <TextInput
                     id="password"
@@ -56,7 +56,7 @@
                 <ErrorMessage message={$form.errors.password} class="mt-2" />
             </div>
 
-            <div class="mt-4 block">
+            <div class="mt-4">
                 <Label for="remember_me" class="inline-flex items-center">
                     <input
                         id="remember_me"
