@@ -22,8 +22,8 @@
     <h2 class="my-5 text-2xl">Confirm Password</h2>
     <Card>
         <div class="mb-4 text-sm text-gray-400">
-            This is a secure area of the application. Please confirm password before
-            continuing.
+            This is a secure area of the application. Please confirm password
+            before continuing.
         </div>
         <form method="POST" on:submit|preventDefault={submit}>
             <div>

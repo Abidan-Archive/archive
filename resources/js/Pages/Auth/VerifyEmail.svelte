@@ -1,7 +1,7 @@
 <script>
     import Card from '@components/Card.svelte';
     import route from '@/route';
-    import { PrimaryButton, } from '@components/forms';
+    import { PrimaryButton } from '@components/forms';
     import { page, router } from '@inertiajs/svelte';
 
     function resend() {
@@ -16,15 +16,15 @@
     <h2 class="my-5 text-2xl">Email Verification</h2>
     <Card>
         <div class="mb-4 text-sm text-gray-400">
-            Thanks for signing up! Before getting started, could you verify your email
-            address by clicking on the link we just emailed to you? If you didn't
-            receive the email, we will gladly send you another.
+            Thanks for signing up! Before getting started, could you verify your
+            email address by clicking on the link we just emailed to you? If you
+            didn't receive the email, we will gladly send you another.
         </div>
 
         {#if $page.props.status == 'verification-link-sent'}
             <div class="mb-4 text-sm font-medium text-green-400">
-                A new verification link as been sent to the email address you provided
-                during registration.
+                A new verification link as been sent to the email address you
+                provided during registration.
             </div>
         {/if}
 
