@@ -25,15 +25,13 @@ class AuthServiceProvider extends ServiceProvider
      * Register any authentication / authorization services.
      */
     public function boot(): void {
-        if (Schema::hasTable('permissions')) {
-            // Get all the permissions
-            $permissions = Permission::with('roles')->get();
-            // Dynamically register permissions with Laravel's Gate
-            foreach ($permissions as $permission) {
-                Gate::define($permission->name, function(User $user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
-            }
+        // Get all the permissions
+        $permissions = Permission::with('roles')->get();
+        // Dynamically register permissions with Laravel's Gate
+        foreach ($permissions as $permission) {
+            Gate::define($permission->name, function(User $user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
         }
     }
 

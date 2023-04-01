@@ -32,7 +32,9 @@ class Source extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'path'];
+    const DIRECTORY = 'sources';
+
+    protected $fillable = ['name', 'filename'];
 
     public function event(): BelongsTo {
         return $this->belongsTo(Event::class);

@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('path');
+            $table->string('filename')->nullable(); // Only null on initial upload
 
             $table->foreignIdFor(Event::class);
 

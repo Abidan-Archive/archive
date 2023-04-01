@@ -1,7 +1,9 @@
 <script>
     import Report from '@components/Report.svelte';
+    import Status from '@components/Status.svelte';
 
     export let event;
+    export let status;
 </script>
 
 <svelte:head>
@@ -9,6 +11,7 @@
 </svelte:head>
 
 <div class="container mx-auto pt-5">
+    <Status {status} />
     <section class="mb-5">
         <h2 class="text-2xl">{event.name}</h2>
     </section>

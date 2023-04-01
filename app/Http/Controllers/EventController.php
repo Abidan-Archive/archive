@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
+use App\Models\Source;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class EventController extends Controller
@@ -38,12 +40,18 @@ class EventController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventRequest $request): RedirectResponse
     {
+        $validated = $request->validated();
+        $event = Event::create($validated);
+        foreach ($validated['sources'] as $file) {
+            $source = $event->sources()->create(['name' => $file->getClientOriginalName()]);
+            $source->update(['filename' => implode('_', [$event->id, $source->id, $file->hashName()])]);
+            $file->storeAs(Source::DIRECTORY, $source->filename);
+        }
+        $request->session()->flash('status', 'Event successfully created!');
+        return to_route('event.show', compact('event'));
     }
 
     /**
@@ -51,7 +59,7 @@ class EventController extends Controller
      *
      * @param  \App\Models\Event  $event
      */
-    public function show(Event $event)
+    public function show(Event $event): Response
     {
         $event->reports;
         return inertia('Event/Show', compact('event'));
