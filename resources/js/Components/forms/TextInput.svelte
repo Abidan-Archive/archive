@@ -1,7 +1,7 @@
 <script>
     import clsx from 'clsx';
 
-    let className;
+    let className = '';
     export let type = 'text';
     export let value;
     export { className as class };

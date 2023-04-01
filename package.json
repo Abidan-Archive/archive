@@ -37,7 +37,8 @@
     },
     "dependencies": {
         "@inertiajs/svelte": "^1.0.0",
-        "clsx": "^1.2.1"
+        "clsx": "^1.2.1",
+        "svelte-file-dropzone": "^2.0.1"
     },
     "lint-staged": {
         "*.{js,svelte}": "eslint --cache --fix"

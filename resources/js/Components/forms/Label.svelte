@@ -1,11 +1,14 @@
 <script>
     export let value;
 
-    let className;
+    let forInput;
+    let className = '';
     export { className as class };
+    export { forInput as for };
 </script>
 
 <label
+    for={forInput}
     class={`block text-sm font-medium text-gray-300 ${className}`}
     {...$$restProps}>
     {#if !!value}

@@ -69,10 +69,8 @@
                 <Copy class="inline" />
                 <span class="pl-1">Copy</span>
             </button>
-            <button class="flex"
-                on:click={likeClicked}
-            >
-                <Heart variant='outline' />
+            <button class="flex" on:click={likeClicked}>
+                <Heart variant="outline" />
                 <span class="pl-1 text-base">{report.likes}</span>
             </button>
         </div>
