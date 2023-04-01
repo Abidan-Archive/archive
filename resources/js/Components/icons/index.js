@@ -1,4 +1,5 @@
 export { default as Calendar } from './Calendar.svelte';
+export { default as CircleX } from './CircleX.svelte';
 export { default as Copy } from './Copy.svelte';
 export { default as Discord } from './Discord.svelte';
 export { default as Facebook } from './Facebook.svelte';

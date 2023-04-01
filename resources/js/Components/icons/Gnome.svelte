@@ -1,9 +1,9 @@
 <!--Gnome icons created by juicy_fish - Flaticon-->
 <!--https://www.flaticon.com/free-icons/gnome-->
 <svg
-    class={`h-6 w-6 ${$$props.class}`}
     viewBox="0 0 512.000000 512.000000"
-    preserveAspectRatio="xMidYMid meet">
+    preserveAspectRatio="xMidYMid meet"
+    class={`h-6 w-6 ${$$restProps.class || ''}`}>
     <g
         transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)"
         fill="currentColor"
