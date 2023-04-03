@@ -3,12 +3,7 @@
     import Card from '@components/Card.svelte';
     import clsx from 'clsx';
     import route from '@/route';
-    import {
-        ErrorMessage,
-        Label,
-        PrimaryButton,
-        TextInput,
-    } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     export let status;
@@ -94,7 +89,7 @@
                         </a>
                     {/if}
 
-                    <PrimaryButton class="ml-3">Log in</PrimaryButton>
+                    <Button class="ml-3">Log in</Button>
                 </div>
             </div>
         </form>

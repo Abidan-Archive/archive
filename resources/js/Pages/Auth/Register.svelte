@@ -2,12 +2,7 @@
     import Card from '@components/Card.svelte';
     import clsx from 'clsx';
     import route from '@/route';
-    import {
-        ErrorMessage,
-        Label,
-        PrimaryButton,
-        TextInput,
-    } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm('Register', {
@@ -98,7 +93,7 @@
                     Already registered?
                 </a>
 
-                <PrimaryButton class="ml-4">Register</PrimaryButton>
+                <Button class="ml-4">Register</Button>
             </div>
         </form>
     </Card>

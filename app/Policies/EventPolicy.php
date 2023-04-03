@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\Response;
 class EventPolicy
 {
     /**
-     * Perofrm pre-authorization check for admin
+     * Perform pre-authorization check for admin
      */
     public function before(User $user, string $ability): bool|null
     {

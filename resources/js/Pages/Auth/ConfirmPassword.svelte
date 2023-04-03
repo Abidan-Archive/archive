@@ -1,12 +1,7 @@
 <script>
     import Card from '@components/Card.svelte';
     import route from '@/route';
-    import {
-        ErrorMessage,
-        Label,
-        PrimaryButton,
-        TextInput,
-    } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
@@ -40,7 +35,7 @@
             </div>
 
             <div class="mt-4 flex justify-end">
-                <PrimaryButton>Confirm</PrimaryButton>
+                <Button>Confirm</Button>
             </div>
         </form>
     </Card>

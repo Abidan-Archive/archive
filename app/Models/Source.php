@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Models\Event;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Storage;
 
 /**
  * App\Models\Source
@@ -34,9 +37,21 @@ class Source extends Model
 
     const DIRECTORY = 'sources';
 
+    protected $appends = ['path'];
+
     protected $fillable = ['name', 'filename'];
+
+    protected function path(): Attribute {
+        return Attribute::make(get:
+            fn($value, $attributes) => Storage::url(self::DIRECTORY.'/'.$attributes['filename'])
+        );
+    }
 
     public function event(): BelongsTo {
         return $this->belongsTo(Event::class);
+    }
+
+    public function stubs(): HasMany {
+        return $this->hasMany(Stub::class);
     }
 }

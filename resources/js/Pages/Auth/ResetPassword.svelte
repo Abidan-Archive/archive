@@ -1,12 +1,7 @@
 <script>
     import Card from '@components/Card.svelte';
     import route from '@/route';
-    import {
-        ErrorMessage,
-        Label,
-        PrimaryButton,
-        TextInput,
-    } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { page, useForm } from '@inertiajs/svelte';
 
     let form = useForm('ResetPassword', {
@@ -63,7 +58,7 @@
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton>Reset Password</PrimaryButton>
+                <Button>Reset Password</Button>
             </div>
         </form>
     </Card>

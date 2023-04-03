@@ -48,10 +48,10 @@ class EventController extends Controller
         foreach ($validated['sources'] as $file) {
             $source = $event->sources()->create(['name' => $file->getClientOriginalName()]);
             $source->update(['filename' => implode('_', [$event->id, $source->id, $file->hashName()])]);
-            $file->storeAs(Source::DIRECTORY, $source->filename);
+            $file->storePubliclyAs(Source::DIRECTORY, $source->filename);
         }
         $request->session()->flash('status', 'Event successfully created!');
-        return to_route('event.show', compact('event'));
+        return to_route('event.update', compact('event'));
     }
 
     /**
@@ -73,7 +73,8 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        $event->sources;
+        return inertia('Event/Edit', compact('event'));
     }
 
     /**
@@ -98,4 +99,5 @@ class EventController extends Controller
     {
         //
     }
+    
 }

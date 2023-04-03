@@ -1,15 +1,24 @@
 <script>
+    import AnchorButton from '@components/AnchorButton.svelte';
     import Card from '@components/Card.svelte';
     import CircleX from '@components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
+    import Modal from '@components/Modal.svelte';
+    import Status from '@components/Status.svelte';
     import route from '@/route';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
-    import { useForm } from '@inertiajs/svelte';
+    import { formatToInputDateString } from '@/utils';
+    import { router, useForm } from '@inertiajs/svelte';
 
+    export let status;
+    export let event;
+
+    let showDeleteConfirmModal = false;
+    let sourceToDelete = null;
     let form = useForm({
-        name: null,
-        date: null,
-        location: null,
+        name: event.name,
+        date: formatToInputDateString(event.date),
+        location: event.location,
         sources: [],
     });
     let rejectedFiles = [];
@@ -29,15 +38,28 @@
         $form.sources = [];
     }
 
-    function submit() {
-        $form.post(route('event.store'));
+    function handleEventSubmit() {
+        $form.patch(route('event.update'));
+    }
+    function handleRenameSourceSubmit(id) {
+        // router.update(route(''))
+    }
+
+    function handleDeleteSourceClicked(id) {
+        showDeleteConfirmModal = true;
+        sourceToDelete = id;
+    }
+    function handleDeleteSourceConfirmed() {
+        showDeleteConfirmModal = false;
+        // router.destroy(route(''), sourceToDelete);
     }
 </script>
 
+<Status {status} />
 <section class="contianer mx-auto mt-10">
-    <h2 class="my-5 text-2xl">Create Event</h2>
+    <h2 class="my-5 text-2xl">Edit Event</h2>
     <Card>
-        <form method="POST" on:submit|preventDefault={submit}>
+        <form method="POST" on:submit|preventDefault={handleEventSubmit}>
             <div class="block">
                 <Label for="name">Name</Label>
                 <TextInput
@@ -70,7 +92,7 @@
                 <ErrorMessage message={$form.errors.location} class="mt-2" />
             </div>
             <div id="dropzone-container" class="mt-4 block">
-                <Label for="dropzone">Audio Source</Label>
+                <Label for="dropzone">Add Additional Audio Sources</Label>
                 <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple>
                     <button>Choose audio files to upload</button>
                     <p>or</p>
@@ -107,12 +129,59 @@
                 {/if}
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Button class="ml-3">Create</Button>
+            <div class="mt-4 flex items-center justify-end p-3">
+                <Button type="submit">Update</Button>
             </div>
         </form>
     </Card>
 </section>
+
+<section>
+    <h3 class="my-4 text-xl">Manage Sources</h3>
+    <div class="flex flex-col gap-5">
+        {#each event.sources as { id, name, path }}
+                <Card class="flex items-center justify-between">
+                <form
+                    method="PATCH"
+                    on:submit|preventDefault={() =>
+                        handleRenameSourceSubmit(id)}
+                    class="flex items-center gap-1">
+                    <AnchorButton href={route('home')}>
+                        Stub
+                    </AnchorButton>
+                    <TextInput id={'source-' + id} bind:value={name} />
+                    <Button type="submit">Rename</Button>
+                </form>
+                <audio src={path} controls />
+                <Button
+                    variant="danger"
+                    on:click={() => handleDeleteSourceClicked(id)}>
+                    Delete
+                </Button>
+            </Card>
+        {/each}
+    </div>
+</section>
+
+<Modal bind:visible={showDeleteConfirmModal}>
+    <h2 slot="header" class="mb-5 text-xl">Are you sure you want to delete?</h2>
+
+    <div class="py-5">
+        <p>
+            By deleting a source you also delete all of the attached stubs
+            regardless of completion.
+        </p>
+        <p>Are you sure you want to do this?</p>
+    </div>
+
+    <div slot="footer" class="mt-5 flex justify-between">
+        <Button variant="danger" on:click={handleDeleteSourceConfirmed}
+            >Yes, Delete</Button>
+        <Button on:click={() => (showDeleteConfirmModal = false)}>
+            Cancel
+        </Button>
+    </div>
+</Modal>
 
 <style lang="postcss">
     #dropzone-container :global(.dropzone) {
