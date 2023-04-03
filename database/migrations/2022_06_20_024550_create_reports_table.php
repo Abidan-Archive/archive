@@ -30,12 +30,6 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::create('report_likes', function(Blueprint $table) {
-            $table->foreignIdFor(Report::class);
-            $table->foreignIdFor(User::class);
-            $table->timestamps();
-        });
     }
 
     /**
@@ -46,6 +40,5 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('reports');
-        Schema::dropIfExists('report_likes');
     }
 };

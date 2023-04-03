@@ -101,6 +101,8 @@ const Ziggy = {
             methods: ['DELETE'],
             bindings: { tag: 'id' },
         },
+        like: { uri: 'like', methods: ['POST'] },
+        unlike: { uri: 'like', methods: ['DELETE'] },
         register: { uri: 'register', methods: ['GET', 'HEAD'] },
         login: { uri: 'login', methods: ['GET', 'HEAD'] },
         'password.request': {

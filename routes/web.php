@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TagController;
@@ -28,5 +29,8 @@ Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handle
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
 Route::resource('tag', TagController::class);
+
+Route::post('like', [LikeController::class, 'like'])->name('like');
+Route::delete('like', [LikeController::class, 'unlike'])->name('unlike');
 
 require __DIR__.'/auth.php';

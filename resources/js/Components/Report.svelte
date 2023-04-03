@@ -3,7 +3,7 @@
     import route from '@/route';
     import { Copy, Heart, Link } from '@components/icons';
     // import { fade } from 'svelte/transition';
-    import { inertia } from '@inertiajs/svelte';
+    import { inertia, router } from '@inertiajs/svelte';
 
     export let withEvent = true;
     export let report;
@@ -27,6 +27,12 @@
     }
     function likeClicked() {
         console.log('like clicked');
+        if (!report.is_liked) {
+            router.post(route('like'), {likeable_type: 'App\\Models\\Report', id: report.id});
+        } else {
+            // router delete doesn't allow payload, so we're faking it with _method
+            router.post(route('unlike'), {'_method':'DELETE', likeable_type: 'App\\Models\\Report', id: report.id});
+        }
     }
 </script>
 
@@ -69,11 +75,9 @@
                 <Copy class="inline" />
                 <span class="pl-1">Copy</span>
             </button>
-            <button class="flex"
-                on:click={likeClicked}
-            >
-                <Heart variant='outline' />
-                <span class="pl-1 text-base">{report.likes}</span>
+            <button class="flex" on:click={likeClicked}>
+                <Heart variant={report.is_liked ? 'filled' : 'outline'} />
+                <span class="pl-1 text-base">{report.likes_count}</span>
             </button>
         </div>
     </div>
