@@ -61,7 +61,7 @@ class EventController extends Controller
      */
     public function show(Event $event): Response
     {
-        $event->reports;
+        $event->load('reports');
         return inertia('Event/Show', compact('event'));
     }
 
