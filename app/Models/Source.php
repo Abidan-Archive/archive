@@ -41,9 +41,19 @@ class Source extends Model
 
     protected $fillable = ['name', 'filename'];
 
+    protected static function booted(): void {
+        static::creating(fn(Source $model) =>
+            $model->id = (($model->event->sources->max('id') ?? 0) + 1),
+        );
+    }
+
     protected function path(): Attribute {
         return Attribute::make(get:
-            fn($value, $attributes) => Storage::url(self::DIRECTORY.'/'.$attributes['filename'])
+            function($value, $attributes) {
+                if (array_key_exists('filename', $attributes))
+                    return Storage::url(self::DIRECTORY.'/'.$attributes['filename']);
+                return null;
+            }
         );
     }
 

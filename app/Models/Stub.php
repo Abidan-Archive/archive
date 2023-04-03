@@ -12,6 +12,12 @@ class Stub extends Model
 
     protected $fillable = ['prompt', 'from', 'to'];
 
+    protected static function booted(): void {
+        static::creating(fn(Stub $model) =>
+            $model->id = (($model->source->stubs->max('id') ?? 0) + 1),
+        );
+    }
+
     public function source(): BelongsTo {
         return $this->belongsTo(Source::class);
     }

@@ -15,13 +15,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sources', function (Blueprint $table) {
-            // $table->id();
-            $table->foreignIdFor(Event::class);
-            $table->bigInteger('id')->
+            $table->unsignedBigInteger('id');
+            $table->foreignIdFor(Event::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->string('name');
             $table->string('filename')->nullable(); // Only null on initial upload
-
-        
 
             $table->timestamps();
             $table->primary(['id', 'event_id']);

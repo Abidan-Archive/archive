@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Source;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,15 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stubs', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
+            $table->foreignIdFor(Source::class)
+                ->constrained()
+                ->cascadeOnDelete();
 
-            $table->string('prompt')->nullable();
             $table->unsignedInteger('from');
             $table->unsignedInteger('to');
+            $table->string('prompt')->nullable();
 
-            $table->foreignIdFor(\App\Models\Source::class);
 
             $table->timestamps();
+
+            $table->primary(['id', 'source_id']);
         });
     }
 

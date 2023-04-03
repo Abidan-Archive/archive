@@ -29,38 +29,28 @@ return new class extends Migration
         });
 
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->foreignIdFor(Permission::class);
-            $table->foreignIdFor(Role::class);
+            $table->foreignIdFor(Permission::class)
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(Role::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->timestamps();
-
-            $table->foreign('permission_id')
-                ->references('id')
-                ->on('permissions')
-                ->cascadeOnDelete();
-
-            $table->foreign('role_id')
-                ->references('id')
-                ->on('roles')
-                ->cascadeOnDelete();
 
             $table->primary(['permission_id', 'role_id']);
         });
 
 
         Schema::create('role_user', function (Blueprint $table) {
-            $table->foreignIdFor(Role::class);
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Role::class)
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(User::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
             $table->timestamps();
-
-            $table->foreign('role_id')
-                ->references('id')
-                ->on('roles')
-                ->cascadeOnDelete();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->cascadeOnDelete();
 
             $table->primary(['role_id', 'user_id']);
         });
