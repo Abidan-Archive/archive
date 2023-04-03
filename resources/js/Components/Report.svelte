@@ -26,7 +26,6 @@
         await navigator.clipboard.writeText(out);
     }
     function likeClicked() {
-        console.log('like clicked');
         if (!report.is_liked) {
             router.post(route('like'), {likeable_type: 'App\\Models\\Report', id: report.id});
         } else {
