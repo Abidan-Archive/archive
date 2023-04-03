@@ -17,6 +17,7 @@ class LikeRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        $this->getValidatorInstance()->validate();
         return $this->user()->can('like', $this->likeable());
     }
 
