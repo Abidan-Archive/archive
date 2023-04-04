@@ -2,10 +2,12 @@
     import clsx from 'clsx';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
+    import Heart from '@components/icons/Heart.svelte';
     import SearchForm from '@components/SearchForm.svelte';
     import route from '@/route';
 
     export let events;
+    export let mostLiked;
     export let quote;
 </script>
 
@@ -62,6 +64,24 @@
                         use:inertia
                         href={route('event.show', event)}>
                         {event.name}
+                    </a>
+                </li>
+            {/each}
+        </ul>
+    </section>
+    <section class="flex-1">
+        <h2 class="text-3xl font-thin uppercase">Most Liked Reports</h2>
+        <ul>
+            {#each mostLiked as report}
+                <li>
+                    <!-- svelte-ignore missing-declaration -->
+                    <a
+                        class="text-lg hover:underline"
+                        use:inertia
+                        href={route('report.show', report)}>
+                        {report.likes_count}
+                        <Heart class="inline" variant={report.is_liked ? 'filled' : 'outline'} />  &middot;
+                        Report#{report.id} 
                     </a>
                 </li>
             {/each}
