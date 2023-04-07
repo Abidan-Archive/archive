@@ -27,10 +27,17 @@
     }
     function likeClicked() {
         if (!report.is_liked) {
-            router.post(route('like'), {likeable_type: 'App\\Models\\Report', id: report.id});
+            router.post(route('like'), {
+                likeable_type: 'App\\Models\\Report',
+                id: report.id,
+            });
         } else {
             // router delete doesn't allow payload, so we're faking it with _method
-            router.post(route('unlike'), {'_method':'DELETE', likeable_type: 'App\\Models\\Report', id: report.id});
+            router.post(route('unlike'), {
+                _method: 'DELETE',
+                likeable_type: 'App\\Models\\Report',
+                id: report.id,
+            });
         }
     }
 </script>

@@ -15,7 +15,7 @@
     class={clsx(
         'bg-radial overflow-hidden shadow-md',
         '-mx-2 sm:-mx-5',
-        'h-[66vh] md:h-[73vh] lg:h-[80vh]'
+        'h-[calc(100vh_-_4rem_-_14rem)] sm:h-[calc(100vh_-_4rem_-_10rem)]'
     )}>
     <Star>
         <div
@@ -29,8 +29,8 @@
     </Star>
 </div>
 
-<div class="-mx-5 bg-midnight-500">
-    <div class="flex px-6 py-8">
+<div class="-mx-5 h-56 bg-midnight-500 sm:h-40">
+    <div class="flex px-6 py-6">
         <section>
             <h2
                 class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
@@ -80,8 +80,10 @@
                         use:inertia
                         href={route('report.show', report)}>
                         {report.likes_count}
-                        <Heart class="inline" variant={report.is_liked ? 'filled' : 'outline'} />  &middot;
-                        Report#{report.id} 
+                        <Heart
+                            class="inline"
+                            variant={report.is_liked ? 'filled' : 'outline'} /> &middot;
+                        Report#{report.id}
                     </a>
                 </li>
             {/each}

@@ -13,7 +13,7 @@
     const discord = 'https://discord.gg/tCg94qy';
 </script>
 
-<article class="container mx-auto w-2/3 mt-10">
+<article class="container mx-auto mt-10 w-2/3">
     <section class="mb-4">
         <h2 class="pb-5 text-2xl">About Site</h2>
         <p>
