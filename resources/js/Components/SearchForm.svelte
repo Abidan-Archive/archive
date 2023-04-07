@@ -26,7 +26,7 @@
             id="simple-search"
             class="focus:ring-black-800 focus:ring-black-500 block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5  pl-10 text-center text-sm font-bold text-white placeholder-gray-400 focus:border-abidan-700"
             placeholder="[Information Requested]"
-            required />
+            />
     </div>
     <button
         type="submit"
