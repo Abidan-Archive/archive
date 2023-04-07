@@ -52,7 +52,7 @@
         <!-- </aside>  -->
     </div>
 </div>
-<div class="container mt-12 flex items-center justify-evenly">
+<div class="container mt-12 flex justify-evenly">
     <section class="flex-1">
         <h2 class="text-3xl font-thin uppercase">Most Recent Events</h2>
         <ul>
