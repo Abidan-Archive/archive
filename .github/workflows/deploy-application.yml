@@ -5,6 +5,9 @@ on:
     branches:
       - prod
 
+env:
+  APP_ENV: deployment
+
 jobs:
   create-deployment-artifacts:
     name: Create deployment artifacts

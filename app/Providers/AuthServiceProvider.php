@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Schema;
 use App\Models\Permission;
 use App\Models\User;
 use App\Policies\LikePolicy;
@@ -28,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void {
         $this->registerPolicies();
 
-        if (Schema::hasTable('permissions')) {
+        if (!$this->app->environment('deployment')) {
             // Get all the permissions
             $permissions = Permission::with('roles')->get();
             // Dynamically register permissions with Laravel's Gate
