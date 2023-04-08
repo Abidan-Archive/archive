@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Schema;
 use App\Models\Permission;
 use App\Models\User;
 use App\Policies\LikePolicy;
@@ -27,13 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void {
         $this->registerPolicies();
 
-        // Get all the permissions
-        $permissions = Permission::with('roles')->get();
-        // Dynamically register permissions with Laravel's Gate
-        foreach ($permissions as $permission) {
-            Gate::define($permission->name, function(User $user) use ($permission) {
-                return $user->hasPermission($permission);
-            });
+        if (Schema::hasTable('permissions')) {
+            // Get all the permissions
+            $permissions = Permission::with('roles')->get();
+            // Dynamically register permissions with Laravel's Gate
+            foreach ($permissions as $permission) {
+                Gate::define($permission->name, function(User $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
         }
 
         Gate::define('like', [LikePolicy::class, 'like']);
