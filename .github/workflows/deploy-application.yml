@@ -27,6 +27,10 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
+      - name: Generate frontend routes file
+        run: |
+          php artisan ziggy:generate
+
       - name: Compile CSS and Javascript
         run: |
           npm ci
