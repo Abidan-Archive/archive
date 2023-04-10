@@ -28,6 +28,8 @@ jobs:
         run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Generate frontend routes file
+        env:
+          APP_URL: http://${{ vars.HOST_IP }}
         run: |
           php artisan ziggy:generate
 
