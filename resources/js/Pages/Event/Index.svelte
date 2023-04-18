@@ -4,7 +4,6 @@
     import PaginatorSimple from '@components/PaginatorSimple.svelte';
     export let events;
     export let paginate;
-    console.log(events);
 </script>
 
 <svelte:head>
