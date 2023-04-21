@@ -53,6 +53,7 @@ const Ziggy = {
         'event.report.create': {
             uri: 'event/{event}/report/create',
             methods: ['GET', 'HEAD'],
+            bindings: { event: 'id' },
         },
         'event.report.store': {
             uri: 'event/{event}/report',
