@@ -1,5 +1,5 @@
 <script>
-    import clsx from 'clsx';
+    import cn from '@/Utils/cn';
 
     let className;
     export let type = 'text';
@@ -12,7 +12,7 @@
 <input
     bind:value
     use:setType
-    class={clsx(
+    class={cn(
         'rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm',
         'focus:border-indigo-600 focus:ring-indigo-600',
         className

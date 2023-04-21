@@ -1,7 +1,7 @@
 <script>
     import { Discord, Github } from '@components/icons';
     import { inertia } from '@inertiajs/svelte';
-    import route from '@/route';
+    import route from '@/Utils/route';
     const contributors = [
         { nick: '🍑 Railalis', name: 'Railalis#4470' },
         { nick: 'Entropy', name: 'Decadakon#1432' },
@@ -79,12 +79,5 @@
     }
     p {
         @apply mb-2;
-    }
-    a {
-        @apply underline;
-
-        &:hover {
-            @apply text-gray-500;
-        }
     }
 </style>

@@ -1,10 +1,9 @@
 <script>
-    import clsx from 'clsx';
+    import {cn, route} from '@/Utils';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
     import Heart from '@components/icons/Heart.svelte';
     import SearchForm from '@components/SearchForm.svelte';
-    import route from '@/route';
 
     export let events;
     export let mostLiked;
@@ -12,7 +11,7 @@
 </script>
 
 <div
-    class={clsx(
+    class={cn(
         'bg-radial overflow-hidden shadow-md',
         '-mx-2 sm:-mx-5',
         'h-[calc(100vh_-_4rem_-_14rem)] sm:h-[calc(100vh_-_4rem_-_10rem)]'

@@ -1,7 +1,10 @@
 <script>
-    import clsx from 'clsx';
+    import cn from '@/Utils/cn';
     import { useForm } from '@inertiajs/svelte';
     import Lens from '@components/icons/Lens';
+
+    let className;
+    export { className as class };
 
     const urlParams = new URLSearchParams(window.location.search);
     let form = useForm({
@@ -13,7 +16,7 @@
     }
 </script>
 
-<form class={clsx('flex', $$props.class)} on:submit|preventDefault={submit}>
+<form class={cn('flex', className)} on:submit|preventDefault={submit}>
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full">
         <div

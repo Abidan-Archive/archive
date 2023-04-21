@@ -1,11 +1,11 @@
 <script>
     import Card from '@components/Card.svelte';
     import Status from '@components/Status.svelte';
-    import route from '@/route';
+    import route from '@/Utils/route';
     import {
         ErrorMessage,
         Label,
-        PrimaryButton,
+        Button,
         TextInput,
     } from '@components/forms';
     import { useForm } from '@inertiajs/svelte';
@@ -47,7 +47,7 @@
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton>Email Password Reset Link</PrimaryButton>
+                <Button>Email Password Reset Link</Button>
             </div>
         </form>
     </Card>

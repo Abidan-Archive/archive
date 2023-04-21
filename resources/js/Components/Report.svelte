@@ -1,10 +1,11 @@
 <script>
-    import clsx from 'clsx';
-    import route from '@/route';
+    import { cn, route } from '@/Utils';
     import { Copy, Heart, Link } from '@components/icons';
     // import { fade } from 'svelte/transition';
     import { inertia, router } from '@inertiajs/svelte';
 
+    let className;
+    export { className as class };
     export let withEvent = true;
     export let report;
 
@@ -44,9 +45,9 @@
 
 <article
     id={report.id}
-    class={clsx(
+    class={cn(
         'border-enkai-500 bg-midnight-700 rounded-lg border p-4 shadow-md',
-        $$props.class
+        className
     )}>
     <div class="flex justify-between">
         <div>

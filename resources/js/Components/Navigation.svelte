@@ -8,6 +8,7 @@
         Discord,
         Hamburger,
     } from '@components/icons';
+    import route from '@/Utils/route';
     const links = {
         discord: 'https://discord.gg/tCg94qy',
         wiki: 'https://wiki.abidanarchive.com',
@@ -17,7 +18,6 @@
     function toggleNavbar() {
         showMenu = !showMenu;
     }
-    import route from '@/route';
 </script>
 
 <nav

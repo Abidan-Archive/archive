@@ -1,6 +1,6 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
-    import route from '@/route';
+    import route from '@/Utils/route';
     export let events;
 </script>
 

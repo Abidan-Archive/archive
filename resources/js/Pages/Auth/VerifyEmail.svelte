@@ -1,7 +1,7 @@
 <script>
     import Card from '@components/Card.svelte';
-    import route from '@/route';
-    import { PrimaryButton } from '@components/forms';
+    import route from '@/Utils/route';
+    import { Button } from '@components/forms';
     import { page, router } from '@inertiajs/svelte';
 
     function resend() {
@@ -31,7 +31,7 @@
         <div class="mt-4 flex items-center justify-between">
             <form method="POST" on:submit|preventDefault={resend}>
                 <div>
-                    <PrimaryButton>Resend Verification Email</PrimaryButton>
+                    <Button>Resend Verification Email</Button>
                 </div>
             </form>
 
