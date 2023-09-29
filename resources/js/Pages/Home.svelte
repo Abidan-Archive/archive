@@ -42,7 +42,7 @@
             </p>
             <p>
                 Everything on this site is <b>subject to change</b>. Will can
-                and will change anything to suit the story better.
+                and may change anything to suit the story better.
             </p>
         </section>
         <!-- <aside class="block text-right"> -->
@@ -71,6 +71,7 @@
     </section>
     <section class="flex-1">
         <h2 class="text-3xl font-thin uppercase">Most Liked Reports</h2>
+        <i>Coming soon</i>
         <ul>
             {#each mostLiked as report}
                 <li>
