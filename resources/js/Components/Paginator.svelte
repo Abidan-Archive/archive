@@ -88,17 +88,15 @@
 
                     {#each links.slice(1, links.length - 1) as link}
                         {#if link.label === '...'}
-                            <span aria-disabled="true">
-                                <span
-                                    class="border-muenkai relative -ml-px inline-flex cursor-default items-center border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-300"
-                                    >...</span>
-                            </span>
+                            <span
+                                aria-disabled="true"
+                                class="border-muenkai relative -ml-px inline-flex cursor-default items-center border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-300"
+                                >...</span>
                         {:else if link.active}
-                            <span aria-current="page">
-                                <span
-                                    class="border-muenkai relative -ml-px inline-flex cursor-default items-center border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-500"
-                                    >{@html link.label}</span>
-                            </span>
+                            <span
+                                aria-current="page"
+                                class="border-muenkai relative -ml-px inline-flex cursor-default items-center border bg-midnight-700 px-4 py-2 text-sm font-medium leading-5 text-gray-500"
+                                >{@html link.label}</span>
                         {:else}
                             <a
                                 use:inertia

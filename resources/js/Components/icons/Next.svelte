@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
     class={`h-6 w-6 ${$$restProps.class || ''}`}>
     <path
         fill-rule="evenodd"
-        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
         clip-rule="evenodd" />
 </svg>
