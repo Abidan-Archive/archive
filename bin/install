@@ -123,7 +123,7 @@ setup_laravel() {
         ./vendor/bin/sail art key:generate && \
         ./vendor/bin/sail art migrate:install && \
         ./vendor/bin/sail art migrate && \
-        ./vendor/bin/sail art scount:import "App\Models\Report" && \
+        ./vendor/bin/sail art scout:import "App\Models\Report" && \
         ./vendor/bin/sail stop
     else
         print "APP_KEY detected. Assuming first time setup complete."
