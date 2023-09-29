@@ -59,11 +59,11 @@
             <a
                 class="text-white-500 flex hover:text-abidan-300"
                 use:inertia
-                href="/">
+                href={route('event.index')}>
                 <div class="px-2">
                     <Calendar class="h-6 w-6" />
                 </div>
-                Recent
+                Events
             </a>
             <a
                 class="text-white-400 flex hover:text-abidan-300"
