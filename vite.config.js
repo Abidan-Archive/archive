@@ -25,6 +25,7 @@ export default defineConfig({
             '@layouts': resolve(projectRoot, 'resources/js/Layouts'),
             ziggy: resolve(projectRoot, 'vendor/tightenco/ziggy/dist/index.es'),
         },
+        dedupe: ['svelte', 'svelte/transition', 'svelte/internal'],
         extensions: ['.js', '.svelte', '.json'],
     },
 });

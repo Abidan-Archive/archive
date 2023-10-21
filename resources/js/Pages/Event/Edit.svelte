@@ -140,15 +140,13 @@
     <h3 class="my-4 text-xl">Manage Sources</h3>
     <div class="flex flex-col gap-5">
         {#each event.sources as { id, name, path }}
-                <Card class="flex items-center justify-between">
+            <Card class="flex items-center justify-between">
                 <form
                     method="PATCH"
                     on:submit|preventDefault={() =>
                         handleRenameSourceSubmit(id)}
                     class="flex items-center gap-1">
-                    <AnchorButton href={route('home')}>
-                        Stub
-                    </AnchorButton>
+                    <AnchorButton href={route('home')}>Stub</AnchorButton>
                     <TextInput id={'source-' + id} bind:value={name} />
                     <Button type="submit">Rename</Button>
                 </form>

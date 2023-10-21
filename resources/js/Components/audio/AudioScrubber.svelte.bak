@@ -1,0 +1,215 @@
+<script>
+    import clsx from 'clsx';
+    import { onMount, onDestroy } from 'svelte';
+    import WaveCursor from 'wavesurfer.js/dist/plugin/wavesurfer.cursor';
+    import WaveRegion from 'wavesurfer.js/dist/plugin/wavesurfer.regions';
+    import WaveSurfer from 'wavesurfer.js';
+    import {
+        Play,
+        Pause,
+        Previous,
+        Next,
+        Forward,
+        Backward,
+        Scissors,
+    } from '@components/icons';
+    import { secondsToDuration, durationToSeconds } from '@/utils';
+
+    export let src;
+    export let regions = {};
+    export let title;
+
+    let wavesurfer;
+    let loading = true;
+    let playing = false;
+    let currentTime = 0;
+    let duration;
+    let mark = null;
+
+    onMount(async () => {
+        initWaveform();
+        wavesurfer.addRegion({
+            start: 1,
+            end: 2,
+            color: 'rgba(255,0,0,.2)',
+        });
+    });
+
+    async function initWaveform() {
+        try {
+            wavesurfer = WaveSurfer.create({
+                backend: 'MediaElementWebAudio',
+                container: '#waveform',
+                cursorWidth: 1,
+                normalize: true,
+                // responsive: true,
+                scrollParent: true,
+                waveColor: 'rgb(50,102,149)',
+                progressColor: '#ad98e7',
+                plugins: [
+                    WaveCursor.create({
+                        showTime: true,
+                        opacity: 1,
+                        customShowTimeStyle: {
+                            'background-color': '#000',
+                            color: '#fff',
+                            padding: '2px',
+                            'font-size': '10px',
+                        },
+                    }),
+                    WaveRegion.create({
+                        minLenght: null,
+                    }),
+                ],
+            });
+            wavesurfer.on('waveform-ready', () => {
+                loading = false;
+                duration = wavesurfer.getDuration();
+            });
+            const setTime = () => (currentTime = wavesurfer.getCurrentTime());
+            wavesurfer.on('seek', setTime);
+            wavesurfer.on('audioprocess', setTime);
+            wavesurfer.on('interaction', setTime);
+            const setRegions = () => (regions = wavesurfer.regions.list);
+            wavesurfer.on('region-created', setRegions);
+            wavesurfer.on('region-updated', setRegions);
+            wavesurfer.on('region-removed', setRegions);
+            wavesurfer.on('region-update-end', () => (mark = null));
+            wavesurfer.load(src);
+        } catch (e) {
+            console.warn('Something went wrong during Wavesurfer init', e);
+        }
+    }
+
+    function playPause() {
+        if (loading) return;
+        if (wavesurfer.isPlaying()) {
+            wavesurfer.pause();
+        } else {
+            wavesurfer.play();
+        }
+        playing = !playing;
+    }
+
+    function skip(offset) {
+        wavesurfer.skip(offset);
+    }
+
+    function formatTime(time) {
+        if (!time) return '0:00';
+        return secondsToDuration(time);
+    }
+
+    function handleInput(event) {
+        const secs = durationToSeconds(event.target.value);
+        if (secs >= 0 || secs <= duration) {
+            wavesurfer.skip(secs - wavesurfer.getCurrentTime());
+            currentTime = wavesurfer.getCurrentTime();
+        }
+    }
+
+    function handleMark() {
+        if (loading) return;
+        const offset = 0.5;
+        if (mark === null) {
+            mark = wavesurfer.addRegion({
+                start: currentTime,
+                end: currentTime + offset,
+                color: `rgba(${[...Array(3)]
+                    .map(() => Math.random() * 256)
+                    .join(',')},0.2)`,
+            });
+        } else {
+            let dt = currentTime - mark.start;
+            if (dt > 0) mark.onResize(dt - offset);
+            else mark.onResize(dt, 'start');
+            mark = null;
+        }
+    }
+
+    function handleKeydown(event) {
+        if (event.repeat || loading || !wavesurfer) return;
+        switch (event.key) {
+            case ' ':
+                return playPause();
+            case 'm':
+            case 'Enter':
+                return handleMark();
+            case 'ArrowRight':
+                return skip(1);
+            case 'ArrowLeft':
+                return skip(-1);
+        }
+    }
+    const buttonStyles = ({ large = false, marked = false } = {}) =>
+        clsx(
+            'rounded-full border border-white p-2 text-center text-2xl text-black',
+            { 'w-8 h-8': !large, 'mx-2 w-10 h-10': !!large },
+            { 'bg-enkai-500': !marked, 'bg-red-600': !!marked }
+        );
+</script>
+
+<svelte:window on:keydown={handleKeydown} />
+<figure class="align-center flex flex-col gap-2 py-2 px-4">
+    <figcaption class="text-center">{!loading ? title : 'Loading...'}</figcaption>
+    <div id="waveform" class="w-full" />
+    {#if !loading}
+        <div class="flex justify-center">
+            {#if !playing}
+                <input
+                    type="text"
+                    class="mr-1 max-h-6 rounded text-black"
+                    value={formatTime(currentTime)}
+                    on:change={handleInput}
+                    disabled={loading || playing} />
+            {:else}
+                {formatTime(currentTime)}
+            {/if}
+            {' / ' + formatTime(duration)}
+        </div>
+        <div class="align-center flex justify-center gap-2">
+            <button
+                title="skip backward 5 second"
+                class={buttonStyles()}
+                on:click={() => skip(-5)}>
+                <Backward />
+            </button>
+            <button
+                title="skip backward 1 second"
+                class={buttonStyles()}
+                on:click={() => skip(-1)}>
+                <Previous />
+            </button>
+            <button
+                title="toggle play pause"
+                class={buttonStyles({ large: true })}
+                on:click={playPause}>
+                {#if !playing}
+                    <Play />
+                {:else}
+                    <Pause />
+                {/if}
+            </button>
+            <button
+                title="skip forward 1 second"
+                class={buttonStyles()}
+                on:click={() => skip(1)}>
+                <Next />
+            </button>
+            <button
+                title="skip forward 5 second"
+                class={buttonStyles()}
+                on:click={() => skip(5)}>
+                <Forward />
+            </button>
+        </div>
+        <div class="align-center flex justify-center gap-2">
+            <button
+                title="Create a Region"
+                class={buttonStyles({ large: true, marked: !!mark })}
+                on:click={handleMark}>
+                <Scissors />
+            </button>
+        </div>
+    {/if}
+</figure>

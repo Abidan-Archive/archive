@@ -5,6 +5,9 @@ on:
     branches:
       - prod
 
+env:
+  APP_ENV: deployment
+
 jobs:
   create-deployment-artifacts:
     name: Create deployment artifacts
@@ -23,6 +26,12 @@ jobs:
 
       - name: Install Composer dependencies
         run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Generate frontend routes file
+        env:
+          APP_URL: http://${{ vars.HOST_IP }}
+        run: |
+          php artisan ziggy:generate
 
       - name: Compile CSS and Javascript
         run: |

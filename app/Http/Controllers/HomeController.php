@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Inspiring;
 use App\Models\Event;
 use App\Models\Report;
+use App\Models\Like;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -17,7 +18,13 @@ class HomeController extends Controller
             ->orderBy('date', 'desc')
             ->take(5)
             ->get();
-        return inertia('Home', compact('events', 'quote'));
+        $mostLiked = Report::with('likes')
+            ->orderBy('likes_count', 'desc')
+            ->latest()
+            ->take(5)
+            ->get()
+            ->filter(fn($m) => $m->likes_count > 0);
+        return inertia('Home', compact('events', 'mostLiked', 'quote'));
     }
 
     public function about(): Response {

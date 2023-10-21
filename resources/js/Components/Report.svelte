@@ -1,10 +1,11 @@
 <script>
-    import clsx from 'clsx';
-    import route from '@/route';
+    import { cn, route } from '@/Utils';
     import { Copy, Heart, Link } from '@components/icons';
     // import { fade } from 'svelte/transition';
     import { inertia, router } from '@inertiajs/svelte';
 
+    let className;
+    export { className as class };
     export let withEvent = true;
     export let report;
 
@@ -27,19 +28,26 @@
     }
     function likeClicked() {
         if (!report.is_liked) {
-            router.post(route('like'), {likeable_type: 'App\\Models\\Report', id: report.id});
+            router.post(route('like'), {
+                likeable_type: 'App\\Models\\Report',
+                id: report.id,
+            });
         } else {
             // router delete doesn't allow payload, so we're faking it with _method
-            router.post(route('unlike'), {'_method':'DELETE', likeable_type: 'App\\Models\\Report', id: report.id});
+            router.post(route('unlike'), {
+                _method: 'DELETE',
+                likeable_type: 'App\\Models\\Report',
+                id: report.id,
+            });
         }
     }
 </script>
 
 <article
     id={report.id}
-    class={clsx(
-        'border-enkai-500 bg-midnight-700 rounded-lg border p-4 shadow-md',
-        $$props.class
+    class={cn(
+        'rounded-lg border border-enkai-500 bg-midnight-700 p-4 shadow-md',
+        className
     )}>
     <div class="flex justify-between">
         <div>

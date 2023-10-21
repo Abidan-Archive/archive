@@ -21,6 +21,9 @@ use App\Http\Controllers\TagController;
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+// Route::get('/testaudio', fn() => response()->file('storage/sources/3_3_YZTShKdDHOrptCtEZmPplZASRMYYk4gRBqBnSAME.m4a'));
+Route::get('/testaudio', fn() => response()->file('storage/sources/Bloodline_Release_Part_1.mp3'));
+Route::get('/test', fn() => inertia('Test'));
 
 // Redirects for legacy
 Route::get('/events/{event}', [HomeController::class, 'redirect']);

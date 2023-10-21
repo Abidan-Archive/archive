@@ -1,19 +1,20 @@
 <script>
-    import clsx from 'clsx';
+    import { cn, route } from '@/Utils';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@components/Star.svelte';
+    import Heart from '@components/icons/Heart.svelte';
     import SearchForm from '@components/SearchForm.svelte';
-    import route from '@/route';
 
     export let events;
+    export let mostLiked;
     export let quote;
 </script>
 
 <div
-    class={clsx(
+    class={cn(
         'bg-radial overflow-hidden shadow-md',
         '-mx-2 sm:-mx-5',
-        'h-[66vh] md:h-[73vh] lg:h-[80vh]'
+        'h-[calc(100vh_-_4rem_-_14rem)] sm:h-[calc(100vh_-_4rem_-_10rem)]'
     )}>
     <Star>
         <div
@@ -27,8 +28,8 @@
     </Star>
 </div>
 
-<div class="-mx-5 bg-midnight-500">
-    <div class="flex px-6 py-8">
+<div class="-mx-5 h-56 bg-midnight-500 sm:h-40">
+    <div class="flex px-6 py-6">
         <section>
             <h2
                 class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
@@ -50,7 +51,7 @@
         <!-- </aside>  -->
     </div>
 </div>
-<div class="container mt-12 flex items-center justify-evenly">
+<div class="container mt-12 flex justify-evenly">
     <section class="flex-1">
         <h2 class="text-3xl font-thin uppercase">Most Recent Events</h2>
         <ul>
@@ -62,6 +63,26 @@
                         use:inertia
                         href={route('event.show', event)}>
                         {event.name}
+                    </a>
+                </li>
+            {/each}
+        </ul>
+    </section>
+    <section class="flex-1">
+        <h2 class="text-3xl font-thin uppercase">Most Liked Reports</h2>
+        <ul>
+            {#each mostLiked as report}
+                <li>
+                    <!-- svelte-ignore missing-declaration -->
+                    <a
+                        class="text-lg hover:underline"
+                        use:inertia
+                        href={route('report.show', report)}>
+                        {report.likes_count}
+                        <Heart
+                            class="inline"
+                            variant={report.is_liked ? 'filled' : 'outline'} /> &middot;
+                        Report#{report.id}
                     </a>
                 </li>
             {/each}

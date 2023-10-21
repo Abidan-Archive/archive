@@ -1,7 +1,6 @@
 <script>
     import Card from '@components/Card.svelte';
-    import clsx from 'clsx';
-    import route from '@/route';
+    import { cn, route } from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
@@ -86,7 +85,7 @@
                 <a
                     use:inertia
                     href={route('login')}
-                    class={clsx(
+                    class={cn(
                         'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
                         'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
                     )}>

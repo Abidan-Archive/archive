@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Policies\LikePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -27,13 +28,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void {
         $this->registerPolicies();
 
-        // Get all the permissions
-        $permissions = Permission::with('roles')->get();
-        // Dynamically register permissions with Laravel's Gate
-        foreach ($permissions as $permission) {
-            Gate::define($permission->name, function(User $user) use ($permission) {
-                return $user->hasPermission($permission);
-            });
+        if (!$this->app->environment('deployment') && Schema::hasTable('permissions')) {
+            // Get all the permissions
+            $permissions = Permission::with('roles')->get();
+            // Dynamically register permissions with Laravel's Gate
+            foreach ($permissions as $permission) {
+                Gate::define($permission->name, function(User $user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
         }
 
         Gate::define('like', [LikePolicy::class, 'like']);

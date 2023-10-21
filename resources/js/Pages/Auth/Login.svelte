@@ -1,8 +1,7 @@
 <script>
     import Status from '@components/Status.svelte';
     import Card from '@components/Card.svelte';
-    import clsx from 'clsx';
-    import route from '@/route';
+    import { cn, route } from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
@@ -56,7 +55,7 @@
                     <input
                         id="remember_me"
                         type="checkbox"
-                        class={clsx(
+                        class={cn(
                             'rounded border-gray-700 bg-gray-900 text-indigo-600 shadow-sm',
                             'focus:ring-indigo-600 focus:ring-offset-gray-800'
                         )}
@@ -70,7 +69,7 @@
                 <a
                     use:inertia
                     href={route('register')}
-                    class={clsx(
+                    class={cn(
                         'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
                         'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
                     )}>
@@ -81,7 +80,7 @@
                         <a
                             use:inertia
                             href={route('password.request')}
-                            class={clsx(
+                            class={cn(
                                 'rounded-md text-sm text-gray-400 underline hover:text-gray-100',
                                 'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800'
                             )}>
