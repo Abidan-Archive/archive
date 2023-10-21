@@ -88,10 +88,11 @@
                     <div class="mt-1">
                         <div class="flex justify-between">
                             <span>Files</span>
-                            <button
-                                class="text-red-400"
+                            <Button
+                                variant="destructive"
                                 on:click={handleRemoveAllFiles}
-                                >Remove All</button>
+                                aria-label="Remove all files"
+                                >Remove All</Button>
                         </div>
                         {#each $form.sources as item, i}
                             <div class="mt-2 flex gap-2">

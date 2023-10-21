@@ -4,12 +4,11 @@
     import CircleX from '@components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Modal from '@components/Modal.svelte';
-    import Status from '@components/Status.svelte';
+    import Toast from '@components/Toast.svelte';
     import {formatToInputDateString, route} from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
-    import { router, useForm } from '@inertiajs/svelte';
+    import { router, useForm, page } from '@inertiajs/svelte';
 
-    export let status;
     export let event;
 
     let showDeleteConfirmModal = false;
@@ -38,7 +37,7 @@
     }
 
     function handleEventSubmit() {
-        $form.patch(route('event.update'));
+        $form.patch(route('event.update', event.id));
     }
     function handleRenameSourceSubmit(id) {
         // router.update(route(''))
@@ -54,7 +53,7 @@
     }
 </script>
 
-<Status {status} />
+<Toast message={$page.props.flash} />
 <section class="contianer mx-auto mt-10">
     <h2 class="my-5 text-2xl">Edit Event</h2>
     <Card>

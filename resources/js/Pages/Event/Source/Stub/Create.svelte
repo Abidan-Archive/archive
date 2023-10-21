@@ -7,10 +7,13 @@
     import MediaControls from '@components/audio/MediaControls.svelte';
     import Dialog from '@components/Modals/Dialog.svelte';
 
+    export let event;
+    export let source;
+
     // Props
     let audioUrl = '/testaudio';
     let audioContentType = 'audio/mpeg';
-    let waveformDataUrl = '/storage/sources/Bloodline_Release_Part_1.dat';
+    let waveformDataUrl = source.path;
     let audioContext = null;
 
     let zoomviewWaveformRef;
@@ -183,9 +186,10 @@
     // Todo:
     // - Blub and data correlation for submit, data bundling
     // - Adjust segment creation for start stop
-    // - Keybindings, space enter left right shift left shift right
+    // x Keybindings, space enter left right shift left shift right
     // - Validation on blurbs to be filled
     // - Save to local on timer or significant changes
+    // - Reload already created segments
     let isShiftHeld = false;
     function onKeyDown(e) {
         if (e.repeat) return;
@@ -212,7 +216,7 @@
     on:keyup|preventDefault={onKeyUp} />
 <div class="container mx-auto flex w-full flex-col gap-5">
     <figure class="flex flex-col items-center gap-2">
-        <figcaption class="my-2">{audioUrl}</figcaption>
+        <figcaption class="my-2">{event.name} - {source.name}</figcaption>
         <div id="overview-container" bind:this={overviewWaveformRef} />
         <div
             id="zoomview-container"

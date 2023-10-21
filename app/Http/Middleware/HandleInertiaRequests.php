@@ -38,7 +38,19 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            // Status is used in certain forms like login
+            // Unsure if we should use it for toast messages
+            // Those make more sense in flash to me..
+            // Have both for now
             'status' => fn() => $request->session()->get('status'),
+            'flash' => fn() => $request->session()->get('flash'),
+            'auth.user' => fn() => $request->user()
+            ? [
+                    ...$request->user()->only('id', 'name', 'email'),
+                    'roles' => $request->user()->roles->pluck('name')
+            ] :
+            null
+            ,
         ]);
     }
 }

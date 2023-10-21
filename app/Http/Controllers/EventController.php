@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\Source;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 
 class EventController extends Controller
@@ -50,14 +51,11 @@ class EventController extends Controller
             $source->update(['filename' => implode('_', [$event->id, $source->id, $file->hashName()])]);
             $file->storePubliclyAs(Source::DIRECTORY, $source->filename);
         }
-        $request->session()->flash('status', 'Event successfully created!');
-        return to_route('event.update', compact('event'));
+        return to_route('event.update', compact('event'))->with('status', 'Event successfuly created!');
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
      */
     public function show(Event $event): Response
     {
@@ -67,9 +65,6 @@ class EventController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
     public function edit(Event $event)
     {
@@ -79,25 +74,23 @@ class EventController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+        $event->update($validated);
+
+        return to_route('event.update', compact($event))->with('status', 'Event successfully updated!');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
-        //
+        $event->delete();
+        session()->flash('status', 'Event successfully deleted!');
+        return to_route('event.index');
     }
-    
+
 }
