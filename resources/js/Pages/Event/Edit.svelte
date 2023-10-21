@@ -5,9 +5,8 @@
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Modal from '@components/Modal.svelte';
     import Status from '@components/Status.svelte';
-    import route from '@/route';
+    import {formatToInputDateString, route} from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
-    import { formatToInputDateString } from '@/utils';
     import { router, useForm } from '@inertiajs/svelte';
 
     export let status;

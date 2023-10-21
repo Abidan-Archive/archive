@@ -2,7 +2,7 @@
     import Card from '@components/Card.svelte';
     import CircleX from '@components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
-    import route from '@/route';
+    import route from '@/Utils/route';
     import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm } from '@inertiajs/svelte';
 
