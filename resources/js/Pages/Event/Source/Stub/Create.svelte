@@ -11,9 +11,10 @@
     export let source;
 
     // Props
-    let audioUrl = '/testaudio';
+    let audioUrl = source.path;
     let audioContentType = 'audio/mpeg';
-    let waveformDataUrl = source.path;
+    // Need to autogenerate this and include it in source modle
+    // let waveformDataUrl = 'something.dat';
     let audioContext = null;
 
     let zoomviewWaveformRef;
