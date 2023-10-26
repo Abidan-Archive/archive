@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperRole
  */
 class Role extends Model
 {

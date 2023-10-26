@@ -30,6 +30,7 @@ use League\CommonMark\CommonMarkConverter;
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue whereSpeaker($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperDialogue
  */
 class Dialogue extends Model
 {

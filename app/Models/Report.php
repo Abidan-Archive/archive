@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
+/**
+ * @mixin IdeHelperReport
+ */
 class Report extends Model implements Likeable
 {
     use HasFactory, Likes, SoftDeletes, Searchable;

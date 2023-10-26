@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperPermission
  */
 class Permission extends Model
 {

@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Source wherePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Source whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperSource
  */
 class Source extends Model
 {

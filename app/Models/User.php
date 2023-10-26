@@ -11,6 +11,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use  HasApiTokens, HasFactory, HasRoles, Notifiable;

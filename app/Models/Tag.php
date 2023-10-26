@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @mixin IdeHelperTag
  */
 class Tag extends Model
 {
