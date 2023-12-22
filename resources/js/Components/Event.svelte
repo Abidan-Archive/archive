@@ -2,11 +2,11 @@
     import clsx from 'clsx';
     import route from '@/route';
     import { Link } from '@components/icons';
-    import { inertia } from '@inertiajs/svelte';
+    import { router, inertia } from '@inertiajs/svelte';
     export let event;
 
     const formattedDate = new Date(event.date).toLocaleDateString('en-US');
-    async function linkClicked() {
+    async function copyLinkClicked() {
         await navigator.clipboard.writeText(route('event.show', event));
     }
 </script>
@@ -14,7 +14,7 @@
 <article
     id={event.id}
     class={clsx('md-shadow bg-midnight-700 rounded-lg p-4', $$props.class)}>
-    <section class="flex justify-between mb-4">
+    <section class="mb-4 flex justify-between">
         <div>
             <h3>
                 <a
@@ -30,19 +30,18 @@
         <div class="flex items-center text-sm text-enkai-600">
             <button
                 class="flex hover:underline hover:underline-offset-4"
-                on:click={linkClicked}>
+                on:click|stopPropagation={copyLinkClicked}>
                 <Link class="inline" />
                 <span class="pl-1">Link</span>
             </button>
         </div>
     </section>
     <section class="flex justify-between">
-        <span class="text-sm text-enkai-600 sm:flex hidden">
-            Source: {event.location || "Dubious Forums"}
+        <span class="hidden text-sm text-enkai-600 sm:flex">
+            Source: {event.location || 'Dubious Forums'}
         </span>
         <span class="text-sm text-enkai-600">
             {event.reports.length || 0} reports
-        </span> 
+        </span>
     </section>
-    
 </article>

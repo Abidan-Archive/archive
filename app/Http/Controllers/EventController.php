@@ -25,12 +25,8 @@ class EventController extends Controller
      * Display a listing of the resource.
      */
     public function index(): Response {
-        $paginate = Event::with('reports')
-            ->paginate(20)
-            ->toArray();
-        $events = $paginate['data'];
-        unset($paginate['data']);
-        
+        [$events, $paginate] = Event::with('reports')->inertiaPaginate(20);
+
         return inertia('Event/Index', compact('events', 'paginate'));
     }
 
