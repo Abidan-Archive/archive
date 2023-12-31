@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Inspiring;
 use App\Models\Event;
 use App\Models\Report;
-use App\Models\Like;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;

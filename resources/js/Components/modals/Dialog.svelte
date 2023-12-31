@@ -1,5 +1,5 @@
 <script>
-    import {getContext} from 'svelte';
+    import { getContext } from 'svelte';
     import Button from '@components/forms/Button.svelte';
 
     export let message = '';
@@ -22,12 +22,15 @@
 </script>
 
 <div>
-    <h2 class="text-3xl mb-8 text-center">{message}</h2>
+    <h2 class="mb-8 text-center text-3xl">{message}</h2>
     <div class="flex justify-between">
-        <Button variant="destructive" class="font-bold w-5/12"
-            on:click={_onCancel}
-        >{cancelText}</Button>
-        <Button size='small' class="bg-green-600 hover:bg-green-600/90 text-enkai-500 font-bold w-5/12"
+        <Button
+            variant="destructive"
+            class="w-5/12 font-bold"
+            on:click={_onCancel}>{cancelText}</Button>
+        <Button
+            size="small"
+            class="w-5/12 bg-green-600 font-bold text-enkai-500 hover:bg-green-600/90"
             on:click={_onOkay}>{okayText}</Button>
     </div>
 </div>

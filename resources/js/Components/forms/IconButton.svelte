@@ -13,7 +13,7 @@
         'flex items-center justify-center self-center rounded-full border border-white p-2 text-center text-2xl',
         { 'h-10 w-10': !large, 'h-12 w-12': !!large },
         { 'bg-enkai-500': !marked, 'bg-red-600': !!marked },
-        {'text-black': !light, 'text-enkai-500': !!light},
+        { 'text-black': !light, 'text-enkai-500': !!light },
         className
     )}
     on:click

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Event;
+use App\Models\Source;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,32 +9,31 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('sources', function (Blueprint $table) {
+        Schema::create('stubs', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
-            $table->foreignIdFor(Event::class)
+            $table->foreignIdFor(Source::class)
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('name');
-            $table->string('filename')->nullable(); // Only null on initial upload
+            $table->unsignedInteger('from');
+            $table->unsignedInteger('to');
+            $table->string('prompt')->nullable();
+
 
             $table->timestamps();
-            $table->primary(['id', 'event_id']);
+
+            $table->primary(['id', 'source_id']);
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('sources');
+        Schema::dropIfExists('stubs');
     }
 };

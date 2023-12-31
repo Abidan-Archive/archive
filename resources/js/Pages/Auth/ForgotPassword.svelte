@@ -1,16 +1,9 @@
 <script>
     import Card from '@components/Card.svelte';
-    import Status from '@components/Status.svelte';
+    import Toast from '@components/Toast.svelte';
     import route from '@/Utils/route';
-    import {
-        ErrorMessage,
-        Label,
-        Button,
-        TextInput,
-    } from '@components/forms';
-    import { useForm } from '@inertiajs/svelte';
-
-    export let status;
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
+    import { useForm, page } from '@inertiajs/svelte';
 
     let form = useForm('ForgotPassword', {
         email: null,
@@ -30,7 +23,7 @@
             you to choose a new one.
         </div>
 
-        <Status {status} />
+        <Toast message={$page.props.status} />
 
         <form method="POST" on:submit|preventDefault={submit}>
             <div>

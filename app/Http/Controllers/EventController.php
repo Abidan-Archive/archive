@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
+use App\Models\Source;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
@@ -39,56 +42,56 @@ class EventController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventRequest $request): RedirectResponse
     {
+        $validated = $request->validated();
+        $event = Event::create($validated);
+        foreach ($validated['sources'] as $file) {
+            $source = $event->sources()->create(['name' => $file->getClientOriginalName()]);
+            $source->update(['filename' => implode('_', [$event->id, $source->id, $file->hashName()])]);
+            $file->storePubliclyAs(Source::DIRECTORY, $source->filename);
+        }
+        return to_route('event.update', compact('event'))->with('status', 'Event successfuly created!');
     }
 
     /**
      * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
      */
-    public function show(Event $event)
+    public function show(Event $event): Response
     {
-        $event->reports;
+        $event->load('reports');
         return inertia('Event/Show', compact('event'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
     public function edit(Event $event)
     {
-        //
+        $event->sources;
+        return inertia('Event/Edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
-        //
+        $validated = $request->validated();
+        $event->update($validated);
+
+        return to_route('event.update', compact($event))->with('status', 'Event successfully updated!');
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
-        //
+        $event->delete();
+        session()->flash('status', 'Event successfully deleted!');
+        return to_route('event.index');
     }
+
 }

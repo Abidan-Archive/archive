@@ -1,12 +1,7 @@
 <script>
     import Card from '@components/Card.svelte';
     import { cn, route } from '@/Utils';
-    import {
-        ErrorMessage,
-        Label,
-        Button,
-        TextInput,
-    } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm('Register', {

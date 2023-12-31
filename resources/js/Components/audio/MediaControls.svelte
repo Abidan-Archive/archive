@@ -70,7 +70,10 @@
     </div>
 </div>
 <div class="align-center flex justify-center gap-2">
-    <IconButton title="create a segment" on:click={() => dispatch('clip')} large>
+    <IconButton
+        title="create a segment"
+        on:click={() => dispatch('clip')}
+        large>
         <Scissors />
     </IconButton>
 </div>

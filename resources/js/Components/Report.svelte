@@ -46,7 +46,7 @@
 <article
     id={report.id}
     class={cn(
-        'border-enkai-500 bg-midnight-700 rounded-lg border p-4 shadow-md',
+        'rounded-lg border border-enkai-500 bg-midnight-700 p-4 shadow-md',
         className
     )}>
     <div class="flex justify-between">

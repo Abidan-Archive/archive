@@ -1,16 +1,9 @@
 <script>
-    import Status from '@components/Status.svelte';
+    import Toast from '@components/Toast.svelte';
     import Card from '@components/Card.svelte';
     import { cn, route } from '@/Utils';
-    import {
-        ErrorMessage,
-        Label,
-        Button,
-        TextInput,
-    } from '@components/forms';
-    import { useForm, inertia } from '@inertiajs/svelte';
-
-    export let status;
+    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
+    import { useForm, inertia, page } from '@inertiajs/svelte';
 
     let form = useForm({
         email: null,
@@ -26,7 +19,7 @@
 <section class="contianer mx-auto mt-10 w-1/2">
     <h2 class="my-5 text-2xl">Login</h2>
     <Card>
-        <Status {status} />
+        <Toast message={$page.props.status} />
 
         <form method="POST" on:submit|preventDefault={submit}>
             <div>

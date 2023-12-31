@@ -16,7 +16,11 @@
                 variant: {
                     default:
                         'bg-gray-200 text-gray-800 hover:bg-gray-200/90 border border-transparent hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800 active:bg-gray-300',
-                    destructive: 'bg-red-600 text-enkai-500',
+                    success:
+                        'bg-green-500 hover:bg-green-600 focus:bg-green-400',
+                    destructive:
+                        'bg-red-600 hover:bg-red-500 focus:bg-red-300 text-enkai-500',
+                    warn: 'bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-400',
                     link: 'underline-offset-4 hover:underline',
                 },
                 size: {

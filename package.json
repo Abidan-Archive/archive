@@ -37,8 +37,8 @@
     },
     "dependencies": {
         "@inertiajs/svelte": "^1.0.0",
-        "class-variance-authority": "^0.7.0",
         "clsx": "^1.2.1",
+        "class-variance-authority": "^0.7.0",
         "konva": "8.3.10",
         "peaks.js": "^2.1.0",
         "svelte-file-dropzone": "^2.0.1",

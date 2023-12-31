@@ -1,7 +1,7 @@
 <script>
     import cn from '@/Utils/cn';
 
-    let className;
+    let className = '';
     export let type = 'text';
     export let value;
     export { className as class };
@@ -12,6 +12,7 @@
 <input
     bind:value
     use:setType
+    on:keydown
     class={cn(
         'rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm',
         'focus:border-indigo-600 focus:ring-indigo-600',
