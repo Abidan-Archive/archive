@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Inertia\Response;
@@ -35,9 +36,10 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Event $event)
     {
-        //
+        $event->load('sources');
+        return inertia('Report/Create', compact('event'));
     }
 
     /**

@@ -1,7 +1,6 @@
 <script>
     import Paginator from '@components/Paginator.svelte';
     import Event from '@components/Event.svelte';
-    import PaginatorSimple from '@components/PaginatorSimple.svelte';
     export let events;
     export let paginate;
 </script>

@@ -1,5 +1,5 @@
 <script>
-    import clsx from 'clsx';
+    import cn from '@src/Utils/cn';
     import { inertia } from '@inertiajs/svelte';
     import { Previous, Next } from '@components/icons';
 

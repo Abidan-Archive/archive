@@ -19,3 +19,4 @@ yarn-error.log
 /.nvim
 docker-compose.override.yml
 report_*.json
+todo

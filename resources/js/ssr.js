@@ -13,6 +13,7 @@ createServer((page) =>
             let page = pages[`./Pages/${name}.svelte`];
             return { default: page.default, layout: page.layout || Layout };
         },
+        // dedupe: ['svelte', 'svelte/transition', 'svelte/internal'], // Is this even real?
         progress: {
             color: '#326695',
         },

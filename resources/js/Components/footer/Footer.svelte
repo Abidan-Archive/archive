@@ -1,6 +1,6 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
-    import route from '@/route';
+    import route from '@/Utils/route';
     import FooterIcon from '@components/footer/FooterIcon.svelte';
     import {
         Reddit,
@@ -29,7 +29,9 @@
     ];
 </script>
 
-<footer {...$$restProps} class={`mt-10 bg-gray-800 p-5 ${$$props.class}`}>
+<footer
+    {...$$restProps}
+    class={`mt-10 w-full bg-gray-800 p-5 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
         <nav
             class="flex items-baseline justify-between gap-2 text-sm text-gray-400 sm:text-center">
