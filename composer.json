@@ -11,11 +11,11 @@
         "inertiajs/inertia-laravel": "^0.6.9",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
-        "laravel/scout": "^9.4",
+        "laravel/scout": "^10.6",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.3",
         "marvinlabs/laravel-discord-logger": "^1.2",
-        "meilisearch/meilisearch-php": "^0.27.0",
+        "meilisearch/meilisearch-php": "^1.5",
         "tightenco/ziggy": "^1.5"
     },
     "require-dev": {
