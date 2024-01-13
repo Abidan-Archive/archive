@@ -1,5 +1,6 @@
 import { createInertiaApp } from '@inertiajs/svelte';
 import createServer from '@inertiajs/svelte/server';
+
 import '../scss/app.scss';
 import Layout from './Layouts/Layout.svelte';
 

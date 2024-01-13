@@ -17,15 +17,17 @@
     const formattedDate = new Date(event.date).toLocaleDateString('en-US');
     async function copyLinkClicked() {
         await navigator.clipboard.writeText(route('event.show', event));
-        addToast({message: `Event link ${copyVerbs.pick()} into your clipboard.`});
+        addToast({
+            message: `Event link ${copyVerbs.pick()} into your clipboard.`,
+        });
     }
     let className;
-    export {className as class};
+    export { className as class };
 </script>
 
 <article
     id={event.id}
-    class={cn('md-shadow bg-base-700 rounded-lg p-4', className)}>
+    class={cn('md-shadow rounded-lg bg-base-700 p-4', className)}>
     <section class="mb-4 flex justify-between">
         <div>
             <h3>
