@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import Paginator from '@/Components/Paginator.svelte';
     import Event from '@/Components/Event.svelte';
 
@@ -9,12 +10,8 @@
     <title>Events | Abidan Archive</title>
 </svelte:head>
 
-<div class="container mx-auto pt-5">
-    <section>
-        <h2 class="my-5 text-3xl">Events</h2>
-    </section>
-    <hr class="my-5" />
-    <section class="mx-auto flex w-2/3 flex-col gap-3">
+<Page header="Events">
+    <div class="mx-auto flex w-3/4 flex-col gap-3">
         {#if !events.data.length}
             <div class="text-center">
                 <p>No Events found.</p>
@@ -26,5 +23,5 @@
             {/each}
             <Paginator {...events} />
         {/if}
-    </section>
-</div>
+    </div>
+</Page>

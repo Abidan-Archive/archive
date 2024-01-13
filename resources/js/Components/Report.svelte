@@ -1,10 +1,9 @@
 <script>
-    import { cn, route } from '@/Utils';
+    import Oddment from '@/Utils/oddment.js';
     import { Copy, Heart, Link } from '@/Components/icons';
-    // import { fade } from 'svelte/transition';
-    import { inertia, router } from '@inertiajs/svelte';
     import { addToast } from '@/Stores/toast';
-    import Oddment from '@/oddment.js';
+    import { cn, route } from '@/Utils';
+    import { inertia, router } from '@inertiajs/svelte';
 
     let className;
     export { className as class };
@@ -82,7 +81,7 @@
         'rounded-lg border border-typo-500 bg-base-700 p-4 shadow-md',
         className
     )}>
-    <div class="flex justify-between">
+    <section class="flex justify-between">
         <div>
             <h3>
                 <a
@@ -120,7 +119,7 @@
                 <span class="pl-1 text-base">{report.likes_count}</span>
             </button>
         </div>
-    </div>
+    </section>
     <section class="my-5">
         {#each report.dialogues as dialogue}
             <dl class="mb-2">

@@ -1,19 +1,31 @@
 <script>
-    import clsx from 'clsx';
+    import Oddment from '@/Utils/oddment.js';
+    import cn from '@/Utils/cn';
     import route from '@/Utils/route';
     import { Link } from '@/Components/icons';
-    import { router, inertia } from '@inertiajs/svelte';
+    import { addToast } from '@/Stores/toast';
+    import { inertia } from '@inertiajs/svelte';
+
+    const copyVerbs = new Oddment({
+        copied: 20,
+        'violently thrown': 5,
+        'gently placed': 5,
+    });
+
     export let event;
 
     const formattedDate = new Date(event.date).toLocaleDateString('en-US');
     async function copyLinkClicked() {
         await navigator.clipboard.writeText(route('event.show', event));
+        addToast({message: `Event link ${copyVerbs.pick()} into your clipboard.`});
     }
+    let className;
+    export {className as class};
 </script>
 
 <article
     id={event.id}
-    class={clsx('md-shadow bg-base-700 rounded-lg p-4', $$props.class)}>
+    class={cn('md-shadow bg-base-700 rounded-lg p-4', className)}>
     <section class="mb-4 flex justify-between">
         <div>
             <h3>
