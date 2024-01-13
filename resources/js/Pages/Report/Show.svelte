@@ -16,6 +16,6 @@
     <meta name="twitter:description" content={report.dialogues[0].line} />
 </svelte:head>
 
-<div class="container mx-auto p-5">
+<div class="container mx-auto mt-8 px-5">
     <Report {report} />
 </div>

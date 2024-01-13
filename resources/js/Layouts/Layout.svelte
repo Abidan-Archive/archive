@@ -21,7 +21,7 @@
     closeButton={false}>
     <Navigation />
     <Toasts class="top-16" />
-    <main class="mt-16 grow px-2 sm:px-5" aria-label="content">
+    <main class="mt-16 grow px-2 sm:px-5 h-full" aria-label="content">
         <slot />
     </main>
     <Footer />

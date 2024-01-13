@@ -12,16 +12,26 @@
     export let report;
 
     const formattedDate = new Date(report.date).toLocaleDateString('en-US');
-    const verbs = new Oddment({
-        Murdered: 1,
-        Removed: 20,
-        Dismissed: 5,
-        Tidied: 5,
-        Vanished: 5,
+    const removeVerbs = new Oddment({
+        murdered: 1,
+        removed: 30,
+        dismissed: 5,
+        tidied: 5,
+        vanished: 5,
+        'mysteriously disappeared': 1
+    });
+    const copyVerbs = new Oddment({
+        absorbed: 5,
+        burgled: 5,
+        copied: 30,
+        plagiarized: 5,
+        'lured with a small piece of cheese': 1,
+        yoinked: 1,
     });
 
     async function linkClicked() {
         await navigator.clipboard.writeText(report.permalink);
+        addToast({ message: `Report permalink ${copyVerbs.pick()} into your clipboard` });
     }
     async function copyClicked() {
         let out = `#${report.id}`;
@@ -34,7 +44,7 @@
         out += report.permalink;
 
         await navigator.clipboard.writeText(out);
-        addToast({ message: 'Report Copied into your clipboard' });
+        addToast({ message: `Report ${copyVerbs.pick()} into your clipboard` });
     }
     function likeClicked() {
         if (!report.is_liked) {
@@ -55,7 +65,7 @@
             });
 
             addToast({
-                message: `${verbs.pick()} Report #${report.id} from your likes`,
+                message: `Report #${report.id} ${removeVerbs.pick()} from your likes`,
                 type: 'success',
             });
         }
