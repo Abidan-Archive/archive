@@ -39,6 +39,13 @@ module.exports = {
                     800: '#002d56',
                     900: '#00203d',
                 },
+
+                // Ideas for possible new colors
+                // typo: '#D7E7F0',
+                // background: '#000810',
+                // primary: '#7531D7',
+                // secondary: '#054076',
+                // accent: '#16BAF6',
             },
             fontFamily: {
                 sans: ['Roboto', ...defaultTheme.fontFamily.sans],
