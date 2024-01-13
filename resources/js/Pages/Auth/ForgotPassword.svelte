@@ -1,9 +1,15 @@
 <script>
     import Card from '@/Components/Card.svelte';
-    import Toast from '@/Components/Toast.svelte';
     import route from '@/Utils/route';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, page } from '@inertiajs/svelte';
+    import { onMount } from 'svelte';
+    import { addToast } from '@/Stores/toasts';
+
+    onMount(() => {
+        if ($page.props.status)
+            addToast({ message: status, type: 'success', timeout: false });
+    });
 
     let form = useForm('ForgotPassword', {
         email: null,

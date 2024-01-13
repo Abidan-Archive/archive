@@ -1,9 +1,15 @@
 <script>
-    import Toast from '@/Components/Toast.svelte';
     import Card from '@/Components/Card.svelte';
     import { cn, route } from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
+    import { onMount } from 'svelte';
+    import { addToast } from '@/Stores/toasts';
+
+    onMount(() => {
+        if ($page.props.status)
+            addToast({ message: status, type: 'success', timeout: false });
+    });
 
     let form = useForm({
         email: null,
@@ -19,8 +25,6 @@
 <section class="contianer mx-auto mt-10 w-1/2">
     <h2 class="my-5 text-2xl">Login</h2>
     <Card>
-        <Toast message={$page.props.status} />
-
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email">Email</Label>

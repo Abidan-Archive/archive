@@ -2,7 +2,7 @@
     import Modal from 'svelte-simple-modal';
     import Navigation from '@/Components/Navigation.svelte';
     import Footer from '@/Components/footer/Footer.svelte';
-
+    import Toasts from '@/Components/Toasts.svelte';
 </script>
 
 <svelte:head>
@@ -20,6 +20,7 @@
     classContent="relative p-2 overflow-auto"
     closeButton={false}>
     <Navigation />
+    <Toasts />
     <main class="mt-16 grow px-2 sm:px-5" aria-label="content">
         <slot />
     </main>

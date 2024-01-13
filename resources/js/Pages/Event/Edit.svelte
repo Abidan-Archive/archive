@@ -4,10 +4,16 @@
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Modal from '@/Components/Modal.svelte';
-    import Toast from '@/Components/Toast.svelte';
     import {formatToInputDateString, route} from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
+    import { onMount } from 'svelte';
+    import { addToast } from '@/Stores/toasts';
+
+    onMount(() => {
+        if ($page.props.flash)
+            addToast({ message: status, type: 'success', timeout: false });
+    });
 
     export let event;
 
@@ -53,7 +59,6 @@
     }
 </script>
 
-<Toast message={$page.props.flash} />
 <section class="contianer mx-auto mt-10">
     <h2 class="my-5 text-2xl">Edit Event</h2>
     <Card>
