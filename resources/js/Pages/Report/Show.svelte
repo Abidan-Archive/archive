@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import Report from '@/Components/Report.svelte';
 
     export let report;
@@ -16,6 +17,6 @@
     <meta name="twitter:description" content={report.dialogues[0].line} />
 </svelte:head>
 
-<div class="container mx-auto mt-8 px-5">
+<Page header={`Report #${report.id}`}>
     <Report {report} />
-</div>
+</Page>

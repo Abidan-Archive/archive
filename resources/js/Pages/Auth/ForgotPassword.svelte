@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/Utils/route';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
@@ -20,8 +21,7 @@
     }
 </script>
 
-<section class="contianer mx-auto mt-10 w-1/2">
-    <h2 class="my-5 text-2xl">Forgot Password</h2>
+<Page class="w-1/2" header="Forgot Password">
     <Card>
         <div class="mb-4 text-sm text-gray-400">
             Forgot your password? No problem. Just let us know your email
@@ -48,4 +48,4 @@
             </div>
         </form>
     </Card>
-</section>
+</Page>

@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/Utils/route';
     import { Button } from '@/Components/forms';
@@ -12,8 +13,7 @@
     }
 </script>
 
-<section class="contianer mx-auto mt-10 w-1/2">
-    <h2 class="my-5 text-2xl">Email Verification</h2>
+<Page class="w-1/2" header="Email Verification">
     <Card>
         <div class="mb-4 text-sm text-gray-400">
             Thanks for signing up! Before getting started, could you verify your
@@ -44,4 +44,4 @@
             </form>
         </div>
     </Card>
-</section>
+</Page>

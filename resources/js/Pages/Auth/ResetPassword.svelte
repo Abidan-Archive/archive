@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/Utils/route';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
@@ -16,8 +17,7 @@
     }
 </script>
 
-<section class="contianer mx-auto mt-10 w-1/2">
-    <h2 class="my-5 text-2xl">Reset Password</h2>
+<Page class="w-1/2" header="Reset Password">
     <Card>
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
@@ -62,4 +62,4 @@
             </div>
         </form>
     </Card>
-</section>
+</Page>

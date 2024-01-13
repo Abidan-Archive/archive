@@ -21,7 +21,7 @@
     closeButton={false}>
     <Navigation />
     <Toasts class="top-16" />
-    <main class="mt-16 grow px-2 sm:px-5 h-full" aria-label="content">
+    <main class="mt-16 h-full grow px-2 sm:px-5" aria-label="content">
         <slot />
     </main>
     <Footer />
@@ -35,7 +35,7 @@
         @apply flex min-h-screen flex-col;
     }
     :global(hr) {
-        @apply border-gray-500;
+        @apply mb-4 mt-2 border-gray-500;
     }
     :global(main a) {
         @apply text-typo-500 hover:text-typo-600 hover:underline;

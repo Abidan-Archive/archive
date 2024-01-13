@@ -18,7 +18,7 @@
         dismissed: 5,
         tidied: 5,
         vanished: 5,
-        'mysteriously disappeared': 1
+        'mysteriously disappeared': 1,
     });
     const copyVerbs = new Oddment({
         absorbed: 5,
@@ -31,7 +31,9 @@
 
     async function linkClicked() {
         await navigator.clipboard.writeText(report.permalink);
-        addToast({ message: `Report permalink ${copyVerbs.pick()} into your clipboard` });
+        addToast({
+            message: `Report permalink ${copyVerbs.pick()} into your clipboard`,
+        });
     }
     async function copyClicked() {
         let out = `#${report.id}`;
@@ -65,7 +67,9 @@
             });
 
             addToast({
-                message: `Report #${report.id} ${removeVerbs.pick()} from your likes`,
+                message: `Report #${
+                    report.id
+                } ${removeVerbs.pick()} from your likes`,
                 type: 'success',
             });
         }
