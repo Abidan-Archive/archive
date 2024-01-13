@@ -2,11 +2,12 @@
     import { inertia, page } from '@inertiajs/svelte';
     import Logo from '@/Components/Logo.svelte';
     import {
-        Globe,
-        House,
         Calendar,
         Discord,
+        Globe,
         Hamburger,
+        House,
+        Tag,
         User,
         XMark,
     } from '@/Components/icons';
@@ -23,9 +24,14 @@
               }
             : null,
         {
-            label: 'Recent Events',
+            label: 'Events',
             href: route('event.index'),
             icon: Calendar,
+        },
+        {
+            label: 'Tags',
+            href: route('tag.index'),
+            icon: Tag,
         },
         {
             label: 'Discord',
