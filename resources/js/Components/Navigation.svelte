@@ -105,7 +105,7 @@
                         showProfileMenu = true;
                     }}>
                     <User class="mx-2 h-6 w-6" />
-                    {$page.props.auth.user?.email}
+                    {$page.props.auth.user?.username}
                 </button>
             {/if}
         </div>
