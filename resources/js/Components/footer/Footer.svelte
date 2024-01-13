@@ -34,12 +34,12 @@
     class={`mt-10 w-full bg-gray-800 p-5 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
         <nav
-            class="flex items-baseline justify-between gap-2 text-sm text-gray-400 sm:text-center">
-            <a use:inertia href={route('about')} class="hover:underline"
-                >About Site</a>
+            class="flex items-center justify-between gap-2 text-sm text-gray-400 sm:text-center">
             <FooterIcon href="https://github.com/Abidan-Archive/archive">
                 <Github class="inline" />
             </FooterIcon>
+            <a use:inertia href={route('about')} class="hover:underline"
+                >About Site</a>
         </nav>
         <nav class="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             {#each links as link}
