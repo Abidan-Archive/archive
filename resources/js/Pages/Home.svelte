@@ -1,4 +1,5 @@
 <script>
+    import { page } from '@inertiajs/svelte';
     import { cn, route } from '@/Utils';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@/Components/Star.svelte';
@@ -8,6 +9,7 @@
     export let events;
     export let mostLiked;
     export let quote;
+    export let contributors;
 </script>
 
 <div
@@ -44,15 +46,22 @@
                 and may change anything to suit the story better.
             </p>
         </section>
-        <!-- <aside class="block text-right"> -->
-        <!--     <h3>Want to contribute?</h3> -->
-        <!--     <p>We are always looking for chroniclers to transcribe audio into new Reports.</p> -->
-        <!--     <a use:inertia href={route('register')}>Join us!</a> -->
-        <!-- </aside>  -->
+        <aside class="text-right">
+            {#if !$page.props.auth.user}
+                <h3 class="text-2xl">Want to contribute?</h3>
+                <p class="ml-auto w-2/3">
+                    We are always looking for chroniclers to transcribe audio
+                    into new Reports.
+                </p>
+                <p>
+                    <a use:inertia href={route('register')}>Join Today!</a>
+                </p>
+            {/if}
+        </aside>
     </div>
 </div>
 <div class="container mt-12 flex justify-evenly">
-    <section class="flex-1">
+    <section>
         <h2 class="text-3xl font-thin uppercase">Most Recent Events</h2>
         <ul>
             {#each events as event}
@@ -68,9 +77,8 @@
             {/each}
         </ul>
     </section>
-    <section class="flex-1">
+    <section>
         <h2 class="text-3xl font-thin uppercase">Most Liked Reports</h2>
-        <i>Coming soon</i>
         <ul>
             {#each mostLiked as report}
                 <li>
@@ -88,6 +96,15 @@
                 </li>
             {/each}
         </ul>
+    </section>
+    <section>
+        <h2 class="text-3xl font-thin uppercase">Points Leaderboard</h2>
+        <ol>
+            {#each contributors as them}
+                <li>{them}</li>
+            {/each}
+            <ol />
+        </ol>
     </section>
 </div>
 
