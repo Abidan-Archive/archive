@@ -46,7 +46,7 @@
 <article
     id={report.id}
     class={cn(
-        'rounded-lg border border-enkai-500 bg-midnight-700 p-4 shadow-md',
+        'rounded-lg border border-typo-500 bg-base-700 p-4 shadow-md',
         className
     )}>
     <div class="flex justify-between">
@@ -69,7 +69,7 @@
                 &middot; <span>{formattedDate}</span>
             </h3>
         </div>
-        <div class="flex items-center gap-2 text-sm text-enkai-600">
+        <div class="flex items-center gap-2 text-sm text-typo-600">
             <button
                 class="flex hover:underline hover:underline-offset-4"
                 on:click={linkClicked}>

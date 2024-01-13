@@ -30,7 +30,7 @@
             on:click={_onCancel}>{cancelText}</Button>
         <Button
             size="small"
-            class="w-5/12 bg-green-600 font-bold text-enkai-500 hover:bg-green-600/90"
+            class="w-5/12 bg-green-600 font-bold text-typo-500 hover:bg-green-600/90"
             on:click={_onOkay}>{okayText}</Button>
     </div>
 </div>

@@ -1040,7 +1040,7 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
-.border-abidan-400 {
+.border-primary-400 {
   --tw-border-opacity: 1;
   border-color: rgb(50 102 149 / var(--tw-border-opacity));
 }
@@ -1067,43 +1067,43 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.bg-abidan-50 {
+.bg-primary-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(204 217 228 / var(--tw-bg-opacity));
 }
-.bg-abidan-100 {
+.bg-primary-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(153 179 202 / var(--tw-bg-opacity));
 }
-.bg-abidan-200 {
+.bg-primary-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(102 141 175 / var(--tw-bg-opacity));
 }
-.bg-abidan-300 {
+.bg-primary-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(76 122 162 / var(--tw-bg-opacity));
 }
-.bg-abidan-400 {
+.bg-primary-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(50 102 149 / var(--tw-bg-opacity));
 }
-.bg-abidan-500 {
+.bg-primary-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 65 123 / var(--tw-bg-opacity));
 }
-.bg-abidan-600 {
+.bg-primary-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 58 110 / var(--tw-bg-opacity));
 }
-.bg-abidan-700 {
+.bg-primary-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 52 98 / var(--tw-bg-opacity));
 }
-.bg-abidan-800 {
+.bg-primary-800 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 45 86 / var(--tw-bg-opacity));
 }
-.bg-abidan-900 {
+.bg-primary-900 {
   --tw-bg-opacity: 1;
   background-color: rgb(0 32 61 / var(--tw-bg-opacity));
 }
@@ -1147,7 +1147,7 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(76 29 149 / var(--tw-bg-opacity));
 }
-.bg-midnight {
+.bg-base {
   --tw-bg-opacity: 1;
   background-color: rgb(27 39 53 / var(--tw-bg-opacity));
 }
@@ -1483,7 +1483,7 @@ select {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
 }
-.ring-abidan-300 {
+.ring-primary-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(76 122 162 / var(--tw-ring-opacity));
 }

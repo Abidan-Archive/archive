@@ -1,0 +1,7 @@
+// This is just to fix LSP issues for neovim with aliase pathing
+{
+    "baseUrl": "resources/js/",
+    "paths": {
+        "@/*": ["/*"]
+    }
+}

@@ -28,7 +28,7 @@
     </Star>
 </div>
 
-<div class="-mx-5 h-56 bg-midnight-500 sm:h-40">
+<div class="-mx-5 h-56 bg-base-500 sm:h-40">
     <div class="flex px-6 py-6">
         <section>
             <h2

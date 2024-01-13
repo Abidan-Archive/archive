@@ -15,7 +15,7 @@
 <dialog
     bind:this={dialog}
     on:click|self={() => dialog.close()}
-    class="w-1/2 bg-transparent p-0 text-enkai-500">
+    class="w-1/2 bg-transparent p-0 text-typo-500">
     <div on:click|stopPropagation>
         <Card>
             <slot name="header" />

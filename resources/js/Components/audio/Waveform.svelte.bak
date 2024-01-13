@@ -166,7 +166,7 @@
         clsx(
             'rounded-full border border-white p-2 text-center text-2xl text-black',
             { 'w-8 h-8': !large, 'mx-2 w-10 h-10': !!large },
-            { 'bg-enkai-500': !marked, 'bg-red-600': !!marked }
+            { 'bg-typo-500': !marked, 'bg-red-600': !!marked }
         );
 </script>
 

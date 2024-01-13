@@ -19,7 +19,7 @@
                     success:
                         'bg-green-500 hover:bg-green-600 focus:bg-green-400',
                     destructive:
-                        'bg-red-600 hover:bg-red-500 focus:bg-red-300 text-enkai-500',
+                        'bg-red-600 hover:bg-red-500 focus:bg-red-300 text-typo-500',
                     warn: 'bg-yellow-500 hover:bg-yellow-600 focus:bg-yellow-400',
                     link: 'underline-offset-4 hover:underline',
                 },

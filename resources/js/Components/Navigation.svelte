@@ -43,7 +43,7 @@
 </script>
 
 <nav
-    class="fixed top-0 left-0 z-50 h-16 w-full border-l-5 border-abidan-400 bg-gray-800">
+    class="fixed top-0 left-0 z-50 h-16 w-full border-l-5 border-primary-400 bg-gray-800">
     <div
         class="mx-6 px-4 py-2 md:flex md:items-center md:justify-between md:px-0 md:py-1">
         <div class="flex items-center justify-between">
@@ -71,7 +71,7 @@
             class:flex={showMenu}>
             {#each links as { label, href, icon }}
                 <a
-                    class="text-white-500 flex hover:text-abidan-300 "
+                    class="text-white-500 flex hover:text-primary-300 "
                     use:inertia
                     {href}>
                     <svelte:component this={icon} class="mx-2 h-6 w-6" />

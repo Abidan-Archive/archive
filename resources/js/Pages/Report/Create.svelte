@@ -67,7 +67,7 @@
                     placeholder="Blurb" />
             </div>
             <button
-                class="h-10 w-10 rounded-full border bg-enkai-500 p-2 text-black"
+                class="h-10 w-10 rounded-full border bg-typo-500 p-2 text-black"
                 ><Trash /></button>
         </Card>
     {/each}

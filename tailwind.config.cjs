@@ -18,16 +18,16 @@ module.exports = {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
             },
             colors: {
-                enkai: {
+                typo: {
                     500: '#e8e6e3',
                     600: '#c3beb6',
                 },
-                midnight: {
+                base: {
                     500: '#1b2735',
                     700: '#25282a',
                     900: '#181a1b',
                 },
-                abidan: {
+                primary: {
                     50: '#ccd9e4',
                     100: '#99b3ca',
                     200: '#668daf',
