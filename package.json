@@ -1,14 +1,6 @@
 {
     "type": "module",
     "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build && vite build --ssr",
-        "preview": "vite preview",
-        "format": "prettier --write 'resources/**/*.{css,html,js,svelte}'",
-        "lint": "eslint --fix --quiet resources --ext .js,.svelte",
-        "prepare": "husky install"
-    },
     "devDependencies": {
         "@sveltejs/vite-plugin-svelte": "^2.0.2",
         "@tailwindcss/forms": "^0.4.0",
@@ -48,5 +40,13 @@
     },
     "lint-staged": {
         "*.{js,svelte}": "eslint --cache --fix"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build && vite build --ssr",
+        "preview": "vite preview",
+        "format": "prettier --write 'resources/**/*.{css,html,js,svelte}'",
+        "lint": "eslint --fix --quiet resources --ext .js,.svelte",
+        "prepare": "husky install"
     }
 }

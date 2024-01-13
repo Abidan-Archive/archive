@@ -14,7 +14,7 @@
         <h2 class="my-5 text-3xl">Events</h2>
     </section>
     <hr class="my-5" />
-    <section class="flex flex-col gap-3 w-2/3 mx-auto">
+    <section class="mx-auto flex w-2/3 flex-col gap-3">
         {#if !events.data.length}
             <div class="text-center">
                 <p>No Events found.</p>

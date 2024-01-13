@@ -3,6 +3,8 @@
     import { Copy, Heart, Link } from '@/Components/icons';
     // import { fade } from 'svelte/transition';
     import { inertia, router } from '@inertiajs/svelte';
+    import { addToast } from '@/Stores/toast';
+    import Oddment from '@/oddment.js';
 
     let className;
     export { className as class };
@@ -10,6 +12,13 @@
     export let report;
 
     const formattedDate = new Date(report.date).toLocaleDateString('en-US');
+    const verbs = new Oddment({
+        Murdered: 1,
+        Removed: 20,
+        Dismissed: 5,
+        Tidied: 5,
+        Vanished: 5,
+    });
 
     async function linkClicked() {
         await navigator.clipboard.writeText(report.permalink);
@@ -25,6 +34,7 @@
         out += report.permalink;
 
         await navigator.clipboard.writeText(out);
+        addToast({ message: 'Report Copied into your clipboard' });
     }
     function likeClicked() {
         if (!report.is_liked) {
@@ -32,12 +42,21 @@
                 likeable_type: 'App\\Models\\Report',
                 id: report.id,
             });
+            addToast({
+                message: `Liked Report #${report.id}`,
+                type: 'success',
+            });
         } else {
             // router delete doesn't allow payload, so we're faking it with _method
             router.post(route('unlike'), {
                 _method: 'DELETE',
                 likeable_type: 'App\\Models\\Report',
                 id: report.id,
+            });
+
+            addToast({
+                message: `${verbs.pick()} Report #${report.id} from your likes`,
+                type: 'success',
             });
         }
     }

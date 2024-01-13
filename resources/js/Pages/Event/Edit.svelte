@@ -4,11 +4,11 @@
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Modal from '@/Components/Modal.svelte';
-    import {formatToInputDateString, route} from '@/Utils';
+    import { formatToInputDateString, route } from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toasts';
+    import { addToast } from '@/Stores/toast';
 
     onMount(() => {
         if ($page.props.flash)

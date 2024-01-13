@@ -24,7 +24,7 @@
 </script>
 
 <nav class={cn('h-screen overflow-hidden border-r pr-4', className)}>
-    <h2 class="text-2xl mb-4">Navigation</h2>
+    <h2 class="mb-4 text-2xl">Navigation</h2>
     <TextInput
         id="filter"
         class="mb-4 placeholder:text-center"

@@ -13,11 +13,16 @@ export const addToast = (toast) => {
 
     // Let's get those defaults, no I don't care about side-effects
     toast = { ...defaults, ...toast };
+    console.log(toast);
     toasts.update((all) => [toast, ...all]);
 
     // If toast has a timeout, dismiss it after the timeout
-    if (toast.timeout) setTimeout(() => dismissToast(id), toast.timeout);
+    if (toast.timeout) {
+        setTimeout(() => dismissToast(id), toast.timeout);
+    }
 };
 
-export const dismissToast = (id) =>
+export const dismissToast = (id) => {
+    console.log(id);
     toasts.update((all) => all.filter((t) => t.id !== id));
+};

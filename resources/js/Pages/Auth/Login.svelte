@@ -4,7 +4,7 @@
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toasts';
+    import { addToast } from '@/Stores/toast';
 
     onMount(() => {
         if ($page.props.status)

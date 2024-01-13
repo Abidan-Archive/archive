@@ -37,6 +37,7 @@ Route::resource('event.source.stub', StubController::class);
 Route::get('/event/{event}/source/{source}', [SourceController::class, 'show'])->name('event.source.show');
 Route::delete('/event/{event}/source/{source}', [SourceController::class, 'destroy'])->name('event.source.destroy');
 Route::get('/stubs', [StubController::class, 'all'])->name('stubs.all');
+Route::get('/test', fn() => inertia('Test'));
 
 Route::resource('tag', TagController::class);
 

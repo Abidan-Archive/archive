@@ -20,7 +20,7 @@
     classContent="relative p-2 overflow-auto"
     closeButton={false}>
     <Navigation />
-    <Toasts />
+    <Toasts class="top-16" />
     <main class="mt-16 grow px-2 sm:px-5" aria-label="content">
         <slot />
     </main>

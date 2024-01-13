@@ -15,7 +15,5 @@
 
 <div class="mt-8 flex flex-row gap-4">
     <Sidebar />
-    <div class="flex-1 ">
-        Other stuff
-    </div>
+    <div class="flex-1 ">Other stuff</div>
 </div>

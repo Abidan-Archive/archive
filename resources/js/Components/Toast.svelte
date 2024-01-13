@@ -19,7 +19,7 @@
     export { className as class };
 
     const variants = cva(
-        'color-typo-500 flex items-center mx-auto mb-2 text-sm font-medium',
+        'rounded-lg p-2 color-typo-500 flex items-center mx-auto mb-2 text-sm font-medium w-80 pointer-events-auto',
         {
             variants: {
                 type: {

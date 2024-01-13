@@ -4,7 +4,7 @@
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toasts';
+    import { addToast } from '@/Stores/toast';
 
     onMount(() => {
         if ($page.props.status)
@@ -28,8 +28,6 @@
             address and we will email you a password reset link that will allow
             you to choose a new one.
         </div>
-
-        <Toast message={$page.props.status} />
 
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
