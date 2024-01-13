@@ -1,7 +1,7 @@
 <script>
-    import Card from '@components/Card.svelte';
+    import Card from '@/Components/Card.svelte';
     import route from '@/Utils/route';
-    import { Button } from '@components/forms';
+    import { Button } from '@/Components/forms';
     import { page, router } from '@inertiajs/svelte';
 
     function resend() {

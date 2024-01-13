@@ -1,5 +1,5 @@
 <script>
-    import { Discord, Github } from '@components/icons';
+    import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/Utils/route';
     const contributors = [

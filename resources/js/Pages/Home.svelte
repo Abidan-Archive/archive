@@ -1,9 +1,9 @@
 <script>
     import { cn, route } from '@/Utils';
     import { inertia } from '@inertiajs/svelte';
-    import Star from '@components/Star.svelte';
-    import Heart from '@components/icons/Heart.svelte';
-    import SearchForm from '@components/SearchForm.svelte';
+    import Star from '@/Components/Star.svelte';
+    import Heart from '@/Components/icons/Heart.svelte';
+    import SearchForm from '@/Components/SearchForm.svelte';
 
     export let events;
     export let mostLiked;

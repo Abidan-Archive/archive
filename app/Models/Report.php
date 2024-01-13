@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Likeable;
+use App\Models\Concerns\InertiaPaginate;
 use App\Models\Concerns\Likes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,7 +19,7 @@ use Laravel\Scout\Searchable;
  */
 class Report extends Model implements Likeable
 {
-    use HasFactory, Likes, SoftDeletes, Searchable;
+    use HasFactory, Likes, SoftDeletes, Searchable, InertiaPaginate;
 
     protected $appends = ['permalink', 'is_liked'];
 

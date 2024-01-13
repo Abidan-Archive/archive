@@ -1,8 +1,8 @@
 <script>
-    import Paginator from '@components/Paginator.svelte';
-    import Event from '@components/Event.svelte';
+    import Paginator from '@/Components/Paginator.svelte';
+    import Event from '@/Components/Event.svelte';
+
     export let events;
-    export let paginate;
 </script>
 
 <svelte:head>
@@ -15,16 +15,16 @@
     </section>
     <hr class="my-5" />
     <section class="flex flex-col gap-3 w-2/3 mx-auto">
-        {#if !events.length}
+        {#if !events.data.length}
             <div class="text-center">
                 <p>No Events found.</p>
             </div>
         {:else}
-            <Paginator {...paginate} />
-            {#each events as event}
+            <Paginator {...events} />
+            {#each events.data as event}
                 <Event {event} />
             {/each}
-            <Paginator {...paginate} />
+            <Paginator {...events} />
         {/if}
     </section>
 </div>

@@ -9,8 +9,8 @@
         Scissors,
         MagnifyingGlassPlus,
         MagnifyingGlassMinus,
-    } from '@components/icons';
-    import { IconButton } from '@components/forms';
+    } from '@/Components/icons';
+    import { IconButton } from '@/Components/forms';
 
     let dispatch = createEventDispatcher();
 

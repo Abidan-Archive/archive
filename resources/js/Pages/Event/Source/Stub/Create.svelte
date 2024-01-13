@@ -1,11 +1,11 @@
 <script>
     import { onMount, onDestroy, getContext } from 'svelte';
     import Peaks from 'peaks.js';
-    import Card from '@components/Card.svelte';
-    import { Play, Trash } from '@components/icons';
-    import { Button, IconButton } from '@components/forms';
-    import MediaControls from '@components/audio/MediaControls.svelte';
-    import Dialog from '@components/Modals/Dialog.svelte';
+    import Card from '@/Components/Card.svelte';
+    import { Play, Trash } from '@/Components/icons';
+    import { Button, IconButton } from '@/Components/forms';
+    import MediaControls from '@/Components/audio/MediaControls.svelte';
+    import Dialog from '@/Components/Modals/Dialog.svelte';
 
     export let event;
     export let source;

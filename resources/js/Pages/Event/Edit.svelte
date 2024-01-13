@@ -1,12 +1,12 @@
 <script>
-    import AnchorButton from '@components/AnchorButton.svelte';
-    import Card from '@components/Card.svelte';
-    import CircleX from '@components/icons/CircleX.svelte';
+    import AnchorButton from '@/Components/AnchorButton.svelte';
+    import Card from '@/Components/Card.svelte';
+    import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
-    import Modal from '@components/Modal.svelte';
-    import Toast from '@components/Toast.svelte';
+    import Modal from '@/Components/Modal.svelte';
+    import Toast from '@/Components/Toast.svelte';
     import {formatToInputDateString, route} from '@/Utils';
-    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
 
     export let event;

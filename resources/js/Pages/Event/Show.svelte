@@ -1,5 +1,5 @@
 <script>
-    import Report from '@components/Report.svelte';
+    import Report from '@/Components/Report.svelte';
 
     export let event;
 </script>

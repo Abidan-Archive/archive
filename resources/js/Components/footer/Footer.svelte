@@ -1,14 +1,14 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
     import route from '@/Utils/route';
-    import FooterIcon from '@components/footer/FooterIcon.svelte';
+    import FooterIcon from '@/Components/footer/FooterIcon.svelte';
     import {
         Reddit,
         Facebook,
         Twitter,
         Github,
         Gnome,
-    } from '@components/icons';
+    } from '@/Components/icons';
     const links = [
         {
             icon: Gnome,

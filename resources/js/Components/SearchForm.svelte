@@ -1,7 +1,7 @@
 <script>
     import cn from '@/Utils/cn';
     import { useForm } from '@inertiajs/svelte';
-    import Lens from '@components/icons/Lens';
+    import Lens from '@/Components/icons/Lens';
 
     let className;
     export { className as class };

@@ -1,8 +1,8 @@
 <script>
-    // import AudioScrubber from '@components/AudioScrubber.svelte';
-    import Card from '@components/Card.svelte';
-    import { Play, Trash } from '@components/icons';
-    import { secondsToDuration, durationToSeconds } from '@/utils';
+    // import AudioScrubber from '@/Components/AudioScrubber.svelte';
+    import Card from '@/Components/Card.svelte';
+    import { Play, Trash } from '@/Components/icons';
+    import { secondsToDuration, durationToSeconds } from '@/Utils';
 
     export let event;
     let scrubber;

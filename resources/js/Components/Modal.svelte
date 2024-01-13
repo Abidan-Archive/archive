@@ -1,5 +1,5 @@
 <script>
-    import Card from '@components/Card.svelte';
+    import Card from '@/Components/Card.svelte';
     export let visible = false;
 
     let dialog;

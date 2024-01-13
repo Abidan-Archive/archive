@@ -1,17 +1,17 @@
 <script>
     import { inertia, page } from '@inertiajs/svelte';
-    import Logo from '@components/Logo.svelte';
+    import Logo from '@/Components/Logo.svelte';
     import {
         Globe,
         House,
         Calendar,
         Discord,
         Hamburger,
-    } from '@components/icons';
+    } from '@/Components/icons';
     import route from '@/Utils/route';
 
     const links = [
-        $page.props.auth.user.roles.includes('admin')
+        $page.props.auth.user?.roles.includes('admin')
             ? {
                   label: 'Admin',
                   href: route('admin.index'),

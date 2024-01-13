@@ -1,7 +1,7 @@
 <script>
     import Modal from 'svelte-simple-modal';
-    import Navigation from '@components/Navigation.svelte';
-    import Footer from '@components/footer/Footer.svelte';
+    import Navigation from '@/Components/Navigation.svelte';
+    import Footer from '@/Components/footer/Footer.svelte';
 
 </script>
 

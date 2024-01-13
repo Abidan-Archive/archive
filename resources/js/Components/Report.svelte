@@ -1,6 +1,6 @@
 <script>
     import { cn, route } from '@/Utils';
-    import { Copy, Heart, Link } from '@components/icons';
+    import { Copy, Heart, Link } from '@/Components/icons';
     // import { fade } from 'svelte/transition';
     import { inertia, router } from '@inertiajs/svelte';
 

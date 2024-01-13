@@ -1,8 +1,8 @@
 <script>
-    import Toast from '@components/Toast.svelte';
-    import Card from '@components/Card.svelte';
+    import Toast from '@/Components/Toast.svelte';
+    import Card from '@/Components/Card.svelte';
     import { cn, route } from '@/Utils';
-    import { ErrorMessage, Label, Button, TextInput } from '@components/forms';
+    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
 
     let form = useForm({

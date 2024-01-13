@@ -1,7 +1,7 @@
 <script>
     import clsx from 'clsx';
-    import route from '@/route';
-    import { Link } from '@components/icons';
+    import route from '@/Utils/route';
+    import { Link } from '@/Components/icons';
     import { router, inertia } from '@inertiajs/svelte';
     export let event;
 
@@ -41,7 +41,7 @@
             Source: {event.location || 'Dubious Forums'}
         </span>
         <span class="text-sm text-enkai-600">
-            {event.reports.length || 0} reports
+            {event.reports || 0} reports
         </span>
     </section>
 </article>

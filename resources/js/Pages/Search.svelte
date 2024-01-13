@@ -1,8 +1,8 @@
 <script>
-    import Report from '@components/Report.svelte';
-    import SearchForm from '@components/SearchForm.svelte';
-    import Paginator from '@components/Paginator.svelte';
-    //import { Sort } from '@components/icons';
+    import Report from '@/Components/Report.svelte';
+    import SearchForm from '@/Components/SearchForm.svelte';
+    import Paginator from '@/Components/Paginator.svelte';
+    //import { Sort } from '@/Components/icons';
     //import { fade } from 'svelte/transition';
 
     export let paginate;

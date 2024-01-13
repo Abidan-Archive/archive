@@ -1,7 +1,7 @@
 <script>
     import cn from '@src/Utils/cn';
     import { inertia } from '@inertiajs/svelte';
-    import { Previous, Next } from '@components/icons';
+    import { Previous, Next } from '@/Components/icons';
 
     export let current_page;
     export let last_page;

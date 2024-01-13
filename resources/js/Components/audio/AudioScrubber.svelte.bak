@@ -12,8 +12,8 @@
         Forward,
         Backward,
         Scissors,
-    } from '@components/icons';
-    import { secondsToDuration, durationToSeconds } from '@/utils';
+    } from '@/Components/icons';
+    import { secondsToDuration, durationToSeconds } from '@/Utils';
 
     export let src;
     export let regions = {};
