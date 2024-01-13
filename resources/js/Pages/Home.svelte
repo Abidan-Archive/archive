@@ -94,6 +94,8 @@
                         Report#{report.id}
                     </a>
                 </li>
+            {:else}
+                <li>Haters.</li>
             {/each}
         </ul>
     </section>
@@ -102,6 +104,8 @@
         <ol>
             {#each contributors as them}
                 <li>{them}</li>
+            {:else}
+                <li>Slackers.</li>
             {/each}
             <ol />
         </ol>
