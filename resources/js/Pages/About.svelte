@@ -80,4 +80,7 @@
     p {
         @apply mb-2;
     }
+    a {
+        @apply underline;
+    }
 </style>
