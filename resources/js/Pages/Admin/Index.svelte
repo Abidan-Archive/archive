@@ -1,5 +1,5 @@
 <script>
-    import Sidebar from './components/Sidebar.svelte';
+    import AdminSidebar from './components/AdminSidebar.svelte';
 </script>
 
 <svelte:head>
@@ -7,6 +7,6 @@
 </svelte:head>
 
 <div class="mt-8 flex h-full flex-row gap-4">
-    <Sidebar />
+    <AdminSidebar />
     <div class="flex-1 ">Other stuff</div>
 </div>

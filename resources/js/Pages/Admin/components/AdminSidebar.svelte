@@ -29,7 +29,7 @@
         id="filter"
         class="mb-4 placeholder:text-center"
         name="filter"
-        placeholder="filter"
+        placeholder="Filter"
         bind:value={filter}
         on:keydown={onKeyDown} />
     <ul>

@@ -1,5 +1,4 @@
 <script>
-    import AnchorButton from '@/Components/AnchorButton.svelte';
     import Card from '@/Components/Card.svelte';
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
@@ -149,7 +148,7 @@
                     on:submit|preventDefault={() =>
                         handleRenameSourceSubmit(id)}
                     class="flex items-center gap-1">
-                    <AnchorButton href={route('home')}>Stub</AnchorButton>
+                    <Button href={route('home')}>Stub</Button>
                     <TextInput id={'source-' + id} bind:value={name} />
                     <Button type="submit">Rename</Button>
                 </form>
