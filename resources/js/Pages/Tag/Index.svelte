@@ -33,7 +33,7 @@
         switch (sortState.key) {
             case 'name': // Alpha
                 return (
-                    (a[sortState.key] < b[sortState.key] ? 1 : -1) *
+                    (a[sortState.key] > b[sortState.key] ? 1 : -1) *
                     sortState.direction
                 );
             case 'reports_count': // Numeric
@@ -66,7 +66,7 @@
                 placeholder="Sort" />
         </div>
     </div>
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap gap-2 ">
         {#each data as tag}
             <a
                 use:inertia
@@ -76,10 +76,13 @@
                     'h-10 rounded-md py-2 px-4 font-bold ease-in-out',
                     getContrastYIQ(tag.color)
                 )}
-                transition:fade>
+                transition:fade|local>
                 {tag.name} ({tag.reports_count})</a>
         {:else}
-            Ozriel cleaned too much here. Not a speck of tags to be found.
+            <div class="flex-shrink-0 self-center align-center w-full text-center"
+                in:fade={{delay: 401}}>
+                Ozriel cleaned too much here. Not a speck of tags to be found.
+            </div>
         {/each}
     </div>
 </Page>
