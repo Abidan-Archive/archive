@@ -51,11 +51,13 @@ class TagController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
      */
     public function show(Tag $tag)
     {
-        //
+        $tag->loadCount('reports');
+        $tag->load('reports');
+        $tag = $tag->only('id', 'name', 'color', 'reports_count', 'reports');
+        return inertia('Tag/Show', compact('tag'));
     }
 
     /**
