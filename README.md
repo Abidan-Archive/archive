@@ -1,6 +1,6 @@
 ## About Abidan Archive
 
-The Abidan Archive is website responsible for recording all words-of-willwight aka wows. Where the fanbase strives to record all canon non-book external information on Will's various works.
+The Abidan Archive is website responsible for recording all words-of-will-wight aka wows. Where the fanbase strives to record all canon non-book external information on Will's various works.
 
 ## Contributing
 
