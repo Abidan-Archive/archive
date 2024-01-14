@@ -1,5 +1,8 @@
 export { default as Backward } from './Backward.svelte';
 export { default as Calendar } from './Calendar.svelte';
+export { default as ChevronDown } from './ChevronDown.svelte';
+export { default as ChevronUp } from './ChevronUp.svelte';
+export { default as ChevronUpDown } from './ChevronUpDown.svelte';
 export { default as CircleCheck } from './CircleCheck.svelte';
 export { default as CircleExclamation } from './CircleExclamation.svelte';
 export { default as CircleInfo } from './CircleInfo.svelte';

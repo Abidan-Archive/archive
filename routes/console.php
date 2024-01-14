@@ -42,7 +42,10 @@ Artisan::command('consume {jsonPath}', function(String $jsonPath) {
                 }
 
                 foreach($r['tags'] as $t) {
-                    $tag = Tag::firstOrCreate(['name' => $t]);
+                    $tag = Tag::firstOrCreate(
+                        ['name' => $t],
+                        ['color' => str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT)]
+                    );
                     $report->tags()->attach($tag);
                 }
             } catch (Exception $e) {

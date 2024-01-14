@@ -20,12 +20,10 @@ class TagController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('tag.index');
+    public function index() {
+        $tags = Tag::select('id','name', 'color')->withCount('reports')->get();
+        return inertia('Tag/Index', compact('tags'));
     }
 
     /**

@@ -23,7 +23,7 @@ class HomeController extends Controller
             ->take(5)
             ->get()
             ->filter(fn($m) => $m->likes_count > 0);
-        $contributors = ['Coming soon'];
+        $contributors = [];
         return inertia('Home', compact('events', 'mostLiked', 'quote', 'contributors'));
     }
 
