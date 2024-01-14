@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/Components/Page.svelte';
     import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/Utils/route';
@@ -13,9 +14,8 @@
     const discord = 'https://discord.gg/tCg94qy';
 </script>
 
-<article class="container mx-auto mt-10 w-2/3">
-    <section class="mb-4">
-        <h2 class="pb-5 text-2xl">About Site</h2>
+<Page header="About Site" class="w-2/3">
+    <section>
         <p>
             Whenever Will has a live event, stream, or socials post, should it
             contain relevant information about his works, it is recorded here
@@ -71,7 +71,7 @@
             contribute.
         </p>
     </section>
-</article>
+</Page>
 
 <style lang="scss">
     section {
