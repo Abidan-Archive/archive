@@ -14,6 +14,7 @@ Thank you for considering contributing to the Abidan Archive Project! Reach out 
 ├── bootstrap           # Bootstraps framework and contains various cached files
 ├── config              # Backend configuration for many services, integrations, etc.
 ├── database            # Files for maintaining and generating data structures
+├── docker              # Docker dev environment configuration files
 ├── lang                # Localization files
 ├── public              # Web server entrypoint and all static/built assets
 ├── routes              # Route definitions
@@ -37,7 +38,8 @@ Thank you for considering contributing to the Abidan Archive Project! Reach out 
     └── js              # Frontend logic files
         ├── Components  # Custom components used throughout frontend
         ├── Layouts     # Layouts that pages inherit
-        └── Pages       # Frontend pages that controllers direct to
+        ├── Pages       # Frontend pages that controllers direct to
+        └── Stores      # Frontend data stores
 ```
 
 ## Security Vulnerabilities
