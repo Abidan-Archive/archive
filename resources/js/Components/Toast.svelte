@@ -6,9 +6,9 @@
         CircleCheck,
         CircleExclamation,
         CircleInfo,
+        XMark,
     } from '@/components/icons';
     import cn from '@/utils/cn.js';
-    import XMark from '@/components/icons/XMark.Svelte';
 
     const dispatch = createEventDispatcher();
 

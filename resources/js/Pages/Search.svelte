@@ -16,7 +16,7 @@
 <section class="container mx-auto pt-5">
     <h2 class="my-5 text-2xl">Search Results</h2>
     <SearchForm class="my-5 w-full" />
-    <hr class="my-5" />
+    <hr />
     <div class="flex flex-col gap-5">
         {#if !reports.length}
             <div class="text-center">

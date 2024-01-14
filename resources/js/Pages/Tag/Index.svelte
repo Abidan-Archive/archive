@@ -79,7 +79,7 @@
                 transition:fade>
                 {tag.name} ({tag.reports_count})</a>
         {:else}
-            Ozriel cleaned too much here. No a speck of tags to be found.
+            Ozriel cleaned too much here. Not a speck of tags to be found.
         {/each}
     </div>
 </Page>
