@@ -23,9 +23,9 @@
         {
             variants: {
                 type: {
-                    error: 'bg-red-500',
-                    success: 'bg-green-500',
-                    info: 'bg-blue-500',
+                    error: 'bg-red-600',
+                    success: 'bg-green-600',
+                    info: 'bg-blue-600',
                 },
             },
         }
