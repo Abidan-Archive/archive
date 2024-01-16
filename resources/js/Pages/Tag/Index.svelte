@@ -79,8 +79,9 @@
                 transition:fade|local>
                 {tag.name} ({tag.reports_count})</a>
         {:else}
-            <div class="flex-shrink-0 self-center align-center w-full text-center"
-                in:fade={{delay: 401}}>
+            <div
+                class="flex-shrink-0 self-center align-center w-full text-center"
+                in:fade={{ delay: 401 }}>
                 Ozriel cleaned too much here. Not a speck of tags to be found.
             </div>
         {/each}

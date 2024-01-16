@@ -33,7 +33,7 @@ class StubController extends Controller
     public function create(Event $event, Source $source): Response
     {
         return inertia(
-            'Event/Stub/Create',
+            'Event/Source/Stub/Create',
             [
                 'event' => $event->only('id', 'name'),
                 'source' => $source

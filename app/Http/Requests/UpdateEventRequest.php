@@ -14,11 +14,11 @@ class UpdateEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'unique:events|max:255',
+            'name' => 'max:255|unique:events,id,'.$this->event->id,
             'date' => 'date',
             'location' => 'max:255',
             'sources' => 'array',
-            'sources.*' => 'file|mimes:mgpa,wav,mp4'
+            'sources.*' => 'file|mimes:mpga,wav,mp4,mpeg,mp3'
         ];
     }
 }

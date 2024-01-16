@@ -25,7 +25,7 @@ Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // Route::get('/testaudio', fn() => response()->file('storage/sources/3_3_YZTShKdDHOrptCtEZmPplZASRMYYk4gRBqBnSAME.m4a'));
-Route::get('/testaudio', fn() => response()->file('storage/sources/Bloodline_Release_Part_1.mp3'));
+// Route::get('/testaudio', fn() => response()->file('storage/sources/Bloodline_Release_Part_1.mp3'));
 
 // Redirects for legacy
 Route::get('/events/{event}', [HomeController::class, 'redirect']);
@@ -34,7 +34,7 @@ Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handle
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
 Route::resource('event.source.stub', StubController::class);
-Route::get('/event/{event}/source/{source}', [SourceController::class, 'show'])->name('event.source.show');
+Route::put('/event/{event}/source/{source}', [SourceController::class, 'update'])->name('event.source.update');
 Route::delete('/event/{event}/source/{source}', [SourceController::class, 'destroy'])->name('event.source.destroy');
 Route::get('/stubs', [StubController::class, 'all'])->name('stubs.all');
 Route::get('/test', fn() => inertia('Test'));

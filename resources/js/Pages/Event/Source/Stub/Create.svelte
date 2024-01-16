@@ -13,7 +13,7 @@
     // Props
     let audioUrl = source.path;
     let audioContentType = 'audio/mpeg';
-    // Need to autogenerate this and include it in source modle
+    // Need to autogenerate this and include it in source model
     // let waveformDataUrl = 'something.dat';
     let audioContext = null;
 

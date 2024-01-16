@@ -30,7 +30,7 @@
     }
 
     function submit() {
-        $form.post(route('event.store'));
+        $form.post(route('event.store'), { forceFormData: true});
     }
 </script>
 

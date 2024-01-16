@@ -24,8 +24,7 @@
                     link: 'underline-offset-4 hover:underline',
                 },
                 size: {
-                    default:
-                        'h-10 py-2 px-4 duration-150 ease-in-out',
+                    default: 'h-10 py-2 px-4 duration-150 ease-in-out',
                     sm: 'h-9 px-3 rounded-md',
                     lg: 'h-11 px-9 rounded-md',
                 },

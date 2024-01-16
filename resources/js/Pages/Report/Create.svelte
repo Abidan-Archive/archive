@@ -1,5 +1,6 @@
 <script>
     // import AudioScrubber from '@/Components/AudioScrubber.svelte';
+    import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { Play, Trash } from '@/Components/icons';
     import { secondsToDuration, durationToSeconds } from '@/Utils';
@@ -23,8 +24,10 @@
         //
         // })
     }
+
 </script>
 
+    <Page></Page>
 <div class="container mx-auto mt-10 flex flex-col justify-center gap-4">
     <!-- <AudioScrubber bind:this={scrubber} bind:regions src="/testaudio" title="Test Scrubber"/> -->
     {#each Object.entries(regions) as [id, region], idx}

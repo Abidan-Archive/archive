@@ -20,6 +20,13 @@ export const addToast = (toast) => {
         setTimeout(() => dismissToast(id), toast.timeout);
     }
 };
+export const addFlash = (flash) => {
+    if (!flash) return;
+    addToast({
+        message: flash.message,
+        type: flash?.type || 'success',
+    });
+};
 
 export const dismissToast = (id) => {
     toasts.update((all) => all.filter((t) => t.id !== id));

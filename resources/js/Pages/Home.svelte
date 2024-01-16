@@ -49,12 +49,15 @@
         <aside class="text-right">
             {#if !$page.props.auth.user}
                 <h3 class="text-2xl">Want to contribute?</h3>
-                <p class="ml-auto w-2/3 mb-2">
+                <p class="ml-auto mb-2 w-2/3">
                     We are always looking for chroniclers to transcribe audio
                     into new Reports.
                 </p>
                 <p>
-                    <a use:inertia href={route('register')} class="text-lg font-semi">Join Today!</a>
+                    <a
+                        use:inertia
+                        href={route('register')}
+                        class="font-semi text-lg">Join Today!</a>
                 </p>
             {/if}
         </aside>

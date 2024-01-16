@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\Source;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Inertia\Response;
 
 class EventController extends Controller
@@ -55,11 +55,9 @@ class EventController extends Controller
     {
         $validated = $request->validated();
         $event = Event::create($validated);
-        foreach ($validated['sources'] as $file) {
-            $source = $event->sources()->create(['name' => $file->getClientOriginalName()]);
-            $source->update(['filename' => implode('_', [$event->id, $source->id, $file->hashName()])]);
-            $file->storePubliclyAs(Source::DIRECTORY, $source->filename);
-        }
+        foreach (($validated['sources'] ?? []) as $i => $file)
+            Source::createFromFile($event, $file, $i);
+
         return to_route('event.update', compact('event'))->with('status', 'Event successfuly created!');
     }
 
@@ -88,8 +86,11 @@ class EventController extends Controller
     {
         $validated = $request->validated();
         $event->update($validated);
+        $max = $event->sources->max('id');// Get max, not count
+        foreach (($validated['sources'] ?? []) as $i => $file)
+            Source::createFromFile($event, $file, $max + 1 + $i);
 
-        return to_route('event.update', compact($event))->with('status', 'Event successfully updated!');
+        return to_route('event.update', compact('event'))->with('status', 'Event successfully updated!');
     }
 
     /**

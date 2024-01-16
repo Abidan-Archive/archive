@@ -2,22 +2,22 @@
     import Card from '@/Components/Card.svelte';
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
-    import Modal from '@/Components/Modal.svelte';
+    import Dialog from '@/Components/modals/Dialog.svelte';
     import { formatToInputDateString, route } from '@/Utils';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
-    import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toast';
+    import { onMount, getContext } from 'svelte';
+    import { addToast, addFlash } from '@/Stores/toast';
 
     onMount(() => {
-        if ($page.props.flash)
+        if ($page.props.status)
             addToast({ message: status, type: 'success', timeout: false });
     });
 
+    const { open } = getContext('simple-modal');
+
     export let event;
 
-    let showDeleteConfirmModal = false;
-    let sourceToDelete = null;
     let form = useForm({
         name: event.name,
         date: formatToInputDateString(event.date),
@@ -42,19 +42,51 @@
     }
 
     function handleEventSubmit() {
-        $form.patch(route('event.update', event.id));
-    }
-    function handleRenameSourceSubmit(id) {
-        // router.update(route(''))
+        router.post(
+            route('event.update', event.id),
+            {
+                _method: 'put',
+                ...$form,
+            },
+            { forceFormData: true }
+        );
+        // $form.put(route('event.update', event.id), { forceFormData: true });
     }
 
-    function handleDeleteSourceClicked(id) {
-        showDeleteConfirmModal = true;
-        sourceToDelete = id;
+    // Let's use the same form for each source
+    let renameSource = useForm({
+        name: null,
+    });
+    function handleRenameSourceSubmit(source) {
+        // And set the name on submit
+        $renameSource.name = source.name;
+        // Then submit to the proper source
+        $renameSource.put(
+            route('event.source.update', [source.event_id, source.id]),
+            {
+                // Handle via toast
+                onSuccess: () => addFlash($page.props.flash),
+                onError: () =>
+                    addToast({
+                        message: $renameSource.errors.name,
+                        type: 'error',
+                    }),
+            }
+        );
     }
-    function handleDeleteSourceConfirmed() {
-        showDeleteConfirmModal = false;
-        // router.destroy(route(''), sourceToDelete);
+
+    function handleDeleteSourceSubmit(source) {
+        router.delete(
+            route('event.source.destroy', [source.event_id, source.id]),
+            {
+                onSuccess: () => addFlash($page.props.flash),
+                onError: () =>
+                    addToast({
+                        message: 'Uh oh something went wrong.',
+                        type: 'error',
+                    }),
+            }
+        );
     }
 </script>
 
@@ -141,47 +173,37 @@
 <section>
     <h3 class="my-4 text-xl">Manage Sources</h3>
     <div class="flex flex-col gap-5">
-        {#each event.sources as { id, name, path }}
+        {#each event.sources as source}
             <Card class="flex items-center justify-between">
                 <form
                     method="PATCH"
                     on:submit|preventDefault={() =>
-                        handleRenameSourceSubmit(id)}
+                        handleRenameSourceSubmit(source)}
                     class="flex items-center gap-1">
                     <Button href={route('home')}>Stub</Button>
-                    <TextInput id={'source-' + id} bind:value={name} />
+                    <TextInput
+                        id={'source-' + source.id}
+                        bind:value={source.name} />
                     <Button type="submit">Rename</Button>
                 </form>
-                <audio src={path} controls />
+                <audio src={source.url} controls />
                 <Button
                     variant="danger"
-                    on:click={() => handleDeleteSourceClicked(id)}>
+                    on:click={() => {
+                        open(Dialog, {
+                            message:
+                                'Are you sure you want to delete this source? All attached stubs will be deleted regardless of completion.',
+                            onOkay: () => handleDeleteSourceSubmit(source),
+                            closeButton: false,
+                            closeOnOuterClick: false,
+                        });
+                    }}>
                     Delete
                 </Button>
             </Card>
         {/each}
     </div>
 </section>
-
-<Modal bind:visible={showDeleteConfirmModal}>
-    <h2 slot="header" class="mb-5 text-xl">Are you sure you want to delete?</h2>
-
-    <div class="py-5">
-        <p>
-            By deleting a source you also delete all of the attached stubs
-            regardless of completion.
-        </p>
-        <p>Are you sure you want to do this?</p>
-    </div>
-
-    <div slot="footer" class="mt-5 flex justify-between">
-        <Button variant="danger" on:click={handleDeleteSourceConfirmed}
-            >Yes, Delete</Button>
-        <Button on:click={() => (showDeleteConfirmModal = false)}>
-            Cancel
-        </Button>
-    </div>
-</Modal>
 
 <style lang="postcss">
     #dropzone-container :global(.dropzone) {
