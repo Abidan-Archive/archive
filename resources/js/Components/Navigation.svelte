@@ -70,9 +70,9 @@
                 </div>
             </a>
             <!-- Mobile menu button -->
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div on:click={() => (showMenu = !showMenu)} class="flex md:hidden">
+            <div class="flex md:hidden">
                 <button
+                    on:click={() => (showMenu = !showMenu)}
                     type="button"
                     class="rounded-lg bg-gray-800 p-2 text-white hover:bg-gray-700 focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 active:bg-gray-800 md:hidden">
                     <svelte:component this={!showMenu ? Hamburger : XMark} />
@@ -90,6 +90,7 @@
                     <a
                         class="text-white-500 flex hover:text-primary-300 "
                         use:inertia
+                        on:click={() => showMenu = false}
                         {href}>
                         <svelte:component this={icon} class="mx-2 h-6 w-6" />
                         {label}
@@ -97,6 +98,7 @@
                 {:else}
                     <a
                         class="text-white-500 flex hover:text-primary-300 "
+                        on:click={() => showMenu = false}
                         {href}>
                         <svelte:component this={icon} class="mx-2 h-6 w-6" />
                         {label}
