@@ -1,4 +1,5 @@
 import { createInertiaApp } from '@inertiajs/svelte';
+import {mount} from 'svelte';
 
 import '../scss/app.scss';
 import Layout from './Layouts/Layout.svelte';
@@ -12,7 +13,7 @@ createInertiaApp({
         return { default: page.default, layout: page.layout || Layout };
     },
     setup({ el, App, props }) {
-        new App({ target: el, props, hydrate: true });
+        mount(App, { target: el }, props);
     },
     progress: {
         color: '#326695',
