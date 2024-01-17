@@ -3,7 +3,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { Play, Trash } from '@/Components/icons';
-    import { secondsToDuration, durationToSeconds } from '@/Utils';
+    import { secondsToDuration, durationToSeconds } from '@/lib';
 
     export let event;
     let scrubber;

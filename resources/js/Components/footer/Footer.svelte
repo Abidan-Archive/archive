@@ -1,6 +1,6 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
-    import route from '@/Utils/route';
+    import route from '@/lib/route';
     import FooterIcon from '@/Components/footer/FooterIcon.svelte';
     import {
         Reddit,

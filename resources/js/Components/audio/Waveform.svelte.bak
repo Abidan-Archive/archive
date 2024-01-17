@@ -15,7 +15,7 @@
         Previous,
         Scissors,
     } from '@/Components/icons';
-    import { secondsToDuration, durationToSeconds } from '@/Utils';
+    import { secondsToDuration, durationToSeconds } from '@/lib';
 
     export let src;
     export let regions = {};

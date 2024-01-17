@@ -1,8 +1,7 @@
 <script>
-    import Oddment from '@/Utils/oddment.js';
     import { Copy, Heart, Link } from '@/Components/icons';
     import { addToast } from '@/Stores/toast';
-    import { cn, route } from '@/Utils';
+    import { cn, route, Oddment } from '@/lib';
     import { inertia, router } from '@inertiajs/svelte';
 
     let className;

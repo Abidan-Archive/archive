@@ -1,6 +1,6 @@
 <script>
     import { page } from '@inertiajs/svelte';
-    import { cn, route } from '@/Utils';
+    import { cn, route } from '@/lib';
     import { inertia } from '@inertiajs/svelte';
     import Star from '@/Components/Star.svelte';
     import Heart from '@/Components/icons/Heart.svelte';

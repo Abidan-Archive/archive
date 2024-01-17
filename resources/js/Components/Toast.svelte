@@ -8,7 +8,7 @@
         CircleInfo,
         XMark,
     } from '@/components/icons';
-    import cn from '@/utils/cn.js';
+    import cn from '@/lib/cn.js';
 
     const dispatch = createEventDispatcher();
 

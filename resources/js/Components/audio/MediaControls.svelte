@@ -59,13 +59,15 @@
     <div class="w-1/6 self-center justify-self-end text-right">
         <button
             title="create a segment"
+            class="hover:text-typo-600"
             on:click={() => dispatch('zoom', false)}>
             <MagnifyingGlassMinus />
         </button>
         <button
             title="create a segment"
+            class="hover:text-typo-600"
             on:click={() => dispatch('zoom', true)}>
-            <MagnifyingGlassPlus />
+            <MagnifyingGlassPlus  />
         </button>
     </div>
 </div>

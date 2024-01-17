@@ -1,5 +1,5 @@
 <script>
-    import cn from '@/Utils/cn';
+    import cn from '@/lib/cn';
     import { useForm } from '@inertiajs/svelte';
     import Lens from '@/Components/icons/Lens';
 

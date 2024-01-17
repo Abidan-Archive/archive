@@ -1,11 +1,11 @@
 <script>
-    import route from '@/Utils/route';
+    import route from '@/lib/route';
     import { fade } from 'svelte/transition';
     import Page from '@/Components/Page.svelte';
     import SortBy from '@/Components/SortBy.svelte';
     import TextInput from '@/Components/forms/TextInput.svelte';
-    import cn from '@/Utils/cn';
-    import { getContrastYIQ } from '@/Utils/color';
+    import cn from '@/lib/cn';
+    import { getContrastYIQ } from '@/lib/color';
     import { inertia, router } from '@inertiajs/svelte';
 
     export let tags;

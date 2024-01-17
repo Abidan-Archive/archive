@@ -34,6 +34,7 @@ Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handle
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
 Route::resource('event.source.stub', StubController::class);
+Route::get('/event/{event}/source/{source}', [SourceController::class, 'show'])->name('event.source.show');
 Route::put('/event/{event}/source/{source}', [SourceController::class, 'update'])->name('event.source.update');
 Route::delete('/event/{event}/source/{source}', [SourceController::class, 'destroy'])->name('event.source.destroy');
 Route::get('/stubs', [StubController::class, 'all'])->name('stubs.all');

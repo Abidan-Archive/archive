@@ -1,5 +1,5 @@
 <script>
-    import cn from '@/Utils/cn';
+    import cn from '@/lib/cn';
     import { ChevronUp, ChevronDown, ChevronUpDown } from '@/Components/icons';
 
     export let state;

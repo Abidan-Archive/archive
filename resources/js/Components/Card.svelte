@@ -1,5 +1,5 @@
 <script>
-    import cn from '@/Utils/cn';
+    import cn from '@/lib/cn';
 
     let className = '';
     export { className as class };

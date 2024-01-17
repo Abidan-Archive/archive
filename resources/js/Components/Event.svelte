@@ -1,7 +1,7 @@
 <script>
-    import Oddment from '@/Utils/oddment.js';
-    import cn from '@/Utils/cn';
-    import route from '@/Utils/route';
+    import Oddment from '@/lib/oddment.js';
+    import cn from '@/lib/cn';
+    import route from '@/lib/route';
     import { Link } from '@/Components/icons';
     import { addToast } from '@/Stores/toast';
     import { inertia } from '@inertiajs/svelte';

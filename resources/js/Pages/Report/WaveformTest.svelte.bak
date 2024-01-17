@@ -2,7 +2,7 @@
     import Waveform from '@components/Waveform.svelte';
     import Card from '@components/Card.svelte';
     import { Play, Trash } from '@components/icons';
-    import { secondsToDuration, durationToSeconds } from '@/utils';
+    import { secondsToDuration, durationToSeconds } from '@/lib';
 
     export let event;
     let scrubber;

@@ -11,7 +11,7 @@
         User,
         XMark,
     } from '@/Components/icons';
-    import route from '@/Utils/route';
+    import route from '@/lib/route';
 
     // External links through use:inertia feels bad, see if we can get a change
     // https://github.com/inertiajs/inertia/issues/1719#issuecomment-1890295472

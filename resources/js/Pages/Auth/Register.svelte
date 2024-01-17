@@ -1,7 +1,7 @@
 <script>
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
-    import { cn, route } from '@/Utils';
+    import { cn, route } from '@/lib';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 

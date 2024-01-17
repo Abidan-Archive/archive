@@ -3,7 +3,7 @@
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Dialog from '@/Components/modals/Dialog.svelte';
-    import { formatToInputDateString, route } from '@/Utils';
+    import { formatToInputDateString, route } from '@/lib';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
     import { onMount, getContext } from 'svelte';
@@ -186,7 +186,7 @@
                         bind:value={source.name} />
                     <Button type="submit">Rename</Button>
                 </form>
-                <audio src={source.url} controls />
+                <audio src={source.url} controls class="z-0" />
                 <Button
                     variant="danger"
                     on:click={() => {

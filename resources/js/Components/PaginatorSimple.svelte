@@ -1,5 +1,5 @@
 <script>
-    import cn from '@src/Utils/cn';
+    import cn from '@src/lib/cn';
     import { inertia } from '@inertiajs/svelte';
     import { Previous, Next } from '@/Components/icons';
 

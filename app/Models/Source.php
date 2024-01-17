@@ -53,7 +53,7 @@ class Source extends Model
 
     protected function url(): Attribute {
         return Attribute::make(get: fn($value, $attributes) =>
-            Storage::url(self::DIRECTORY.'/'.$attributes['filename']));
+            route('event.source.show', [$attributes['event_id'], $attributes['id']]));
     }
 
     /**
@@ -75,9 +75,9 @@ class Source extends Model
      * Create a dat file from audiowaveform for fast waveform rendering when scrubbing
      */
     private static function createDat(string $filename): void {
-        $dir = Storage::disk('public')->path(self::DIRECTORY.'/');
+        $dir = Storage::disk('public')->path(self::DIRECTORY);
         $out = pathinfo($filename, PATHINFO_FILENAME).'.dat';
-        $process = new Process(['audiowaveform', '-q', '-b 8', '-i', $dir.$filename, '-o', $dir.$out]);
+        $process = new Process(['audiowaveform', '-q', '-b 8', '-i', "$dir/$filename", '-o', "$dir/$out"]);
         $process->run();
         if (!$process->isSuccessful()) throw new ProcessFailedException($process);
     }

@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
-    import route from '@/Utils/route';
+    import route from '@/lib/route';
     const contributors = [
         { nick: '🍑 Railalis', name: 'Railalis#4470' },
         { nick: 'Entropy', name: 'Decadakon#1432' },
