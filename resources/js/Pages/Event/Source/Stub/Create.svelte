@@ -1,16 +1,24 @@
 <script>
     import { onMount, onDestroy, getContext } from 'svelte';
+    import { page, router } from '@inertiajs/svelte';
     import Peaks from 'peaks.js';
-    import Card from '@/Components/Card.svelte';
-    import { Play, Trash } from '@/Components/icons';
+
     import { Button, IconButton } from '@/Components/forms';
-    import MediaControls from '@/Components/audio/MediaControls.svelte';
+    import { Play, Pause, Trash } from '@/Components/icons';
+    import { addFlash } from '@/Stores/toast.js';
+    import Card from '@/Components/Card.svelte';
     import Dialog from '@/Components/Modals/Dialog.svelte';
+    import MediaControls from '@/Components/audio/MediaControls.svelte';
+    import Page from '@/Components/Page.svelte';
+    import route from '@/lib/route.js';
+
+    // Todo:
+    // - Handle errors / form validation for stubs
+    // - Delete dialog z-indexing issues
 
     export let event;
     export let source;
 
-    // Props
     let audioUrl = source.url;
     let waveformDataUrl = source.dat_url;
     let audioContentType = 'audio/mpeg';
@@ -24,9 +32,13 @@
     let currentTime = 0;
     let duration;
     let playing = false;
+
     let segments = [];
+    let segmentPlaying = null;
 
     const { open } = getContext('simple-modal');
+
+    addFlash($page.props?.flash);
 
     onMount(() => {
         initPeaks();
@@ -93,6 +105,7 @@
         });
         peaks.on('player.pause', () => {
             playing = false;
+            segmentPlaying = null;
         });
         peaks.on(
             'segments.add',
@@ -111,6 +124,13 @@
                 segment.endTime
             );
         });
+        // Create all the previous created segments
+        peaks.segments.add(source.stubs.map((stub) => ({
+            startTime: stub.from,
+            endTime: stub.to,
+            editable: true,
+            blurb: stub.prompt,
+        })));
     }
 
     function seek(t) {
@@ -129,6 +149,7 @@
             startTime: time,
             endTime: time + 10,
             editable: true,
+            blurb: '',
         });
     }
     function zoom(e) {
@@ -146,6 +167,7 @@
         if (!peaks || !segment) return;
         console.log('playing segment id: ', segment?.id);
         peaks.player.playSegment(segment);
+        segmentPlaying = segment.id;
     }
     var debounceTimer;
     function debounce(callback, wait = 500) {
@@ -178,43 +200,49 @@
             console.log('segment end update', segment, e);
         });
     }
-
-    function saveWork() {
-        console.log({ segments });
+    function updateSegmentBlurb(e, segment) {
+        return debounce(() => {
+            if (!peaks || !e.target.value) return;
+            segment.update({ blurb: e.target.value });
+            console.log('segment blurb update', segment, e);
+        });
     }
 
-    // Todo:
-    // - Blub and data correlation for submit, data bundling
-    // - Adjust segment creation for start stop
-    // x Keybindings, space enter left right shift left shift right
-    // - Validation on blurbs to be filled
-    // - Save to local on timer or significant changes
-    // - Reload already created segments
     let isShiftHeld = false;
     function onKeyDown(e) {
         if (e.repeat) return;
-        console.log(e);
         if (e.key === 'Shift') return (isShiftHeld = true);
         switch (e.code) {
             case 'Space':
+                if (e.target.tagName.toLowerCase() === 'input') return;
+                e.preventDefault();
                 return playpause();
             case 'Enter':
                 return isShiftHeld && addSegment();
             case 'ArrowRight':
+                if (e.target.tagName.toLowerCase() === 'input') return;
+                e.preventDefault();
                 return seek(isShiftHeld ? 5 : 1);
             case 'ArrowLeft':
+                if (e.target.tagName.toLowerCase() === 'input') return;
+                e.preventDefault();
                 return seek(isShiftHeld ? -5 : -1);
         }
     }
     function onKeyUp(e) {
         if (e.key === 'Shift') isShiftHeld = false;
     }
+
+    function submit() {
+        const stubs = segments.map((s) => ({from: s.startTime, to: s.endTime, prompt: s.blurb}));
+        router.post(route('event.source.stub.store', [event.id, source.id]), {stubs}, {
+            onSuccess: () => addFlash($page.props?.flash),
+        });
+    }
 </script>
 
-<svelte:window
-    on:keydown|preventDefault={onKeyDown}
-    on:keyup|preventDefault={onKeyUp} />
-<div class="container mx-auto flex w-full flex-col gap-5">
+<svelte:window on:keydown={onKeyDown} on:keyup={onKeyUp} />
+<Page class="flex w-full flex-col gap-5">
     <figure class="flex flex-col items-center gap-2">
         <figcaption class="my-2">{event.name} - {source.name}</figcaption>
         <div id="overview-container" bind:this={overviewWaveformRef} />
@@ -236,76 +264,87 @@
     </figure>
     {#if !!segments && !!segments?.length}
         <hr />
-        <div class="flex flex-col justify-center gap-2">
-            {#each segments as segment}
-                <Card
-                    id={'segment-' + segment.id}
-                    class="flex items-center justify-start gap-2">
-                    <IconButton
-                        style={`background-color:${segment.color}`}
-                        light
-                        on:click={playSegment(segment)}>
-                        <Play /></IconButton>
-                    <div class="flex flex-col">
-                        <div class="flex items-center gap-2">
-                            <label for={'start_' + segment.id} class="flex-1"
-                                >Start</label>
-                            <input
-                                id={'start_' + segment.id}
-                                type="text"
-                                class="h-5 w-20 rounded text-black"
-                                value={segment.startTime}
-                                on:input={(e) =>
-                                    updateSegmentStart(e, segment)} />
+        <form method="POST" on:submit|preventDefault={submit}>
+            <div class="flex flex-col justify-center gap-2 mb-8">
+                {#each segments as segment}
+                    <Card
+                        id={'segment-' + segment.id}
+                        class="flex items-center justify-start gap-2">
+                        <IconButton
+                            style={`background-color:${segment.color}`}
+                            light
+                            on:click={segmentPlaying === segment.id
+                                ? playpause()
+                                : playSegment(segment)}>
+                            <svelte:component
+                                this={segmentPlaying === segment.id
+                                    ? Pause
+                                    : Play} />
+                        </IconButton>
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-2">
+                                <label
+                                    for={'start_' + segment.id}
+                                    class="flex-1">Start</label>
+                                <input
+                                    id={'start_' + segment.id}
+                                    name=""
+                                    type="text"
+                                    class="h-5 w-20 rounded text-black"
+                                    value={segment.startTime}
+                                    on:input={(e) =>
+                                        updateSegmentStart(e, segment)}
+                                    required />
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <label for={'end_' + segment.id} class="flex-1"
+                                    >End</label>
+                                <input
+                                    id={'end_' + segment.id}
+                                    type="text"
+                                    class="h-5 w-20 rounded text-black"
+                                    value={segment.endTime}
+                                    on:input={(e) =>
+                                        updateSegmentEnd(e, segment)}
+                                    required />
+                            </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <label for={'end_' + segment.id} class="flex-1"
-                                >End</label>
+                        <div class="mx-4 flex-1">
+                            <label for={segment.id + '_label'} class="sr-only"
+                                >Blurb</label>
                             <input
-                                id={'end_' + segment.id}
+                                id={segment.id + '_label'}
                                 type="text"
-                                class="h-5 w-20 rounded text-black"
-                                value={segment.endTime}
-                                on:input={(e) =>
-                                    updateSegmentEnd(e, segment)} />
+                                class="w-full rounded text-black"
+                                placeholder="Blurb"
+                                on:input={(e) => updateSegmentBlurb(e, segment)} />
                         </div>
-                    </div>
-                    <div class="mx-4 flex-1">
-                        <label for={segment.id + '_label'} class="sr-only"
-                            >Blurb</label>
-                        <input
-                            id={segment.id + '_label'}
-                            type="text"
-                            class="w-full rounded text-black"
-                            placeholder="Blurb"
-                            required />
-                    </div>
-                    <IconButton
-                        on:click={() => {
-                            open(Dialog, {
-                                message:
-                                    'Are you sure you want to delete this clip?',
-                                onOkay: () => {
-                                    if (!peaks) return;
-                                    console.log('segment deleted', segment);
-                                    peaks.segments.removeById(segment.id);
-                                },
-                                closeButton: false,
-                                closeOnOuterClick: false,
-                            });
-                        }}>
-                        <Trash />
-                    </IconButton>
-                </Card>
-            {/each}
-        </div>
-        <hr />
-        <div class="flex justify-end gap-2">
-            <Button on:click={saveWork}>Save Work</Button>
-            <Button>Submit</Button>
-        </div>
+                        <IconButton
+                            on:click={() => {
+                                open(Dialog, {
+                                    message:
+                                        'Are you sure you want to delete this clip?',
+                                    onOkay: () => {
+                                        if (!peaks) return;
+                                        console.log('segment deleted', segment);
+                                        peaks.segments.removeById(segment.id);
+                                    },
+                                    closeButton: false,
+                                    closeOnOuterClick: false,
+                                });
+                            }}>
+                            <Trash />
+                        </IconButton>
+                    </Card>
+                {/each}
+            </div>
+            <hr />
+            <div class="flex justify-end gap-2">
+                <Button type="submit">Submit</Button>
+            </div>
+        </form>
     {/if}
-</div>
+</Page>
 
 <style lang="postcss">
     #zoomview-container,

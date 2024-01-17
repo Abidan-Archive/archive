@@ -6,6 +6,8 @@ use App\Http\Requests\StoreStubRequest;
 use App\Models\Event;
 use App\Models\Source;
 use App\Models\Stub;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class StubController extends Controller
@@ -32,6 +34,7 @@ class StubController extends Controller
      */
     public function create(Event $event, Source $source): Response
     {
+        $source->load('stubs');
         return inertia(
             'Event/Source/Stub/Create',
             [
@@ -43,26 +46,20 @@ class StubController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStubRequest $request)
+    public function store(Event $event, Source $source, StoreStubRequest $request): RedirectResponse
     {
-        // $validated = $request->validated();
-        // foreach(['stubs'] as $stub) {
-        //
-        // }
-    }
+        $validated = $request->validated();
+        $stubs = collect($validated['stubs'])->map(fn(array $stub, int $idx) => $stub += ['id' => $idx]);
+        $source->stubs()->delete(); // We're mass replacing all the roles
+        $source->stubs()->createMany($stubs);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Stub $stub)
-    {
-        //
+        return redirect()->back()->with('flash', ['message' => 'Created '.$stubs->count().' stubs successfully!']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stub $stub)
+    public function destroy(Stub $stub): RedirectResponse
     {
         //
     }

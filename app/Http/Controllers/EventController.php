@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Models\Event;
 use App\Models\Source;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\UploadedFile;
 use Inertia\Response;
 
 class EventController extends Controller

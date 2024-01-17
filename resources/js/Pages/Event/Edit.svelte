@@ -180,7 +180,7 @@
                     on:submit|preventDefault={() =>
                         handleRenameSourceSubmit(source)}
                     class="flex items-center gap-1">
-                    <Button href={route('home')}>Stub</Button>
+                    <Button href={route('event.source.stub.create', [source.event_id, source.id])}>Stub</Button>
                     <TextInput
                         id={'source-' + source.id}
                         bind:value={source.name} />

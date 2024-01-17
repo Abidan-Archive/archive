@@ -24,19 +24,14 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-// Route::get('/testaudio', fn() => response()->file('storage/sources/3_3_YZTShKdDHOrptCtEZmPplZASRMYYk4gRBqBnSAME.m4a'));
-// Route::get('/testaudio', fn() => response()->file('storage/sources/Bloodline_Release_Part_1.mp3'));
-
 // Redirects for legacy
 Route::get('/events/{event}', [HomeController::class, 'redirect']);
 Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handleRedirect');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
-Route::resource('event.source.stub', StubController::class);
-Route::get('/event/{event}/source/{source}', [SourceController::class, 'show'])->name('event.source.show');
-Route::put('/event/{event}/source/{source}', [SourceController::class, 'update'])->name('event.source.update');
-Route::delete('/event/{event}/source/{source}', [SourceController::class, 'destroy'])->name('event.source.destroy');
+Route::resource('event.source.stub', StubController::class)->except(['update']); // Only patch
+Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
 Route::get('/stubs', [StubController::class, 'all'])->name('stubs.all');
 Route::get('/test', fn() => inertia('Test'));
 

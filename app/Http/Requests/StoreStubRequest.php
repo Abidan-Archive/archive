@@ -2,19 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreStubRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(User $user): bool
-    {
-        return $user->can('edit_event');
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,7 +14,9 @@ class StoreStubRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'stubs.*.from' => 'required|numeric|lt:stubs.*.to',
+            'stubs.*.to' => 'required|numeric|min:0|gt:stubs.*.from',
+            'stubs.*.prompt' => 'nullable',
         ];
     }
 }

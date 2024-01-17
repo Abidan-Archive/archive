@@ -11,13 +11,7 @@ class Stub extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prompt', 'from', 'to'];
-
-    protected static function booted(): void {
-        static::creating(fn(Stub $model) =>
-            $model->id = (($model->source->stubs->max('id') ?? 0) + 1),
-        );
-    }
+    protected $fillable = ['id', 'prompt', 'from', 'to'];
 
     public function event(): HasOneThrough {
         return $this->hasOneThrough(Event::class, Source::class);
