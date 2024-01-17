@@ -67,7 +67,7 @@
             <a href="https://svelte.dev/">Svelte</a>, and
             <a href="https://tailwindcss.com/">Tailwindcss</a>. With these
             technologies, the aim is that the website is easy to maintain and
-            anyone can quickly become familiar with it's workings and
+            anyone can quickly become familiar with its workings and
             contribute.
         </p>
     </section>
