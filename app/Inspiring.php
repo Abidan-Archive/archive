@@ -26,7 +26,7 @@ class Inspiring {
             "So what if he turned all shoes into ducks?",
             "While Honor has never won a single battle,\nDeceit wins wars.",
             // Last Horizon
-            "To survive in this galaxy, you nee a wand in one ahnd and a gun in the other.",
+            "To survive in this galaxy, you nee a wand in one hand and a gun in the other.",
             "Would you like to compete for control of\nThe Last Horizon?"
         ])->random();
     }
