@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 
 class TagController extends Controller
 {
@@ -33,18 +35,21 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Tag/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\StoreTagRequest   $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTagRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $validated['name'] = strtolower($validated['name']);
+        $tag = Tag::create($validated);
+        return to_route('tag.update', compact('tag'))->with('status', 'Tag successfully created.');
     }
 
     /**
@@ -68,19 +73,22 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return inertia('Tag/Create');
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\UpdateTagRequest   $request
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
-        //
+        $validated = $request->validated();
+        $validated['name'] = strtolower($validated['name']);
+        $tag->update($validated);
+        return to_route('tag.update', compact('tag'))->with('status', 'Tag successfully updated.');
     }
 
     /**
@@ -91,6 +99,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return to_route('tag.index')->with('status', 'Tag successfully deleted.');
     }
 }

@@ -5,7 +5,7 @@
     import SortBy from '@/Components/SortBy.svelte';
     import TextInput from '@/Components/forms/TextInput.svelte';
     import cn from '@/lib/cn';
-    import { getContrastYIQ } from '@/lib/color';
+    import { getContrastText } from '@/lib/color';
     import { inertia, router } from '@inertiajs/svelte';
 
     export let tags;
@@ -73,8 +73,8 @@
                 href={route('tag.show', tag)}
                 style={`background-color: ${tag.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold ease-in-out',
-                    getContrastYIQ(tag.color)
+                    'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
+                    getContrastText(tag.color)
                 )}
                 transition:fade|local>
                 {tag.name} ({tag.reports_count})</a>
