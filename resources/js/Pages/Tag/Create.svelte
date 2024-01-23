@@ -1,9 +1,9 @@
 <script>
-    import { fade } from 'svelte/transition';
     import { getRandomColor, getContrastText } from '@/lib/color.js';
     import { useForm } from '@inertiajs/svelte';
     import Page from '@/Components/Page.svelte';
     import cn from '@/lib/cn.js';
+    import route from '@/lib/route.js';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
 
     let form = useForm({
@@ -16,17 +16,17 @@
 </script>
 
 <Page header="Create Tag">
-    <div class="flex">
+    <div class="flex gap-8">
         <section class="w-1/3">
             <h3>Live Preview</h3>
-            <p>This is what your tag will look like...</p>
+            <p class="mb-4">This is what your tag will look like...</p>
             <button
                 style={`background-color: ${$form.color};`}
                 class={cn(
                     'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
-                    getContrastText($form.color)
-                )}
-                transition:fade|local>{$form.name}</button>
+                    getContrastText($form.color),
+                    'mx-auto'
+                )}>{$form.name}</button>
         </section>
         <section class="w-2/3">
             <form

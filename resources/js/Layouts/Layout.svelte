@@ -1,8 +1,13 @@
 <script>
+    import { page } from '@inertiajs/svelte';
+
     import Modal from 'svelte-simple-modal';
     import Navigation from '@/Components/Navigation.svelte';
     import Footer from '@/Components/footer/Footer.svelte';
     import Toasts from '@/Components/Toasts.svelte';
+    import { addFlash } from '@/Stores/toast.js';
+
+    $: addFlash($page.props.flash);
 </script>
 
 <svelte:head>

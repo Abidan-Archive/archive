@@ -49,7 +49,8 @@ class TagController extends Controller
         $validated = $request->validated();
         $validated['name'] = strtolower($validated['name']);
         $tag = Tag::create($validated);
-        return to_route('tag.update', compact('tag'))->with('status', 'Tag successfully created.');
+        return to_route('tag.update', compact('tag'))
+            ->with('flash', ['message'=>'Tag successfully created.']);
     }
 
     /**
@@ -73,7 +74,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return inertia('Tag/Create');
+        return inertia('Tag/Edit', compact('tag'));
     }
 
     /**
@@ -88,7 +89,8 @@ class TagController extends Controller
         $validated = $request->validated();
         $validated['name'] = strtolower($validated['name']);
         $tag->update($validated);
-        return to_route('tag.update', compact('tag'))->with('status', 'Tag successfully updated.');
+        return to_route('tag.update', compact('tag'))
+            ->with('flash', ['message' =>'Tag successfully updated.']);
     }
 
     /**
@@ -100,6 +102,6 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         $tag->delete();
-        return to_route('tag.index')->with('status', 'Tag successfully deleted.');
+        return to_route('tag.index')->with('flash', ['message' => 'Tag successfully deleted.']);
     }
 }

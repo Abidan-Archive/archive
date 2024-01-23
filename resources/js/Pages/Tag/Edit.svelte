@@ -1,11 +1,13 @@
 <script>
-    import { fade } from 'svelte/transition';
     import { getContrastText } from '@/lib/color.js';
     import { router, page, useForm } from '@inertiajs/svelte';
+    import { getContext } from 'svelte';
     import Page from '@/Components/Page.svelte';
     import cn from '@/lib/cn.js';
+    import route from '@/lib/route.js';
     import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
     import Dialog from '@/Components/modals/Dialog.svelte';
+    import {addFlash} from '@/Stores/toast.js';
 
     addFlash($page.props.flash);
 
@@ -18,10 +20,18 @@
         color: tag.color,
     });
     function submit() {
-        $form.put(route('tag.update'));
+        $form.put(route('tag.update', tag));
     }
-    function handleDelete() {
-        router.delete(route('tag.destroy'), tag);
+    function handleDeleteClick() {
+        open(Dialog, {
+        message: 'Are you sure you want to delete this tag?',
+        onOkay: deleteSubmit,
+        closeButton: false,
+        closeOnOuterClick: false,
+    })
+    }
+    function deleteSubmit() {
+        router.delete(route('tag.destroy', tag));
     }
 </script>
 
@@ -35,8 +45,7 @@
                 class={cn(
                     'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
                     getContrastText($form.color)
-                )}
-                transition:fade|local>{$form.name}</button>
+                )}>{$form.name}</button>
         </section>
         <section class="w-2/3">
             <form
@@ -66,15 +75,12 @@
                     <ErrorMessage message={$form.errors.color} />
                 </div>
             </form>
-            <div class="flex items-center space-between">
-                <Button on:click={open(Dialog, {
-                    message: 'Are you sure you want to delete this tag?',
-                    onOkay: () => handleDelete(),
-                    closeButton: false,
-                    closeOnOuterClick: false,
-                })}>Delete</Button>
-                <Button>Update</Button>
-            </div>
         </section>
     </div>
+    <section>
+        <div class="flex items-center justify-between">
+            <Button on:click={handleDeleteClick} variant="destructive">Delete</Button>
+            <Button form="update-form" on:click={submit}>Update</Button>
+        </div>
+    </section>
 </Page>
