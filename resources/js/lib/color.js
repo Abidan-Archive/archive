@@ -8,7 +8,7 @@ export const getContrastYIQ = (color) => {
 };
 
 export const getContrastText = (color) => {
-    return getContrastText(color) >= 128
+    return getContrastYIQ(color) >= 128
         ? 'text-base-700 hover:text-black'
         : 'text-typo-500 hover:text-white';
 };
