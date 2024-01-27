@@ -17,24 +17,23 @@
 </script>
 
 <form class={cn('flex', className)} on:submit|preventDefault={submit}>
-    <label for="simple-search" class="sr-only">Search</label>
-    <div class="relative w-full">
+    <div class="flex h-14 w-full justify-center">
         <div
-            class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-            <Lens />
+            class="relative m-0 h-full flex-1 border-2 border-primary-400 bg-black p-1.5 shadow-[0_0_0_0.10rem] shadow-transparent transition-all duration-500 focus-within:border-cyan-500 focus-within:shadow-base-500 hover:border-cyan-500 hover:shadow-base-500">
+            <label for="simple-search" class="sr-only">Search</label>
+            <input
+                type="text"
+                bind:value={$form.query}
+                id="simple-search"
+                placeholder="[Information Requested]"
+                class="group m-0 h-full w-full rounded-sm border-none bg-base-900 ring-0 placeholder:text-center focus:border-none focus:ring-0" />
         </div>
-        <input
-            type="text"
-            bind:value={$form.query}
-            id="simple-search"
-            class="focus:ring-black-800 focus:ring-black-500 block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5  pl-10 text-center text-sm font-bold text-white placeholder-gray-400 focus:border-primary-700"
-            placeholder="[Information Requested]" />
+        <button
+            type="submit"
+            disabled={$form.processing}
+            class="flex h-full w-20 items-center justify-center bg-primary-400 px-3 py-2 transition-colors duration-500 hover:bg-cyan-400 z-10">
+            <Lens class="block h-5 w-5 text-base-500" />
+            <span class="sr-only">Search Button</span>
+        </button>
     </div>
-    <button
-        type="submit"
-        disabled={$form.processing}
-        class="ml-2 rounded-lg border border-primary-700 bg-primary-700 p-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-400 dark:bg-primary-500 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-        <Lens class="h-5 w-5 text-white" />
-        <span class="sr-only">Search</span>
-    </button>
 </form>
