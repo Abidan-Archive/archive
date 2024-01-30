@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Report;
+
 return [
 
     /*
@@ -132,6 +134,12 @@ return [
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', null),
+        'index-settings' => [
+            Report::class => [
+                'filterableAttributes' => ['tags', 'date'],
+                'sortableAttributes' => ['id', 'date', 'likes'],
+            ],
+        ]
     ],
 
 ];

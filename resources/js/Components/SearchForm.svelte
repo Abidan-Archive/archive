@@ -31,7 +31,7 @@
         <button
             type="submit"
             disabled={$form.processing}
-            class="flex h-full w-20 items-center justify-center bg-primary-400 px-3 py-2 transition-colors duration-500 hover:bg-cyan-400 z-10">
+            class="z-10 flex h-full w-20 items-center justify-center bg-primary-400 px-3 py-2 transition-colors duration-500 hover:bg-cyan-400">
             <Lens class="block h-5 w-5 text-base-500" />
             <span class="sr-only">Search Button</span>
         </button>

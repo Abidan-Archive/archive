@@ -59,7 +59,8 @@ class Report extends Model implements Likeable
             'date' => $this->date,
             'footnote' => $this->footnote,
             'dialogues' => $this->dialogues->map->only(['speaker', 'line'])->all(),
-            'tags' => $this->tags->map->only('name')->all()
+            'tags' => $this->tags->pluck('name')->toArray(),
+            'likes' => $this->likes_count,
         ];
     }
 

@@ -69,6 +69,9 @@ class User extends Authenticatable implements MustVerifyEmail
             ->user()->associate($this)
             ->likeable()->associate($likeable)
             ->save();
+        if (method_exists($likeable, 'searchable'))
+            $likeable->refresh()->searchable();
+
 
         return $this;
     }
@@ -80,6 +83,8 @@ class User extends Authenticatable implements MustVerifyEmail
         $likeable->likes()
             ->whereHas('user', fn($q) => $q->whereId($this->id))
             ->delete();
+        if (method_exists($likeable, 'searchable'))
+          $likeable->refresh()->searchable();
 
         return $this;
     }
