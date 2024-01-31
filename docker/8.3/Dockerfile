@@ -50,6 +50,8 @@ RUN apt-get update \
     && echo "deb [signed-by=/etc/apt/keyrings/ppa_chris_needham.gpg] https://ppa.launchpadcontent.net/chris-needham/ppa/ubuntu jammy main" > /etc/apt/sources.list.d/ppa_chris_needham.list \
     && apt-get update \
     && apt-get install -y audiowaveform \
+    # CUSTOM, Add ffmpeg
+    && apt-get install -y ffmpeg \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
