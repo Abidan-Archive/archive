@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Response;
+use Log;
 
 class AdminController extends Controller
 {
@@ -27,9 +27,10 @@ class AdminController extends Controller
     public function assume(User $user): RedirectResponse {
         if (Auth::user()->cannot('assume')) abort(403);
 
+        Log::info('Admin assumed user', ['admin' => Auth::user()->id, 'user' => $user->id]);
         Auth::login($user);
 
         return to_route('home')
-            ->with('status', "You've successfully assumed the user!");
+            ->with('flash', ['message' => "You've successfully assumed the user!"]);
     }
 }
