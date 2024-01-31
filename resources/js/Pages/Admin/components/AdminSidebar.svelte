@@ -1,6 +1,6 @@
 <script>
     import { cn, route } from '@/lib';
-    import TextInput from '@/Components/forms/TextInput.svelte';
+    import Input from '@/Components/forms/Input.svelte';
     import { router, inertia } from '@inertiajs/svelte';
 
     const links = {
@@ -25,7 +25,7 @@
 
 <nav class={cn('overflow-hidden pr-4', className)}>
     <h2 class="mb-4 text-2xl">Navigation</h2>
-    <TextInput
+    <Input
         id="filter"
         class="mb-4 placeholder:text-center"
         name="filter"

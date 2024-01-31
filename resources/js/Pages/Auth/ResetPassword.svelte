@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { page, useForm } from '@inertiajs/svelte';
 
     let form = useForm('ResetPassword', {
@@ -22,7 +22,7 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email" value="Email" />
-                <TextInput
+                <Input
                     id="email"
                     class="mt-1 block w-full"
                     type="email"
@@ -34,7 +34,7 @@
             </div>
             <div class="mt-4">
                 <Label for="password" value="Password" />
-                <TextInput
+                <Input
                     id="password"
                     class="mt-1 block w-full"
                     type="password"
@@ -45,7 +45,7 @@
             </div>
             <div class="mt-4">
                 <Label for="password_confirmation" value="Confirm Password" />
-                <TextInput
+                <Input
                     id="password_confirmation"
                     class="mt-1 block w-full"
                     type="password"

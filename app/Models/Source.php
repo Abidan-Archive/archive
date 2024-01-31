@@ -53,7 +53,7 @@ class Source extends Model
 
     protected function url(): Attribute {
         return Attribute::make(get: fn($value, $attributes) =>
-            route('event.source.show', [$attributes['event_id'], $attributes['id']]));
+            Storage::url(self::DIRECTORY.'/'.$this->filename));
     }
 
     /**

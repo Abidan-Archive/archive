@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { cn, route } from '@/lib';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm('Register', {
@@ -23,7 +23,7 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="username" value="Username" />
-                <TextInput
+                <Input
                     id="username"
                     class="mt-1 block w-full"
                     name="username"
@@ -34,7 +34,7 @@
             </div>
             <div class="mt-4">
                 <Label for="email" value="Email" />
-                <TextInput
+                <Input
                     id="email"
                     class="mt-1 block w-full"
                     type="email"
@@ -45,7 +45,7 @@
             </div>
             <div class="mt-4">
                 <Label for="email_confirmation" value="Confirm Email" />
-                <TextInput
+                <Input
                     id="email_confirmation"
                     class="mt-1 block w-full"
                     type="email"
@@ -58,7 +58,7 @@
             </div>
             <div class="mt-4">
                 <Label for="password" value="Password" />
-                <TextInput
+                <Input
                     id="password"
                     class="mt-1 block w-full"
                     type="password"
@@ -70,7 +70,7 @@
             </div>
             <div class="mt-4">
                 <Label for="password_confirmation" value="Confirm Password" />
-                <TextInput
+                <Input
                     id="password_confirmation"
                     class="mt-1 block w-full"
                     type="password"

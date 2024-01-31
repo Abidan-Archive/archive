@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
@@ -23,7 +23,7 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="password" value="Password" />
-                <TextInput
+                <Input
                     id="password"
                     class="mt-1 block w-full"
                     type="password"

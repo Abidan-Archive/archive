@@ -34,6 +34,7 @@
         "clsx": "^1.2.1",
         "konva": "8.3.10",
         "peaks.js": "^2.1.0",
+        "svelecte": "^3.17.2",
         "svelte-file-dropzone": "^2.0.1",
         "svelte-simple-modal": "^1.6.1",
         "tailwind-merge": "^1.14.0",

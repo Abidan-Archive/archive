@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
     import { addToast } from '@/Stores/toast';
@@ -32,7 +32,7 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email" value="Email" />
-                <TextInput
+                <Input
                     id="email"
                     class="mt-1 block w-full"
                     type="email"

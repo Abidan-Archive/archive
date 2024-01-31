@@ -3,7 +3,7 @@
     import CircleX from '@/Components/icons/CircleX.svelte';
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
@@ -30,7 +30,7 @@
     }
 
     function submit() {
-        $form.post(route('event.store'), { forceFormData: true});
+        $form.post(route('event.store'), { forceFormData: true });
     }
 </script>
 
@@ -40,7 +40,7 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div class="block">
                 <Label for="name">Name</Label>
-                <TextInput
+                <Input
                     id="name"
                     name="name"
                     bind:value={$form.name}
@@ -50,7 +50,7 @@
             </div>
             <div class="mt-4 block">
                 <Label for="date">Date</Label>
-                <TextInput
+                <Input
                     id="date"
                     name="date"
                     type="date"
@@ -61,7 +61,7 @@
             </div>
             <div class="mt-4 block">
                 <Label for="location">Location (Place, Url, Etc.)</Label>
-                <TextInput
+                <Input
                     id="location"
                     name="location"
                     bind:value={$form.location}

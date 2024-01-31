@@ -5,9 +5,9 @@
     import Page from '@/Components/Page.svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import Dialog from '@/Components/modals/Dialog.svelte';
-    import {addFlash} from '@/Stores/toast.js';
+    import { addFlash } from '@/Stores/toast.js';
 
     addFlash($page.props.flash);
 
@@ -24,11 +24,11 @@
     }
     function handleDeleteClick() {
         open(Dialog, {
-        message: 'Are you sure you want to delete this tag?',
-        onOkay: deleteSubmit,
-        closeButton: false,
-        closeOnOuterClick: false,
-    })
+            message: 'Are you sure you want to delete this tag?',
+            onOkay: deleteSubmit,
+            closeButton: false,
+            closeOnOuterClick: false,
+        });
     }
     function deleteSubmit() {
         router.delete(route('tag.destroy', tag));
@@ -43,7 +43,7 @@
             <button
                 style={`background-color: ${$form.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
+                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
                     getContrastText($form.color)
                 )}>{$form.name}</button>
         </section>
@@ -52,10 +52,10 @@
                 id="update-form"
                 method="POST"
                 on:submit|preventDefault={submit}
-                class="flex flex-col gap-4 mb-4">
+                class="mb-4 flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <Label for="name">Name</Label>
-                    <TextInput
+                    <Input
                         id="name"
                         name="name"
                         bind:value={$form.name}
@@ -79,7 +79,8 @@
     </div>
     <section>
         <div class="flex items-center justify-between">
-            <Button on:click={handleDeleteClick} variant="destructive">Delete</Button>
+            <Button on:click={handleDeleteClick} variant="destructive"
+                >Delete</Button>
             <Button form="update-form" on:click={submit}>Update</Button>
         </div>
     </section>

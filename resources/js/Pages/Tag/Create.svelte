@@ -4,7 +4,7 @@
     import Page from '@/Components/Page.svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
 
     let form = useForm({
         name: null,
@@ -23,7 +23,7 @@
             <button
                 style={`background-color: ${$form.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
+                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
                     getContrastText($form.color),
                     'mx-auto'
                 )}>{$form.name}</button>
@@ -35,7 +35,7 @@
                 class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <Label for="name">Name</Label>
-                    <TextInput
+                    <Input
                         id="name"
                         name="name"
                         bind:value={$form.name}

@@ -16,6 +16,7 @@
         "league/commonmark": "^2.3",
         "marvinlabs/laravel-discord-logger": "^1.2",
         "meilisearch/meilisearch-php": "^1.5",
+        "staudenmeir/belongs-to-through": "^2.5",
         "symfony/process": "^6.4",
         "tightenco/ziggy": "^1.5"
     },

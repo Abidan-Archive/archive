@@ -6,7 +6,7 @@ use App\Http\Requests\StoreStubRequest;
 use App\Models\Event;
 use App\Models\Source;
 use App\Models\Stub;
-use Illuminate\Http\Request;
+use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
@@ -25,12 +25,27 @@ class StubController extends Controller
      * Show the all the stubs regardless of parent
      */
     public function all(): Response {
-        $stubs = Stub::all()->load(['event', 'source']);
+        $stubs = Stub::with(['event', 'source'])->orderBy('created_at')->paginate(20);
         return inertia('Stub', compact('stubs'));
     }
 
     /**
+    * Show the form to create a report from a stub
+    * audio playback
+    */
+    public function show(Event $event, Source $source, Stub $stub): Response {
+        $tags = Tag::select('id', 'name')->get();
+        return inertia('Event/Source/Stub/Show', [
+            'event' => $event->only('id', 'date'),
+            'source' => $source->only('id', 'url'),
+            'stub' => $stub,
+            'tags' => $tags,
+        ]);
+    }
+
+    /**
      * Show the form for creating a new resource.
+     * aka audio scrubber
      */
     public function create(Event $event, Source $source): Response
     {

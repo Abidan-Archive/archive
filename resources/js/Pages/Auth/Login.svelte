@@ -2,7 +2,7 @@
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { cn, route } from '@/lib';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
     import { addToast } from '@/Stores/toast';
@@ -29,7 +29,7 @@
             <div>
                 <Label for="email">Email</Label>
                 <!-- svelte-ignore a11y-autofocus -->
-                <TextInput
+                <Input
                     id="email"
                     name="email"
                     bind:value={$form.email}
@@ -41,7 +41,7 @@
 
             <div class="mt-4">
                 <Label for="password">Password</Label>
-                <TextInput
+                <Input
                     id="password"
                     type="password"
                     name="password"

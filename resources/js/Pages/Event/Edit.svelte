@@ -4,7 +4,7 @@
     import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
     import Dialog from '@/Components/modals/Dialog.svelte';
     import { formatToInputDateString, route } from '@/lib';
-    import { ErrorMessage, Label, Button, TextInput } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
     import { onMount, getContext } from 'svelte';
     import { addToast, addFlash } from '@/Stores/toast';
@@ -96,7 +96,7 @@
         <form method="POST" on:submit|preventDefault={handleEventSubmit}>
             <div class="block">
                 <Label for="name">Name</Label>
-                <TextInput
+                <Input
                     id="name"
                     name="name"
                     bind:value={$form.name}
@@ -106,7 +106,7 @@
             </div>
             <div class="mt-4 block">
                 <Label for="date">Date</Label>
-                <TextInput
+                <Input
                     id="date"
                     name="date"
                     type="date"
@@ -117,7 +117,7 @@
             </div>
             <div class="mt-4 block">
                 <Label for="location">Location (Place, Url, Etc.)</Label>
-                <TextInput
+                <Input
                     id="location"
                     name="location"
                     bind:value={$form.location}
@@ -180,8 +180,12 @@
                     on:submit|preventDefault={() =>
                         handleRenameSourceSubmit(source)}
                     class="flex items-center gap-1">
-                    <Button href={route('event.source.stub.create', [source.event_id, source.id])}>Stub</Button>
-                    <TextInput
+                    <Button
+                        href={route('event.source.stub.create', [
+                            source.event_id,
+                            source.id,
+                        ])}>Stub</Button>
+                    <Input
                         id={'source-' + source.id}
                         bind:value={source.name} />
                     <Button type="submit">Rename</Button>

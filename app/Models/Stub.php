@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Znck\Eloquent\Relations\BelongsToThrough;
+use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class Stub extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToThroughTrait;
 
     protected $fillable = ['id', 'prompt', 'from', 'to'];
 
-    public function event(): HasOneThrough {
-        return $this->hasOneThrough(Event::class, Source::class);
+    public function event():BelongsToThrough  {
+        return $this->belongsToThrough(Event::class, Source::class);
     }
 
     public function source(): BelongsTo {

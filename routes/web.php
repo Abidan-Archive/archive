@@ -30,7 +30,7 @@ Route::get('/redirect', [HomeController::class, 'handleRedirect'])->name('handle
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
-Route::resource('event.source.stub', StubController::class)->except(['update']); // Only patch
+Route::resource('event.source.stub', StubController::class)->except(['index', 'update']); // Only patch
 Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
 Route::get('/stubs', [StubController::class, 'all'])->name('stubs.all');
 Route::get('/test', fn() => inertia('Test'));

@@ -3,7 +3,7 @@
     import { fade } from 'svelte/transition';
     import Page from '@/Components/Page.svelte';
     import SortBy from '@/Components/SortBy.svelte';
-    import TextInput from '@/Components/forms/TextInput.svelte';
+    import Input from '@/Components/forms/Input.svelte';
     import cn from '@/lib/cn';
     import { getContrastText } from '@/lib/color';
     import { inertia, router } from '@inertiajs/svelte';
@@ -53,7 +53,7 @@
 
 <Page header="Tags">
     <div class="mb-4 flex justify-between">
-        <TextInput
+        <Input
             id="filter"
             name="filter"
             placeholder="Filter"
@@ -73,7 +73,7 @@
                 href={route('tag.show', tag)}
                 style={`background-color: ${tag.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold ease-in-out capitalize',
+                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
                     getContrastText(tag.color)
                 )}
                 transition:fade|local>
