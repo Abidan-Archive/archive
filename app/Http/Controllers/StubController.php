@@ -17,10 +17,6 @@ class StubController extends Controller
         $this->authorizeResource(Stub::class, 'stub');
     }
 
-    public function index(Event $event, Source $source): Response {
-        return null;
-    }
-
     /**
      * Show the all the stubs regardless of parent
      */
@@ -65,7 +61,7 @@ class StubController extends Controller
     {
         $validated = $request->validated();
         $stubs = collect($validated['stubs'])->map(fn(array $stub, int $idx) => $stub += ['id' => $idx]);
-        $source->stubs()->delete(); // We're mass replacing all the roles
+        $source->stubs()->delete(); // We're mass replacing all the stubs, this is expensive since they all run ffmpeg
         $source->stubs()->createMany($stubs);
 
         return redirect()->back()->with('flash', ['message' => 'Created '.$stubs->count().' stubs successfully!']);

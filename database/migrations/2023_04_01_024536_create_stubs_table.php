@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('from');
             $table->unsignedInteger('to');
             $table->string('prompt')->nullable();
-
+            $table->string('filename')->nullable(); // Only null on initial upload
 
             $table->timestamps();
 

@@ -12,6 +12,9 @@ use Storage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
+/**
+ * @mixin IdeHelperSource
+ */
 class Source extends Model
 {
     use HasFactory;
@@ -20,7 +23,7 @@ class Source extends Model
 
     protected $fillable = ['id', 'name', 'filename'];
 
-    protected $appends = ['url', 'dat_url'];
+    protected $appends = ['audioUrl', 'dat_url'];
 
     /**
     * Register methods to model hooks
@@ -51,7 +54,7 @@ class Source extends Model
             Storage::url(self::DIRECTORY.'/'.pathinfo($attributes['filename'], PATHINFO_FILENAME).'.dat'));
     }
 
-    protected function url(): Attribute {
+    protected function audioUrl(): Attribute {
         return Attribute::make(get: fn($value, $attributes) =>
             Storage::url(self::DIRECTORY.'/'.$this->filename));
     }
