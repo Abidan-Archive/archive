@@ -7,11 +7,21 @@
     export let reports;
 </script>
 
-<svelte:head>
-    <title>{event.name} | Abidan Archive</title>
-</svelte:head>
-
 <Page header={event.name}>
+    <div class="mb-8 grid w-full grid-cols-3">
+        <dl>
+            <dt class="font-semibold">Date:</dt>
+            <dd>{new Date(event.date).toDateString()}</dd>
+        </dl>
+        <dl>
+            <dt class="font-semibold">Reports:</dt>
+            <dd>{reports.total}</dd>
+        </dl>
+        <dl>
+            <dt class="font-semibold">Location:</dt>
+            <dd>{event.location || 'n/a'}</dd>
+        </dl>
+    </div>
     <div class="flex flex-col gap-5">
         {#if !reports.data.length}
             No reports within this Event.<br />

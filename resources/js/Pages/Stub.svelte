@@ -9,10 +9,6 @@
     export let stubs;
 </script>
 
-<svelte:head>
-    <title>Stubs | Abidan Archive</title>
-</svelte:head>
-
 <Page header="All Stubs">
     <div class="mx-auto flex w-1/2 flex-col gap-3">
         <p>Stubs are audio snippets that need transcription.</p>

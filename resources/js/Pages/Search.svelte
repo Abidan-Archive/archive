@@ -15,10 +15,6 @@
     );
 </script>
 
-<svelte:head>
-    <title>Search | Abidan Archive</title>
-</svelte:head>
-
 <section class="container mx-auto pt-5">
     <h2 class="my-5 text-2xl">Search Results</h2>
     <SearchForm class="my-5 mx-auto w-full" />

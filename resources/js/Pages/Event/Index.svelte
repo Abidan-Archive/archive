@@ -6,10 +6,6 @@
     export let events;
 </script>
 
-<svelte:head>
-    <title>Events | Abidan Archive</title>
-</svelte:head>
-
 <Page header="Events">
     <div class="mx-auto flex w-3/4 flex-col gap-3">
         {#if !events.data.length}
