@@ -60,10 +60,9 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        $tag->loadCount('reports');
-        $tag->load('reports');
-        $tag = $tag->only('id', 'name', 'color', 'reports_count', 'reports');
-        return inertia('Tag/Show', compact('tag'));
+        $reports = $tag->reports()->paginate(20);
+        $tag = $tag->only('id', 'name', 'color');
+        return inertia('Tag/Show', compact('tag', 'reports'));
     }
 
     /**

@@ -65,8 +65,8 @@ class EventController extends Controller
      */
     public function show(Event $event): Response
     {
-        $event->load('reports');
-        return inertia('Event/Show', compact('event'));
+        $reports = $event->reports()->paginate(20);
+        return inertia('Event/Show', compact('event', 'reports'));
     }
 
     /**
