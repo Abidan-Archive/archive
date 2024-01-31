@@ -14,7 +14,7 @@
     const discord = 'https://discord.gg/tCg94qy';
 </script>
 
-<Page header="About Site" class="w-2/3">
+<Page header="About Site" class="lg:w-2/3">
     <section>
         <p>
             Whenever Will has a live event, stream, or socials post, should it
@@ -67,8 +67,7 @@
             <a href="https://svelte.dev/">Svelte</a>, and
             <a href="https://tailwindcss.com/">Tailwindcss</a>. With these
             technologies, the aim is that the website is easy to maintain and
-            anyone can quickly become familiar with its workings and
-            contribute.
+            anyone can quickly become familiar with its workings and contribute.
         </p>
     </section>
 </Page>
