@@ -26,6 +26,7 @@
                     error: 'bg-red-600',
                     success: 'bg-green-600',
                     info: 'bg-blue-600',
+                    warn: 'bg-amber-600',
                 },
             },
         }

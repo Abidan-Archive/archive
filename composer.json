@@ -12,10 +12,12 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^10.6",
+        "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.3",
         "marvinlabs/laravel-discord-logger": "^1.2",
         "meilisearch/meilisearch-php": "^1.5",
+        "socialiteproviders/discord": "^4.2",
         "staudenmeir/belongs-to-through": "^2.5",
         "symfony/process": "^6.4",
         "tightenco/ziggy": "^1.5"
