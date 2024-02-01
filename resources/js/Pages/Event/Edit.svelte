@@ -6,13 +6,8 @@
     import { formatToInputDateString, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
-    import { onMount, getContext } from 'svelte';
+    import { getContext } from 'svelte';
     import { addToast, addFlash } from '@/Stores/toast';
-
-    onMount(() => {
-        if ($page.props.status)
-            addToast({ message: status, type: 'success', timeout: false });
-    });
 
     const { open } = getContext('simple-modal');
 

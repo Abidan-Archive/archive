@@ -57,7 +57,7 @@ class EventController extends Controller
         foreach (($validated['sources'] ?? []) as $i => $file)
             Source::createFromFile($event, $file, $i);
 
-        return to_route('event.update', compact('event'))->with('status', 'Event successfuly created!');
+        return to_route('event.update', compact('event'))->with('flash', ['message' => 'Event successfully created!']);
     }
 
     /**
@@ -72,7 +72,7 @@ class EventController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(Event $event): Response
     {
         $event->sources;
         return inertia('Event/Edit', compact('event'));
@@ -89,7 +89,7 @@ class EventController extends Controller
         foreach (($validated['sources'] ?? []) as $i => $file)
             Source::createFromFile($event, $file, $max + 1 + $i);
 
-        return to_route('event.update', compact('event'))->with('status', 'Event successfully updated!');
+        return to_route('event.update', compact('event'))->with('flash', ['message' => 'Event successfully updated!']);
     }
 
     /**
@@ -98,8 +98,8 @@ class EventController extends Controller
     public function destroy(Event $event): RedirectResponse
     {
         $event->delete();
-        session()->flash('status', 'Event successfully deleted!');
-        return to_route('event.index');
+
+        return to_route('event.index')->with('status', 'Event successfully deleted!');
     }
 
 }
