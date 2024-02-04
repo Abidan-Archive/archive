@@ -44,7 +44,7 @@
             <option value={option.value}>{option.label}</option>
         {/each}
     </select>
-    <button class="px-2" on:click={cycleDirections}>
+    <button type="button" class="px-2" on:click={cycleDirections}>
         <span class="sr-only">{directions[d].label}</span>
         <svelte:component this={directions[d].icon} />
     </button>

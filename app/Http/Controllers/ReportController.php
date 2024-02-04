@@ -22,19 +22,20 @@ class ReportController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Return all the reports
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
-        //
+        $reports = Report::with('event')->paginate(20);
+        return inertia('Report/Index', compact('reports'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create(Event $event)
     {
@@ -47,7 +48,7 @@ class ReportController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function store(Request $request)
     {
@@ -70,7 +71,7 @@ class ReportController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function edit(Report $report)
     {
@@ -82,7 +83,7 @@ class ReportController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function update(Request $request, Report $report)
     {
@@ -93,7 +94,7 @@ class ReportController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Report  $report
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function destroy(Report $report)
     {

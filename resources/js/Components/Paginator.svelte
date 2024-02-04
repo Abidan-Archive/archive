@@ -11,6 +11,7 @@
     export let next_page_url;
     export let prev_page_url;
     export let links;
+    export let maxResultDisclaimer = false;
 
     const prev_page_label = '&laquo; Previous';
     const next_page_label = 'Next &raquo;';
@@ -131,4 +132,7 @@
             </div>
         </div>
     </nav>
+    {#if maxResultDisclaimer && total === 1000}
+        <small class="mx-auto">Search is limited to a max of 1000 results but all reports are searched.</small>
+    {/if}
 {/if}

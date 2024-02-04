@@ -3,7 +3,9 @@
     "private": true,
     "devDependencies": {
         "@sveltejs/vite-plugin-svelte": "^2.0.2",
+        "@tailwind-plugin/expose-colors": "^1.1.7",
         "@tailwindcss/forms": "^0.4.0",
+        "@tailwindcss/typography": "^0.5.10",
         "@trivago/prettier-plugin-sort-imports": "^4.3.0",
         "autoprefixer": "^10.4.5",
         "axios": "^1.6.5",
@@ -34,8 +36,8 @@
         "clsx": "^1.2.1",
         "konva": "8.3.10",
         "peaks.js": "^2.1.0",
-        "svelecte": "^3.17.2",
         "svelte-file-dropzone": "^2.0.1",
+        "svelte-select": "^5.8.3",
         "svelte-simple-modal": "^1.6.1",
         "tailwind-merge": "^1.14.0",
         "waveform-data": "^4.3.0"

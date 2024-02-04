@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
@@ -45,6 +46,8 @@ class OAuthController extends Controller
                 'email' => $discordUser->email,
                 'username' => $discordUser->nickname,
             ]);
+
+            event(new Registered($user));
         } else {
             // User found, update data
             $user->update([

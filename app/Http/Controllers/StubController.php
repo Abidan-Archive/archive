@@ -20,7 +20,7 @@ class StubController extends Controller
     /**
      * Show the all the stubs regardless of parent
      */
-    public function all(): Response {
+    public function index(): Response {
         $stubs = Stub::with(['event', 'source'])->orderBy('created_at')->paginate(20);
         return inertia('Stub', compact('stubs'));
     }

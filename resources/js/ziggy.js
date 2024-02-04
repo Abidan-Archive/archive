@@ -90,12 +90,6 @@ const Ziggy = {
             parameters: ['report'],
             bindings: { report: 'id' },
         },
-        'event.source.stub.index': {
-            uri: 'event/{event}/source/{source}/stub',
-            methods: ['GET', 'HEAD'],
-            parameters: ['event', 'source'],
-            bindings: { event: 'id', source: 'id' },
-        },
         'event.source.stub.create': {
             uri: 'event/{event}/source/{source}/stub/create',
             methods: ['GET', 'HEAD'],
@@ -106,28 +100,29 @@ const Ziggy = {
             uri: 'event/{event}/source/{source}/stub',
             methods: ['POST'],
             parameters: ['event', 'source'],
+            bindings: { event: 'id', source: 'id' },
         },
         'event.source.stub.show': {
             uri: 'event/{event}/source/{source}/stub/{stub}',
             methods: ['GET', 'HEAD'],
             parameters: ['event', 'source', 'stub'],
+            bindings: { event: 'id', source: 'id', stub: 'id' },
         },
         'event.source.stub.edit': {
             uri: 'event/{event}/source/{source}/stub/{stub}/edit',
             methods: ['GET', 'HEAD'],
             parameters: ['event', 'source', 'stub'],
         },
-        'event.source.stub.update': {
-            uri: 'event/{event}/source/{source}/stub/{stub}',
-            methods: ['PUT', 'PATCH'],
-            parameters: ['event', 'source', 'stub'],
-            bindings: { stub: 'id' },
-        },
         'event.source.stub.destroy': {
             uri: 'event/{event}/source/{source}/stub/{stub}',
             methods: ['DELETE'],
             parameters: ['event', 'source', 'stub'],
             bindings: { stub: 'id' },
+        },
+        'event.source.store': {
+            uri: 'event/{event}/source',
+            methods: ['POST'],
+            parameters: ['event'],
         },
         'event.source.show': {
             uri: 'event/{event}/source/{source}',
@@ -137,7 +132,7 @@ const Ziggy = {
         },
         'event.source.update': {
             uri: 'event/{event}/source/{source}',
-            methods: ['PUT'],
+            methods: ['PUT', 'PATCH'],
             parameters: ['event', 'source'],
             bindings: { event: 'id', source: 'id' },
         },
@@ -147,7 +142,8 @@ const Ziggy = {
             parameters: ['event', 'source'],
             bindings: { event: 'id', source: 'id' },
         },
-        'stubs.all': { uri: 'stubs', methods: ['GET', 'HEAD'] },
+        'stub.index': { uri: 'stubs', methods: ['GET', 'HEAD'] },
+        'report.index': { uri: 'reports', methods: ['GET', 'HEAD'] },
         'tag.index': { uri: 'tag', methods: ['GET', 'HEAD'] },
         'tag.create': { uri: 'tag/create', methods: ['GET', 'HEAD'] },
         'tag.store': { uri: 'tag', methods: ['POST'] },
@@ -197,6 +193,10 @@ const Ziggy = {
             parameters: ['token'],
         },
         'password.update': { uri: 'reset-password', methods: ['POST'] },
+        'oauth.discord': {
+            uri: 'oauth/redirect/discord',
+            methods: ['GET', 'HEAD'],
+        },
         'verification.notice': {
             uri: 'verify-email',
             methods: ['GET', 'HEAD'],

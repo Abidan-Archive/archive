@@ -3,11 +3,6 @@
     import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/lib/route';
-    const contributors = [
-        { nick: '🍑 Railalis', name: 'Railalis#4470' },
-        { nick: 'Entropy', name: 'Decadakon#1432' },
-        { nick: "Lil'Blue ", name: 'Shadowsaber#1358' },
-    ];
 
     const channel = '#wiki-and-archive-discussion';
     const github = 'https://github.com/Abidan-Archive/archive';
@@ -32,19 +27,28 @@
         </p>
         <p>It's main contributors are:</p>
         <ul class="list-disc pl-5">
-            {#each contributors as { nick, name }}
-                <li>{nick} - {name}</li>
-            {/each}
+            <li>🍑 - Railalis</li>
+            <li>Entropy - Decadakon</li>
+            <li>Lil'Blue - Shadowsaber</li>
         </ul>
+        <sub>Discord nicknames &amp; handles.</sub>
+    </section>
+    <section>
+        <h3 class="text-xl">Experiencing an Issue?</h3>
+        Don't hesitate to reach out on discord in
+        <a href={discord} class="font-bold">{channel}</a> channel. Or, raise an
+        issue on
+        <a href={github}>Github</a> if you are familiar with that sort of thing.
+        You may also contact one of the main contributors listed above, just be sure
+        to explain why you're contacting them as we are wary of bots.
     </section>
     <section>
         <h3 class="text-xl">How to Contribute?</h3>
         <p>
             If you want to get involved with either the development of the
-            website or helping transcribe new Reports. Simply reach out to any
-            of the main contributors on discord or ask in the <a
-                href={discord}
-                class="font-bold">{channel}</a> channel.
+            website or help with more than transcribing new Reports. Simply
+            reach out to any of the main contributors on discord or ask in the
+            <a href={discord} class="font-bold">{channel}</a> channel.
         </p>
         <p>
             Additionally, the entire website is open source and available on <a

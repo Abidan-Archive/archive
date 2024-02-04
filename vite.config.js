@@ -1,8 +1,8 @@
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 import laravel from 'laravel-vite-plugin';
+import { resolve } from 'path';
 import preprocess from 'svelte-preprocess';
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 const projectRoot = resolve(__dirname);
 

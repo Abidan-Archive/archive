@@ -1,4 +1,5 @@
 <script>
+    import DiscordLogo from '@/Components/DiscordLogo.svelte';
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { cn, route } from '@/lib';
@@ -94,5 +95,14 @@
                 </div>
             </div>
         </form>
+        <hr />
+        <div class="flex flex-col items-center gap-2">
+            <p>Sign in with a third-party provider</p>
+            <a
+                href={route('oauth.discord')}
+                class="rounded-sm bg-[#5865F2] px-4 py-2 hover:brightness-90">
+                <DiscordLogo />
+            </a>
+        </div>
     </Card>
 </Page>

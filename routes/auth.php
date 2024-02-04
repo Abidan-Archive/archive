@@ -35,7 +35,7 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.update');
 
-    Route::get('oauth/redirect/discord', fn() => Socialite::driver('discord')->redirect());
+    Route::get('oauth/redirect/discord', fn() => Socialite::driver('discord')->redirect())->name('oauth.discord');
     Route::get('oauth/callback/discord', [OAuthController::class, 'discord']);
 });
 

@@ -136,7 +136,7 @@ return [
         'key' => env('MEILISEARCH_KEY', null),
         'index-settings' => [
             Report::class => [
-                'filterableAttributes' => ['tags', 'date'],
+                'filterableAttributes' => ['tags'],
                 'sortableAttributes' => ['id', 'date', 'likes'],
             ],
         ]

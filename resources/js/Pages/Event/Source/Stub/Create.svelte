@@ -346,10 +346,3 @@
     {/if}
 </Page>
 
-<style lang="postcss">
-    #zoomview-container,
-    #overview-container {
-        @apply w-full;
-        height: 100px;
-    }
-</style>
