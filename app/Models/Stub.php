@@ -24,7 +24,7 @@ class Stub extends Model
 
     protected $fillable = ['id', 'prompt', 'from', 'to'];
 
-    protected $appends = ['audioUrl'];
+    protected $appends = ['audio_url'];
 
     /**
     * Register methods to model hooks

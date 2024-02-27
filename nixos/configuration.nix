@@ -116,6 +116,7 @@
         '';
     };
   };
+
   services.phpfpm.pools.mypool = {
     user = "telarial"; # Probably?
     phpPackage = environment.systemPackages.php83;
@@ -133,10 +134,12 @@
         "request_termination_timeout" = 300;
     };
   };
+
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
   };
+
   services.meilisearch = {
     enable = true;
     environment = "production";

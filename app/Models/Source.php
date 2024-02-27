@@ -23,7 +23,7 @@ class Source extends Model
 
     protected $fillable = ['id', 'name', 'filename'];
 
-    protected $appends = ['audioUrl', 'dat_url'];
+    protected $appends = ['audio_url', 'dat_url'];
 
     /**
     * Register methods to model hooks

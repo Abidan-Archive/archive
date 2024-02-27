@@ -18,7 +18,7 @@
             additional insight to Will's worlds, writing process, and humor.
             After being transcribed by community members the so-called <a
                 use:inertia
-                href={route('search')}>Reports</a> are fully text searchable for
+                href={route('report.index')}>Reports</a> are fully text searchable for
             people to browse and link to for discussion.
         </p>
         <p>
