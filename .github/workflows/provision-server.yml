@@ -8,9 +8,9 @@ jobs:
     name: Create deployment artifacts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Store artifact for distribution
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: server-build
           # Our singular config file <3
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: server-build
 
@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           source: configuration.nix
-          target: /etc/nixos
+          target: ~
 
   provision:
     name: Provision Server
@@ -46,5 +46,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           script: |
+            cd ~
+            sudo mv ~/configuration.nix /etc/nixos/configuration.nix
             sudo nixos-rebuild switch
 
