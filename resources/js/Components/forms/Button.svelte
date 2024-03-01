@@ -37,6 +37,7 @@
     );
 </script>
 
+<!-- eslint-disable-next-line svelte/valid-compile -->
 <svelte:element
     this={href ? 'a' : 'button'}
     type={href ? 'undefined' : type}

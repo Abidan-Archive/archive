@@ -3,13 +3,13 @@
     import { page, router } from '@inertiajs/svelte';
     import Peaks from 'peaks.js';
 
-    import { Button, IconButton } from '@/Components/forms';
-    import { Play, Pause, Trash } from '@/Components/icons';
-    import { addFlash } from '@/Stores/toast.js';
-    import Card from '@/Components/Card.svelte';
-    import Dialog from '@/Components/Modals/Dialog.svelte';
-    import MediaControls from '@/Components/audio/MediaControls.svelte';
-    import Page from '@/Components/Page.svelte';
+    import { Button, IconButton } from '@/components/forms';
+    import { Play, Pause, Trash } from '@/components/icons';
+    import { addFlash } from '@/stores/toast.js';
+    import Card from '@/components/Card.svelte';
+    import Dialog from '@/components/modals/Dialog.svelte';
+    import MediaControls from '@/components/audio/MediaControls.svelte';
+    import Page from '@/components/Page.svelte';
     import route from '@/lib/route.js';
 
     // Todo:
@@ -125,12 +125,14 @@
             );
         });
         // Create all the previous created segments
-        peaks.segments.add(source.stubs.map((stub) => ({
-            startTime: stub.from,
-            endTime: stub.to,
-            editable: true,
-            blurb: stub.prompt,
-        })));
+        peaks.segments.add(
+            source.stubs.map((stub) => ({
+                startTime: stub.from,
+                endTime: stub.to,
+                editable: true,
+                blurb: stub.prompt,
+            }))
+        );
     }
 
     function seek(t) {
@@ -234,10 +236,18 @@
     }
 
     function submit() {
-        const stubs = segments.map((s) => ({from: s.startTime, to: s.endTime, prompt: s.blurb}));
-        router.post(route('event.source.stub.store', [event.id, source.id]), {stubs}, {
-            onSuccess: () => addFlash($page.props?.flash),
-        });
+        const stubs = segments.map((s) => ({
+            from: s.startTime,
+            to: s.endTime,
+            prompt: s.blurb,
+        }));
+        router.post(
+            route('event.source.stub.store', [event.id, source.id]),
+            { stubs },
+            {
+                onSuccess: () => addFlash($page.props?.flash),
+            }
+        );
     }
 </script>
 
@@ -265,7 +275,7 @@
     {#if !!segments && !!segments?.length}
         <hr />
         <form method="POST" on:submit|preventDefault={submit}>
-            <div class="flex flex-col justify-center gap-2 mb-8">
+            <div class="mb-8 flex flex-col justify-center gap-2">
                 {#each segments as segment}
                     <Card
                         id={'segment-' + segment.id}
@@ -317,7 +327,8 @@
                                 type="text"
                                 class="w-full rounded text-black"
                                 placeholder="Blurb"
-                                on:input={(e) => updateSegmentBlurb(e, segment)} />
+                                on:input={(e) =>
+                                    updateSegmentBlurb(e, segment)} />
                         </div>
                         <IconButton
                             on:click={() => {
@@ -346,3 +357,10 @@
     {/if}
 </Page>
 
+<style lang="postcss">
+    #zoomview-container,
+    #overview-container {
+        @apply w-full;
+        height: 100px;
+    }
+</style>

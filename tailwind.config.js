@@ -1,11 +1,22 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+import { skeleton } from '@skeletonlabs/tw-plugin';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+import { join } from 'path';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
-module.exports = {
+import { abidanTheme } from './resources/js/abidan-theme.js';
+
+/** @type {import('tailwindcss').Config} */
+export default {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
-        './resources/js/**/*.{js,svelte}',
+        './resources/js/**/*.{html,ts,js,svelte}',
+        join(
+            require.resolve('@skeletonlabs/skeleton'),
+            '../**/*.{html,js,svelte,ts}'
+        ),
     ],
     theme: {
         borderWidth: {
@@ -27,18 +38,6 @@ module.exports = {
                     700: '#25282a',
                     900: '#181a1b',
                 },
-                primary: {
-                    50: '#ccd9e4',
-                    100: '#99b3ca',
-                    200: '#668daf',
-                    300: '#4c7aa2',
-                    400: '#326695',
-                    500: '#00417b',
-                    600: '#003a6e',
-                    700: '#003462',
-                    800: '#002d56',
-                    900: '#00203d',
-                },
 
                 // Ideas for possible new colors
                 // typo: '#D7E7F0',
@@ -53,9 +52,5 @@ module.exports = {
         },
     },
 
-    plugins: [
-        require('@tailwindcss/forms'),
-        require('@tailwindcss/typography'),
-        // require('@tailwind-plugin/expose-colors'),
-    ],
+    plugins: [typography, forms, skeleton({ themes: { custom: [abidanTheme] } })],
 };

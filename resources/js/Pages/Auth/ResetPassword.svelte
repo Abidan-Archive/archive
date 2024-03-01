@@ -1,9 +1,9 @@
 <script>
-    import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
+    import Page from '@/components/Page.svelte';
+    import Card from '@/components/Card.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
-    import { page, useForm } from '@inertiajs/svelte';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { useForm } from '@inertiajs/svelte';
 
     let form = useForm('ResetPassword', {
         token: route().params.token,

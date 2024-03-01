@@ -1,7 +1,7 @@
 <script>
-    import Page from '@/Components/Page.svelte';
-    import Paginator from '@/Components/Paginator.svelte';
-    import Event from '@/Components/Event.svelte';
+    import Page from '@/components/Page.svelte';
+    import Paginator from '@/components/Paginator.svelte';
+    import Event from '@/components/Event.svelte';
 
     export let events;
 </script>

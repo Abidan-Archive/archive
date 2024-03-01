@@ -1,15 +1,15 @@
 <script>
-    import Report from '@/Components/Report.svelte';
-    import SearchForm from '@/Components/SearchForm.svelte';
-    import Paginator from '@/Components/Paginator.svelte';
+    import Report from '@/components/Report.svelte';
+    import SearchForm from '@/components/SearchForm.svelte';
+    import Paginator from '@/components/Paginator.svelte';
+    import Page from '@/components/Page.svelte';
 
     export let reports;
     export let tags;
 </script>
 
-<section class="container mx-auto pt-5">
-    <h2 class="my-5 text-2xl">Search Results</h2>
-    <SearchForm class="my-5 mx-auto w-full" {tags} advanced={true} />
+<Page header="Search Results">
+    <SearchForm class="mx-auto my-5 w-full" {tags} advanced={true} />
     <hr />
     <div class="flex flex-col gap-5">
         {#if !reports.data.length}
@@ -24,4 +24,4 @@
             <Paginator {...reports} maxResultDisclaimer />
         {/if}
     </div>
-</section>
+</Page>

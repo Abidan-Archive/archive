@@ -12,7 +12,7 @@
         {target}
         {ref}
         aria-label={ariaLabel}
-        class={`text-gray-400  hover:text-primary-400 ${$$props.class}`}>
+        class={`text-on-surface-token hover:text-surface-300 ${$$props.class}`}>
         <slot />
     </a>
 {:else}

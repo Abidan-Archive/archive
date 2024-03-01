@@ -1,6 +1,6 @@
 <script>
     import { getContext } from 'svelte';
-    import Button from '@/Components/forms/Button.svelte';
+    import Button from '@/components/forms/Button.svelte';
 
     export let message = '';
     export let onCancel = () => {};

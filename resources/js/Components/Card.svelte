@@ -6,10 +6,7 @@
 </script>
 
 <div
-    class={cn(
-        'rounded-lg border border-typo-500 bg-base-700 p-4 shadow-md',
-        className
-    )}
+    class={cn('rounded-lg bg-base-700 p-4 shadow-md border-token', className)}
     {...$$restProps}>
     <slot />
 </div>

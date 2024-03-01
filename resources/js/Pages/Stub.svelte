@@ -3,7 +3,7 @@
 
     import Card from '@/components/Card.svelte';
     import Page from '@/components/Page.svelte';
-    import Paginator from '@/Components/Paginator.svelte';
+    import Paginator from '@/components/Paginator.svelte';
     import route from '@/lib/route';
 
     export let stubs;

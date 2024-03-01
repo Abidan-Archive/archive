@@ -1,13 +1,12 @@
 <script>
-    import Card from '@/Components/Card.svelte';
-    import CircleX from '@/Components/icons/CircleX.svelte';
-    import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
-    import Dialog from '@/Components/modals/Dialog.svelte';
+    import Card from '@/components/Card.svelte';
+    import CircleX from '@/components/icons/CircleX.svelte';
+    import Dialog from '@/components/modals/Dialog.svelte';
     import { formatToInputDateString, route } from '@/lib';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
     import { getContext } from 'svelte';
-    import { addToast, addFlash } from '@/Stores/toast';
+    import { addToast, addFlash } from '@/stores/toast';
 
     const { open } = getContext('simple-modal');
 
@@ -21,6 +20,7 @@
     });
     let rejectedFiles = [];
 
+    // eslint-disable-next-line no-unused-vars
     function handleFilesSelect(e) {
         const { acceptedFiles, fileRejections } = e.detail;
         $form.sources = [...$form.sources, ...acceptedFiles];
@@ -122,11 +122,11 @@
             </div>
             <div id="dropzone-container" class="mt-4 block">
                 <Label for="dropzone">Add Additional Audio Sources</Label>
-                <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple>
-                    <button>Choose audio files to upload</button>
-                    <p>or</p>
-                    <p>Drag and drop them here</p>
-                </Dropzone>
+                <!-- <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple> -->
+                <!--     <button>Choose audio files to upload</button> -->
+                <!--     <p>or</p> -->
+                <!--     <p>Drag and drop them here</p> -->
+                <!-- </Dropzone> -->
                 {#each $form.sources as item, i}
                     <ErrorMessage
                         message={($form.errors['sources.' + i] || '').replace(

@@ -8,5 +8,5 @@
 
 <div class="mt-8 flex h-full flex-row gap-4">
     <AdminSidebar />
-    <div class="flex-1 ">Other stuff</div>
+    <div class="flex-1">Other stuff</div>
 </div>

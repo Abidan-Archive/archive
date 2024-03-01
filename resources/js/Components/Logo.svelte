@@ -1,4 +1,13 @@
-<div class="marble block h-12 w-12">
+<script>
+    import cn from '@/lib/cn';
+    let className = '';
+
+    export { className as class };
+</script>
+
+<div
+    class={cn('marble block h-12 w-12', className)}
+    aria-label="Abidan Archive Logo">
     <div class="fire">
         <div class="fire-left">
             <div class="main-fire" />

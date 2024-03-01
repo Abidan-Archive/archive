@@ -1,12 +1,12 @@
 <script>
-    import DiscordLogo from '@/Components/DiscordLogo.svelte';
-    import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
+    import DiscordLogo from '@/components/DiscordLogo.svelte';
+    import Page from '@/components/Page.svelte';
+    import Card from '@/components/Card.svelte';
     import { cn, route } from '@/lib';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toast';
+    import { addToast } from '@/stores/toast';
 
     onMount(() => {
         if ($page.props.status)
@@ -29,7 +29,6 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email">Email</Label>
-                <!-- svelte-ignore a11y-autofocus -->
                 <Input
                     id="email"
                     name="email"
@@ -124,7 +123,7 @@
         @apply relative block rounded-sm bg-[#5865F2] px-4 py-2;
         will-change: transform;
         transform: translateY(-4px);
-            transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+        transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
     }
     .discord-sso:hover > .front {
         transform: translateY(-6px);
@@ -135,7 +134,7 @@
         transition: transform 34ms;
     }
     .discord-sso > .edge {
-        @apply absolute top-0 left-0 h-full w-full rounded-sm;
+        @apply absolute left-0 top-0 h-full w-full rounded-sm;
         background: linear-gradient(
             to left,
             hsl(235deg, 85%, 52%) 0%,
@@ -145,7 +144,7 @@
         );
     }
     .discord-sso > .shadow {
-        @apply absolute top-0 left-0 h-full w-full rounded-sm;
+        @apply absolute left-0 top-0 h-full w-full rounded-sm;
         will-change: transform;
         background: hsl(0deg 0% 0% / 0.25);
         transform: translateY(2px);
@@ -154,7 +153,7 @@
     }
     .discord-sso:hover > .shadow {
         transform: translateY(4px);
-        transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
     }
     .discord-sso:active > .shadow {
         transform: translateY(1px);

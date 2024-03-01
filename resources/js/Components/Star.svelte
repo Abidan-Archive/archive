@@ -45,7 +45,8 @@
         height: 1.5px;
         background: linear-gradient(-45deg, #fbfcfe, rgba(0, 0, 255, 0));
         filter: drop-shadow(0 0 6px #699bff);
-        animation: tail 3000ms ease-in-out infinite,
+        animation:
+            tail 3000ms ease-in-out infinite,
             shooting 3000ms ease-in-out infinite,
             delay-animation 12000ms ease-in-out infinite;
     }

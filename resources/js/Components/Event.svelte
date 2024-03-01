@@ -2,8 +2,8 @@
     import Oddment from '@/lib/oddment.js';
     import cn from '@/lib/cn';
     import route from '@/lib/route';
-    import { Link } from '@/Components/icons';
-    import { addToast } from '@/Stores/toast';
+    import { Link } from '@/components/icons';
+    import { addToast } from '@/stores/toast';
     import { inertia } from '@inertiajs/svelte';
 
     const copyVerbs = new Oddment({

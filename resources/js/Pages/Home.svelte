@@ -2,9 +2,9 @@
     import { page } from '@inertiajs/svelte';
     import { cn, route } from '@/lib';
     import { inertia } from '@inertiajs/svelte';
-    import Star from '@/Components/Star.svelte';
-    import Heart from '@/Components/icons/Heart.svelte';
-    import SearchForm from '@/Components/SearchForm.svelte';
+    import Star from '@/components/Star.svelte';
+    import Heart from '@/components/icons/Heart.svelte';
+    import SearchForm from '@/components/SearchForm.svelte';
 
     export let events;
     export let mostLiked;
@@ -15,24 +15,24 @@
 <div
     class={cn(
         'bg-radial overflow-hidden shadow-md',
-        '-mx-2 sm:-mx-5',
-        'h-[calc(100vh_-_4rem_-_14rem)] sm:h-[calc(100vh_-_4rem_-_10rem)]'
+        // 4rem (16 tw) for app bar 10rem (40 tw) for welcome bar
+        'h-[calc(100vh_-_4rem_-_10rem)]'
     )}>
     <Star>
-        <div
-            class="mx-auto flex h-full flex-col items-center justify-center px-8">
+        <div class="mx-auto grid h-full grid-rows-2 px-8">
             <div
-                class="my-8 w-1/2 text-center md:w-2/3 md:text-3xl lg:text-4xl">
+                class="mx-auto my-8 self-end text-center text-xl sm:w-1/2 md:w-2/3 md:text-3xl lg:text-4xl">
                 {quote}
             </div>
-            <SearchForm class="z-10 w-full md:w-3/4 lg:w-2/3 xl:w-1/2" />
+            <SearchForm
+                class="z-10 mx-auto w-full md:w-3/4 lg:w-2/3 xl:w-1/2" />
         </div>
     </Star>
 </div>
 
-<div class="-mx-5 h-56 bg-base-500 sm:h-40">
-    <div class="flex px-6 py-6">
-        <section>
+<div class="min-h-40 bg-surface-500">
+    <div class="container mx-auto flex flex-col p-6 md:flex-row">
+        <section class="grow">
             <h2
                 class="mb-8 text-center text-3xl md:m-0 md:mb-2 md:text-left md:text-4xl">
                 Welcome to the Archive
@@ -49,7 +49,7 @@
         <aside class="text-right">
             {#if !$page.props.auth.user}
                 <h3 class="text-2xl">Want to contribute?</h3>
-                <p class="ml-auto mb-2 w-2/3">
+                <p class="mb-2 ml-auto md:w-2/3 lg:w-3/4">
                     We are always looking for chroniclers to transcribe audio
                     into new Reports.
                 </p>
@@ -57,19 +57,19 @@
                     <a
                         use:inertia
                         href={route('register')}
-                        class="font-semi text-lg">Join Today!</a>
+                        class="font-semi variant-filled-primary btn btn-md no-underline"
+                        >Join Today!</a>
                 </p>
             {/if}
         </aside>
     </div>
 </div>
-<div class="container mt-12 flex justify-evenly">
+<div class="container mx-auto flex justify-evenly p-6 2xl:w-2/3">
     <section>
         <h2 class="text-3xl font-thin uppercase">Most Recent Events</h2>
         <ul>
             {#each events as event}
                 <li>
-                    <!-- svelte-ignore missing-declaration -->
                     <a
                         class="text-lg hover:underline"
                         use:inertia
@@ -87,16 +87,15 @@
         <ul>
             {#each mostLiked as report}
                 <li>
-                    <!-- svelte-ignore missing-declaration -->
                     <a
-                        class="text-lg hover:underline"
+                        class="text-lg no-underline"
                         use:inertia
                         href={route('report.show', report)}>
                         {report.likes_count}
                         <Heart
                             class="inline"
                             variant={report.is_liked ? 'filled' : 'outline'} /> &middot;
-                        Report#{report.id}
+                        <span class="underline">Report#{report.id}</span>
                     </a>
                 </li>
             {:else}
@@ -117,7 +116,7 @@
     </section>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
     .bg-radial {
         background-image: radial-gradient(
             ellipse at center,

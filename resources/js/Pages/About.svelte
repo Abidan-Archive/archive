@@ -1,6 +1,6 @@
 <script>
-    import Page from '@/Components/Page.svelte';
-    import { Discord, Github } from '@/Components/icons';
+    import Page from '@/components/Page.svelte';
+    import { Discord, Github } from '@/components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/lib/route';
 
@@ -18,8 +18,8 @@
             additional insight to Will's worlds, writing process, and humor.
             After being transcribed by community members the so-called <a
                 use:inertia
-                href={route('report.index')}>Reports</a> are fully text searchable for
-            people to browse and link to for discussion.
+                href={route('report.index')}>Reports</a> are fully text searchable
+            for people to browse and link to for discussion.
         </p>
         <p>
             This site is maintained and built by the Will Wight fanbase and

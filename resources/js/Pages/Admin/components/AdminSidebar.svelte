@@ -1,6 +1,6 @@
 <script>
     import { cn, route } from '@/lib';
-    import Input from '@/Components/forms/Input.svelte';
+    import Input from '@/components/forms/Input.svelte';
     import { router, inertia } from '@inertiajs/svelte';
 
     const links = {

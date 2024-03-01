@@ -1,17 +1,21 @@
 <script>
     import { getContrastText } from '@/lib/color.js';
     import { router, page, useForm } from '@inertiajs/svelte';
-    import { getContext } from 'svelte';
-    import Page from '@/Components/Page.svelte';
+    // import { getContext } from 'svelte';
+    import Page from '@/components/Page.svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
-    import Dialog from '@/Components/modals/Dialog.svelte';
-    import { addFlash } from '@/Stores/toast.js';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import Dialog from '@/components/modals/Dialog.svelte';
+    import { addFlash } from '@/stores/toast.js';
 
     addFlash($page.props.flash);
 
-    const { open } = getContext('simple-modal');
+    // const { open } = getContext('simple-modal');
+
+    function open(...what) {
+        console.log(what);
+    }
 
     export let tag;
 
@@ -43,7 +47,7 @@
             <button
                 style={`background-color: ${$form.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
+                    'h-10 rounded-md px-4 py-2 font-bold capitalize ease-in-out',
                     getContrastText($form.color)
                 )}>{$form.name}</button>
         </section>

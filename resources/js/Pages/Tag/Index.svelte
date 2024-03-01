@@ -1,9 +1,9 @@
 <script>
     import route from '@/lib/route';
     import { fade } from 'svelte/transition';
-    import Page from '@/Components/Page.svelte';
-    import SortBy from '@/Components/SortBy.svelte';
-    import Input from '@/Components/forms/Input.svelte';
+    import Page from '@/components/Page.svelte';
+    import SortBy from '@/components/SortBy.svelte';
+    import Input from '@/components/forms/Input.svelte';
     import cn from '@/lib/cn';
     import { getContrastText } from '@/lib/color';
     import { inertia, router } from '@inertiajs/svelte';
@@ -66,14 +66,14 @@
                 placeholder="Sort" />
         </div>
     </div>
-    <div class="flex flex-wrap gap-2 ">
+    <div class="flex flex-wrap gap-2">
         {#each data as tag}
             <a
                 use:inertia
                 href={route('tag.show', tag)}
                 style={`background-color: ${tag.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
+                    'h-10 rounded-md px-4 py-2 font-bold capitalize ease-in-out',
                     getContrastText(tag.color)
                 )}
                 transition:fade|local>

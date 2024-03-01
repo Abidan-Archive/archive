@@ -1,13 +1,16 @@
 <script>
     import { page } from '@inertiajs/svelte';
+    import { AppShell, initializeStores, Drawer } from '@skeletonlabs/skeleton';
 
-    import Modal from 'svelte-simple-modal';
-    import Navigation from '@/Components/Navigation.svelte';
-    import Footer from '@/Components/footer/Footer.svelte';
-    import Toasts from '@/Components/Toasts.svelte';
-    import { addFlash } from '@/Stores/toast.js';
+    import Header from '@/components/Header.svelte';
+    import Footer from '@/components/footer/Footer.svelte';
+    import Navigation from '@/components/Navigation.svelte';
 
-    $: addFlash($page.props.flash);
+    initializeStores();
+
+    // import { addFlash } from '@/stores/toast.js';
+
+    $: $page.props.flash && alert($page.props.flash);
 </script>
 
 <svelte:head>
@@ -17,32 +20,28 @@
         content="The Abidan Archive is website responsible for recording all of the Will Wight fanbase canon non-book external information on Will's various works." />
 </svelte:head>
 
-<Modal
-    unstyled={true}
-    classBg="fixed top-0 left-0 w-screen h-screen flex flex-col justify-center bg-base-900/[.9]"
-    classWindowWrap="relative m-20 max-h-full"
-    classWindow="relative max-w-full max-h-full my-2 mx-auto rounded shadow-md bg-base-700 text-typo-500 border border-typo-500 p-4"
-    classContent="relative p-2 overflow-auto"
-    closeButton={false}>
-    <Navigation />
-    <Toasts class="top-16" />
-    <main class="mt-16 h-full grow px-2 sm:px-5" aria-label="content">
-        <slot />
-    </main>
-    <Footer />
-</Modal>
+<Drawer bgDrawer="bg-surface-600" regionDrawer="p-4">
+    <h2 class="sm:text-xl">Navigation</h2>
+    <hr />
+    <Navigation column={true} />
+</Drawer>
+<AppShell>
+    <svelte:fragment slot="header"><Header /></svelte:fragment>
+    <slot />
+    <svelte:fragment slot="pageFooter"><Footer /></svelte:fragment>
+</AppShell>
 
 <style @global lang="postcss">
-    :global(body) {
-        @apply h-full bg-base-900 font-sans text-typo-500 antialiased;
+    :global(html, body, #app) {
+        @apply h-full overflow-hidden;
     }
-    :global(#app) {
-        @apply flex min-h-screen flex-col;
+    :global(body) {
+        @apply text-token bg-surface-900 antialiased;
     }
     :global(hr) {
-        @apply mb-4 mt-2 border-gray-500;
+        @apply mb-4 mt-2 !border-surface-400;
     }
     :global(main a) {
-        @apply text-typo-500 hover:text-typo-600 hover:underline;
+        @apply text-surface-100 underline hover:text-surface-300;
     }
 </style>

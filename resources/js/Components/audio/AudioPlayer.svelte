@@ -2,10 +2,10 @@
     import { onMount } from 'svelte';
     export let src;
     export let title = 'untitled';
-    export let muted = false;
-    export let crossorigin;
+    // export let muted = false;
+    // export let crossorigin;
     export let loop = true;
-    export let preload = true;
+    // export let preload = true;
 
     const barWidth = 3;
     const gap = 2;
@@ -87,7 +87,7 @@
         const hours = parseInt(`${(time / 3600) % 60}`, 10);
 
         return (
-            !!hours ? [hours, `${mins}`.padStart(2, '0'), secs] : [mins, secs]
+            hours ? [hours, `${mins}`.padStart(2, '0'), secs] : [mins, secs]
         ).join(':');
     }
     function changeVolume(value) {
@@ -110,7 +110,7 @@
 <figure
     class="align-center relative mb-5 flex w-full max-w-md rounded bg-black p-2 font-sans text-white">
     <figcaption
-        class="absolute top-[calc(100%+2px)] left-0 m-0 w-full rounded-sm bg-inherit py-1 px-2 font-normal uppercase">
+        class="absolute left-0 top-[calc(100%+2px)] m-0 w-full rounded-sm bg-inherit px-2 py-1 font-normal uppercase">
         {title}
     </figcaption>
     <audio
@@ -121,7 +121,7 @@
         on:ended={ended} />
     <button
         type="button"
-        class="min-w-8 h-8 w-8 appearance-none overflow-hidden border-none bg-white text-black"
+        class="h-8 w-8 min-w-8 appearance-none overflow-hidden border-none bg-white text-black"
         on:click={togglePlay}>
         {#if !isPlaying}
             play
@@ -141,7 +141,7 @@
     </div>
     <button
         type="button"
-        class="min-w-8 h-8 w-8 appearance-none overflow-hidden border-none bg-cyan-500 text-black"
+        class="h-8 w-8 min-w-8 appearance-none overflow-hidden border-none bg-cyan-500 text-black"
         on:click={() => undefined} />
     <div class="hidden">
         <input

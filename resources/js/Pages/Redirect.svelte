@@ -8,7 +8,7 @@
     // Handles
     // /events/123/#e1234
     // /events/123-some-title/#e1234
-    if (!!window.location.hash && window.location.hash.match(/\#e([0-9]+)/)) {
+    if (!!window.location.hash && window.location.hash.match(/#e([0-9]+)/)) {
         redirect = route('handleRedirect', {
             type: 'report',
             context: encodeURI(

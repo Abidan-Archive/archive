@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher, onMount } from 'svelte';
+    import { createEventDispatcher } from 'svelte';
     import {
         PlayPause,
         Previous,
@@ -9,8 +9,8 @@
         Scissors,
         MagnifyingGlassPlus,
         MagnifyingGlassMinus,
-    } from '@/Components/icons';
-    import { IconButton } from '@/Components/forms';
+    } from '@/components/icons';
+    import { IconButton } from '@/components/forms';
 
     let dispatch = createEventDispatcher();
 
@@ -67,7 +67,7 @@
             title="create a segment"
             class="hover:text-typo-600"
             on:click={() => dispatch('zoom', true)}>
-            <MagnifyingGlassPlus  />
+            <MagnifyingGlassPlus />
         </button>
     </div>
 </div>

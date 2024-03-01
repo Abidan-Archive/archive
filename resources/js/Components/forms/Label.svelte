@@ -1,5 +1,5 @@
 <script>
-    export let value;
+    export let value = null;
 
     let forInput;
     let className = '';

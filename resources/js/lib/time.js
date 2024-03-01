@@ -7,7 +7,7 @@ export function secondsToDuration(value) {
     const hours = parseInt(`${(value / 3600) % 60}`, 10);
 
     return (
-        !!hours ? [hours, `${mins}`.padStart(2, '0'), secs] : [mins, secs]
+        hours ? [hours, `${mins}`.padStart(2, '0'), secs] : [mins, secs]
     ).join(':');
 }
 

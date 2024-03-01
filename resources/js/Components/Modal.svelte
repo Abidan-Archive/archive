@@ -1,5 +1,5 @@
 <script>
-    import Card from '@/Components/Card.svelte';
+    import Card from '@/components/Card.svelte';
     export let visible = false;
 
     let dialog;
@@ -11,11 +11,12 @@
     }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
     bind:this={dialog}
     on:click|self={() => dialog.close()}
     class="w-1/2 bg-transparent p-0 text-typo-500">
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div on:click|stopPropagation>
         <Card>
             <slot name="header" />
@@ -23,7 +24,6 @@
             <slot />
             <hr />
 
-            <!-- svelte-ignore a11y-autofocus -->
             <slot name="footer" />
         </Card>
     </div>

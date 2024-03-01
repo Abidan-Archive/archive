@@ -1,10 +1,10 @@
 <script>
-    import { Copy, Heart, Link } from '@/Components/icons';
-    import { addToast } from '@/Stores/toast';
+    import { Copy, Heart, Link } from '@/components/icons';
+    import { addToast } from '@/stores/toast';
     import { cn, route, Oddment } from '@/lib';
     import { inertia, router } from '@inertiajs/svelte';
 
-    let className;
+    let className = '';
     export { className as class };
     export let withEvent = true;
     export let report;
@@ -35,12 +35,12 @@
     }
     async function copyClicked() {
         let out = `#${report.id}`;
-        if (!!report.event) out += `- ${report.event.name}\n`;
+        if (report.event) out += `- ${report.event.name}\n`;
         out += report.dialogues.reduce(
             (acc, { speaker, line }) => acc + speaker + '\n' + line + '\n\n',
             ''
         );
-        if (!!report.footnote) out += `Footnote: ${report.footnote}\n\n`;
+        if (report.footnote) out += `Footnote: ${report.footnote}\n\n`;
         out += report.permalink;
 
         await navigator.clipboard.writeText(out);
@@ -77,7 +77,7 @@
 <article
     id={report.id}
     class={cn(
-        'rounded-lg border border-typo-500 bg-base-700 p-4 shadow-md',
+        'rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
         className
     )}>
     <section class="flex justify-between">
@@ -114,7 +114,9 @@
                 <span class="pl-1">Copy</span>
             </button>
             <button class="flex" on:click={likeClicked}>
-                <Heart variant={report.is_liked ? 'filled' : 'outline'} />
+                <Heart
+                    variant={report.is_liked ? 'filled' : 'outline'}
+                    class={cn(report.is_liked && 'fill-error-500')} />
                 <span class="pl-1 text-base">{report.likes_count}</span>
             </button>
         </div>
@@ -123,6 +125,7 @@
         {#each report.dialogues as dialogue}
             <dl class="mb-2">
                 <dt class="text-lg font-bold">{dialogue.speaker}</dt>
+                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                 <dd>{@html dialogue.line_html}</dd>
             </dl>
         {/each}

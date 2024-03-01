@@ -1,11 +1,11 @@
 <script>
-    import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
+    import Page from '@/components/Page.svelte';
+    import Card from '@/components/Card.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/Stores/toast';
+    import { addToast } from '@/stores/toast';
 
     onMount(() => {
         if ($page.props.status)

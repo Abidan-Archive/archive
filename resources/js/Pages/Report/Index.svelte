@@ -1,7 +1,7 @@
 <script>
-    import Page from '@/Components/Page.svelte';
-    import Paginator from '@/Components/Paginator.svelte';
-    import Report from '@/Components/Report.svelte';
+    import Page from '@/components/Page.svelte';
+    import Paginator from '@/components/Paginator.svelte';
+    import Report from '@/components/Report.svelte';
 
     export let reports;
 </script>
@@ -20,5 +20,4 @@
             <Paginator {...reports} />
         {/if}
     </div>
-
 </Page>

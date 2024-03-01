@@ -1,9 +1,8 @@
 <script>
-    import Card from '@/Components/Card.svelte';
-    import CircleX from '@/Components/icons/CircleX.svelte';
-    import Dropzone from 'svelte-file-dropzone/Dropzone.svelte';
+    import Card from '@/components/Card.svelte';
+    import CircleX from '@/components/icons/CircleX.svelte';
     import route from '@/lib/route';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
@@ -14,6 +13,8 @@
     });
     let rejectedFiles = [];
 
+    // Todo Add Skeleton UI dropzone
+    // eslint-disable-next-line no-unused-vars
     function handleFilesSelect(e) {
         const { acceptedFiles, fileRejections } = e.detail;
         $form.sources = [...$form.sources, ...acceptedFiles];
@@ -71,11 +72,11 @@
             </div>
             <div id="dropzone-container" class="mt-4 block">
                 <Label for="dropzone">Audio Source</Label>
-                <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple>
-                    <button>Choose audio files to upload</button>
-                    <p>or</p>
-                    <p>Drag and drop them here</p>
-                </Dropzone>
+                <!-- <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple> -->
+                <!--     <button>Choose audio files to upload</button> -->
+                <!--     <p>or</p> -->
+                <!--     <p>Drag and drop them here</p> -->
+                <!-- </Dropzone> -->
                 {#each $form.sources as item, i}
                     <ErrorMessage
                         message={($form.errors['sources.' + i] || '').replace(

@@ -1,6 +1,6 @@
 <script>
     import cn from '@/lib/cn';
-    import { ChevronUp, ChevronDown, ChevronUpDown } from '@/Components/icons';
+    import { ChevronUp, ChevronDown, ChevronUpDown } from '@/components/icons';
 
     export let state;
     let className;

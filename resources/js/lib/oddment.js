@@ -19,7 +19,7 @@ export default class Oddment {
             total += value;
             if (total >= n) return key;
         }
-        const keys = Object.keys(items);
+        const keys = Object.keys(this.items);
         return keys[keys.length - 1];
     }
 }

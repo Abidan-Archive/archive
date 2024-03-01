@@ -1,10 +1,10 @@
 <script>
     import { getRandomColor, getContrastText } from '@/lib/color.js';
     import { useForm } from '@inertiajs/svelte';
-    import Page from '@/Components/Page.svelte';
+    import Page from '@/components/Page.svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
 
     let form = useForm({
         name: null,
@@ -23,7 +23,7 @@
             <button
                 style={`background-color: ${$form.color};`}
                 class={cn(
-                    'h-10 rounded-md py-2 px-4 font-bold capitalize ease-in-out',
+                    'h-10 rounded-md px-4 py-2 font-bold capitalize ease-in-out',
                     getContrastText($form.color),
                     'mx-auto'
                 )}>{$form.name}</button>

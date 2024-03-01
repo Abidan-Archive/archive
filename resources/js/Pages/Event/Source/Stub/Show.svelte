@@ -1,8 +1,8 @@
 <script>
     import { useForm, inertia } from '@inertiajs/svelte';
-    import Page from '@/Components/Page.svelte';
+    import Page from '@/components/Page.svelte';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
 
     export let event;
     export let source;
