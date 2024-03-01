@@ -1,0 +1,50 @@
+name: Provision Server
+
+on:
+  workflow_dispatch
+
+jobs:
+  create-deployment-artifacts:
+    name: Create deployment artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Store artifact for distribution
+        uses: actions/upload-artifact@v3
+        with:
+          name: server-build
+          # Our singular config file <3
+          path: nixos/configuration.nix
+
+  prepare-provision-on-server:
+    name: Prepare Provision
+    runs-on: ubuntu-latest
+    needs: create-deployment-artifacts
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: server-build
+
+      - name: Upload
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          source: configuration.nix
+          target: /etc/nixos
+
+  provision:
+    name: Provision Server
+    runs-on: ubuntu-latest
+    needs: [ create-deployment-artifacts, prepare-provision-on-server ]
+    steps:
+      - name: Provision server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          script: |
+            sudo nixos-rebuild switch
+

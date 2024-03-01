@@ -14,14 +14,16 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  # Linode region is Atlanta
   time.timeZone = "America/New_York";
 
   users.users.telariel = {
     isNormalUser = true;
     home = "/home/telariel";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "acme" "nginx" ];
     openssh.authorizedKeys.key = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a telariel" ];
   };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -79,17 +81,22 @@
 
   services.nginx = {
     enabled = true;
-    virtualHosts."abidanarchive.com" = {
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+    virtualHosts = {
+      "abidanarchive.com" = {
         default = true;
-        enableACME = true;
         forceSSL = true;
+        enableACME = true;
         listen = [
           { port = 80; },
           { addr = "[::]"; port = 80; }
         ];
         serverName = "abidanarchive.com";
-        root = "/srv/abidanarchive.com/public";
-        index = "index.php";
+        root = "/var/www/abidanarchive.com/public";
+        index = "index.html index.htm index.php";
 
         locations."/".tryFiles = "$uri $uri/ /index.php?$query_string";
         locations."= /favicon.ico".extraConfig = ''
@@ -102,23 +109,44 @@
         '';
         locations."~ \\.php$".extraConfig = ''
           fastcgi_pass unix:${config.services.phpfpm.pools.mypool.socket};
+          fastgci_index index.php;
           fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-          include fastcgi_params;
+          include ${pkgs.nginx}/conf/fastcgi_params;
         '';
         locations."~ /\\.(?!well-known).*".extraConfig = ''
           deny all;
         '';
         extraConfig = ''
           add_header X-Frame-Options "SAMEORIGIN";
+          add_header X-XSS-Protection "1; mode=block";
           add_header X-Content-Type-Options "nosniff";
           charset utf-8;
           error_page 404 /index.php;
         '';
+      };
+
+      # Redirect 'www' to 'non-www'
+      "www.abidanarchive.com" = {
+        forceSSL = true;
+        enableACME = true;
+        globalRedirect = "abidanarchive.com";
+      };
     };
   };
 
+  # SSL certificate renawl settings
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "hey@manning390.com";
+    defaults.group = "nginx";
+  };
+
+  # /var/lib/acme.challenges must be writable by the ACME user
+  # and readable by the nginx user.
+  users.users.nginx.extraGroups = [ "acme" ];
+
   services.phpfpm.pools.mypool = {
-    user = "telarial"; # Probably?
+    user = config.services.nginx.user;
     phpPackage = environment.systemPackages.php83;
     settings = {
         "listen.owner" = config.services.nginx.user;
@@ -138,11 +166,20 @@
   services.mysql = {
     enable = true;
     package = pkgs.mariadb;
+
+    ensureDatabases = [ "abidan" ];
+    ensureUseres = [{
+        name = "telariel"
+        ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
+    }];
   };
 
   services.meilisearch = {
     enable = true;
     environment = "production";
+    masterKeyEnvironmentFile = "/run/keys/meilisearch-key";
+    # The format for the key file is the following:
+    # MEILI_MASTER_KEY=my_secret_key
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
