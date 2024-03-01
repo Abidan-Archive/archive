@@ -26,13 +26,14 @@ jobs:
           name: server-build
 
       - name: Upload
-        uses: appleboy/scp-action@master
+        uses: burnett01/rsync-deployments@6.0.0
         with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          source: configuration.nix
-          target: ${{ vars.HOST_PATH }}/artifacts
+          switches: --mkpath
+          path: configuration.nix
+          remote_path: ${{ vars.HOST_PATH }}/artifacts
+          remote_host: ${{ vars.HOST_IP }}
+          remote_user: ${{ secrets.HOST_USER }}
+          remote_key: ${{ secrets.HOST_KEY }}
 
   provision:
     name: Provision Server
