@@ -27,6 +27,7 @@ export default [
         files: ['resources/**/*.{js,svelte}'],
         languageOptions: {
             globals: {
+                ...globals.node,
                 ...globals.browser,
             },
         },

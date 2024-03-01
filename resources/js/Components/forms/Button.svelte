@@ -37,9 +37,9 @@
     );
 </script>
 
-<!-- eslint-disable-next-line svelte/valid-compile -->
 <svelte:element
     this={href ? 'a' : 'button'}
+    role={href ? 'link' : 'button'}
     type={href ? 'undefined' : type}
     {href}
     class={cn(buttonVariants({ variant, size, className }))}

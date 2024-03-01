@@ -53,7 +53,8 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily', 'discord'],
+            'channels' => ['daily'] ,
+            // 'channels' => ['daily', 'discord'],
             'ignore_exceptions' => false,
         ],
 

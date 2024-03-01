@@ -1,7 +1,8 @@
-import laravel from 'laravel-vite-plugin';
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
+import laravel from 'laravel-vite-plugin';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 
 const projectRoot = resolve(__dirname);
 
@@ -12,7 +13,8 @@ export default defineConfig({
             ssr: 'resources/js/ssr.js',
             refresh: true,
         }),
-        svelte({ compilerOptions: {hydratable: true }}),
+        svelte({ compilerOptions: { hydratable: true } }),
+        purgeCss(),
     ],
     resolve: {
         alias: {

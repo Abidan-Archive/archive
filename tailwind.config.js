@@ -19,11 +19,6 @@ export default {
         ),
     ],
     theme: {
-        borderWidth: {
-            ...defaultTheme.borderWidth,
-            3: '3px',
-            5: '5px',
-        },
         extend: {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -48,6 +43,10 @@ export default {
             },
             fontFamily: {
                 sans: ['Roboto', ...defaultTheme.fontFamily.sans],
+            },
+            borderWidth: {
+                3: '3px',
+                5: '5px',
             },
         },
     },
