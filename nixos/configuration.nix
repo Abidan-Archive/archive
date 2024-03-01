@@ -17,11 +17,11 @@
   # Linode region is Atlanta
   time.timeZone = "America/New_York";
 
-  users.users.telariel = {
+  users.users.HOSTUSER = {
     isNormalUser = true;
-    home = "/home/telariel";
+    home = "/home/HOSTUSER";
     extraGroups = [ "wheel" "networkmanager" "acme" "nginx" ];
-    openssh.authorizedKeys.key = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a telariel" ];
+    openssh.authorizedKeys.key = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a HOSTUSER" ];
   };
 
 
@@ -169,7 +169,7 @@
 
     ensureDatabases = [ "abidan" ];
     ensureUseres = [{
-        name = "telariel"
+        name = "HOSTUSER"
         ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
     }];
   };

@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           source: configuration.nix
-          target: ~
+          target: ${{ vars.HOST_PATH }}/artifacts
 
   provision:
     name: Provision Server
@@ -46,7 +46,8 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           script: |
-            cd ~
-            sudo mv ~/configuration.nix /etc/nixos/configuration.nix
+            cd ${{ vars.HOST_PATH }}/artifacts
+            sed -i 's/HOSTUSER/${{ secrets.HOST_USER }}/g' configuration.nix
+            sudo mv configuration.nix /etc/nixos/configuration.nix
             sudo nixos-rebuild switch
 
