@@ -35,7 +35,7 @@
     sysstat # Linode: used by linode support
     git
     (php83.buildEnv {
-      extensions = ({ enabled, all }: (with all; enabled ++ [
+      extensions = ({ enabled, all }: enabled ++ (with all; [
         ctype
         curl
         dom
@@ -91,7 +91,7 @@
         forceSSL = true;
         enableACME = true;
         listen = [
-          { port = 80; },
+          { port = 80; }
           { addr = "[::]"; port = 80; }
         ];
         serverName = "abidanarchive.com";
@@ -147,7 +147,6 @@
 
   services.phpfpm.pools.mypool = {
     user = config.services.nginx.user;
-    phpPackage = environment.systemPackages.php83;
     settings = {
         "listen.owner" = config.services.nginx.user;
         "pm" = "ondemand"; # We likely have low traffic
@@ -169,7 +168,7 @@
 
     ensureDatabases = [ "abidan" ];
     ensureUseres = [{
-        name = "HOSTUSER"
+        name = "HOSTUSER";
         ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
     }];
   };
