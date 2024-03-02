@@ -21,7 +21,7 @@
     isNormalUser = true;
     home = "/home/HOSTUSER";
     extraGroups = [ "wheel" "networkmanager" "acme" "nginx" ];
-    openssh.authorizedKeys.key = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a HOSTUSER" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a HOSTUSER" ];
   };
 
 
@@ -90,13 +90,9 @@
         default = true;
         forceSSL = true;
         enableACME = true;
-        listen = [
-          { port = 80; }
-          { addr = "[::]"; port = 80; }
-        ];
+
         serverName = "abidanarchive.com";
         root = "/home/HOSTUSER/www/abidanarchive.com/current/public";
-        index = "index.html index.htm index.php";
 
         locations."/".tryFiles = "$uri $uri/ /index.php?$query_string";
         locations."= /favicon.ico".extraConfig = ''
