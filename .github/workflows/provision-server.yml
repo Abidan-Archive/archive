@@ -47,8 +47,13 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           script: |
+            echo "${{ secrets.HOST_PASS }}" | sudo -S echo "${{ secrets.LONGVIEW_KEY }}" > /run/keys/longview-api-key
+            echo "${{ secrets.HOST_PASS }}" | sudo -S echo "${{ secrets.MEILISEARCH_KEY }}" > /run/keys/meilisearch-key
+            mkdir -p ${{ vars.HOST_PATH }}/storage/{app,public,framework,logs}
+            mkdir -p ${{ vars.HOST_PATH }}/storage/framework/{cache,sessions,testing,views}
+            echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 0777 ${{ vars.HOST_PATH }}/storage
             cd ${{ vars.HOST_PATH }}/artifacts
             sed -i 's/HOSTUSER/${{ secrets.HOST_USER }}/g' configuration.nix
-            sudo mv configuration.nix /etc/nixos/configuration.nix
-            sudo nixos-rebuild switch
+            echo "${{ secrets.HOST_PASS }}" | sudo -S mv configuration.nix /etc/nixos/configuration.nix
+            echo "${{ secrets.HOST_PASS }}" | sudo -S nixos-rebuild switch
 
