@@ -13,15 +13,15 @@ jobs:
     name: Create deployment artifacts
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
-      - name: Configure PHP 8.1
+      - name: Configure PHP 8.3
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO, session, tokenizer, xml
 
       - name: Install Composer dependencies
@@ -44,28 +44,29 @@ jobs:
         run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=tests --exclude=storage *
 
       - name: Store artifact for distribution
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-build
           path: ${{ github.sha }}.tar.gz
 
   prepare-release-on-server:
     name: Prepare release
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
     needs: create-deployment-artifacts
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: app-build
 
       - name: Upload
-        uses: appleboy/scp-action@master
+        uses: burnett01/rsync-deployments@6.0.0
         with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          source: ${{ github.sha }}.tar.gz
-          target: ${{ vars.HOST_PATH }}/artifacts
+          switches: --mkPath
+          path: ${{ github.sha }}.tar.gz
+          remote_path: ${{ vars.HOST_PATH }}/artifacts
+          remote_host: ${{ vars.HOST_IP }}
+          remote_user: ${{ secrets.HOST_USER }}
+          remote_key: ${{ secrets.HOST_KEY }}
 
       - name: Extract archive and create directories
         uses: appleboy/ssh-action@master
@@ -130,7 +131,7 @@ jobs:
             ln -s -f ${BASE_PATH}/.env $RELEASE_PATH
             ln -s -f $STORAGE_PATH $RELEASE_PATH
             ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            sudo systemctl reload php8.1-fpm
+            sudo systemctl reload php8.3-fpm
 
   run-after-hooks:
     name: After hook
