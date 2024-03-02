@@ -41,7 +41,7 @@ jobs:
       - name: Create deployment artifact
         env:
           GITHUB_SHA: ${{ github.sha }}
-        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=tests --exclude=storage *
+        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=tests --exclude=storage --exclude=nixos *
 
       - name: Store artifact for distribution
         uses: actions/upload-artifact@v4

@@ -141,7 +141,7 @@
   # and readable by the nginx user.
   users.users.nginx.extraGroups = [ "acme" ];
 
-  services.phpfpm.pools.mypool = {
+  services.phpfpm.pools."abidanarchive.com" = {
     user = config.services.nginx.user;
     settings = {
         "listen.owner" = config.services.nginx.user;

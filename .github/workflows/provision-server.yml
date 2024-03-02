@@ -47,8 +47,8 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           script: |
-            echo "${{ secrets.HOST_PASS }}" | sudo -S echo "${{ secrets.LONGVIEW_KEY }}" > /run/keys/longview-api-key
-            echo "${{ secrets.HOST_PASS }}" | sudo -S echo "${{ secrets.MEILISEARCH_KEY }}" > /run/keys/meilisearch-key
+            echo "${{ secrets.HOST_PASS }}" | sudo -S bash -c 'echo "${{ secrets.LONGVIEW_KEY }}" > /run/keys/longview-api-key'
+            echo "${{ secrets.HOST_PASS }}" | sudo -S bash -c 'echo "${{ secrets.MEILISEARCH_KEY }}" > /run/keys/meilisearch-key'
             mkdir -p ${{ vars.HOST_PATH }}/storage/{app,public,framework,logs}
             mkdir -p ${{ vars.HOST_PATH }}/storage/framework/{cache,sessions,testing,views}
             echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 0777 ${{ vars.HOST_PATH }}/storage
