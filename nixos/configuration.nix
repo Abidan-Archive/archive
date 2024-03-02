@@ -80,7 +80,7 @@
   };
 
   services.nginx = {
-    enabled = true;
+    enable = true;
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
@@ -95,7 +95,7 @@
           { addr = "[::]"; port = 80; }
         ];
         serverName = "abidanarchive.com";
-        root = "/var/www/abidanarchive.com/public";
+        root = "/home/HOSTUSER/www/abidanarchive.com/current/public";
         index = "index.html index.htm index.php";
 
         locations."/".tryFiles = "$uri $uri/ /index.php?$query_string";
@@ -167,7 +167,7 @@
     package = pkgs.mariadb;
 
     ensureDatabases = [ "abidan" ];
-    ensureUseres = [{
+    ensureUsers = [{
         name = "HOSTUSER";
         ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
     }];
