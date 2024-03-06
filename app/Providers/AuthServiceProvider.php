@@ -8,6 +8,7 @@ use App\Policies\LikePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Password;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -41,6 +42,17 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('like', [LikePolicy::class, 'like']);
         Gate::define('unlike', [LikePolicy::class, 'unlike']);
+
+        Password::defaults(function() {
+            $rule = Password::min(9);
+            return $this->app->isProduction()
+                ? $rule->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+                : $rule;
+        });
     }
 
 }
