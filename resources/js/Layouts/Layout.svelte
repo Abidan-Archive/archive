@@ -32,7 +32,7 @@
 </AppShell>
 
 <style @global lang="postcss">
-    :global(html, body, #app) {
+    :global(html, body, .dark body, #app) {
         @apply h-full overflow-hidden;
     }
     :global(body) {

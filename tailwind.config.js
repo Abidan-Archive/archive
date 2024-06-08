@@ -8,6 +8,7 @@ import { abidanTheme } from './resources/js/abidan-theme.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    darkMode: 'class',
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
@@ -51,5 +52,9 @@ export default {
         },
     },
 
-    plugins: [typography, forms, skeleton({ themes: { custom: [abidanTheme] } })],
+    plugins: [
+        typography,
+        forms,
+        skeleton({ themes: { custom: [abidanTheme] } }),
+    ],
 };
