@@ -21,7 +21,7 @@
             message: `Event link ${copyVerbs.pick()} into your clipboard.`,
         });
     }
-    let className;
+    let className = '';
     export { className as class };
 </script>
 
