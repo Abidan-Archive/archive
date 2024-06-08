@@ -34,7 +34,7 @@ Route::resource('event.source.stub', StubController::class)->except(['index', 'u
 Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
 Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
 Route::get('reports', [ReportController::class, 'index'])->name('report.index');
-Route::get('test', fn() => inertia('Test'));
+// Route::get('test', fn() => inertia('Test'));
 
 Route::resource('tag', TagController::class);
 
