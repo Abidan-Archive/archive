@@ -37,7 +37,7 @@
         let out = `#${report.id}`;
         if (report.event) out += `- ${report.event.name}\n`;
         out += report.dialogues.reduce(
-            (acc, { speaker, line }) => acc + speaker + '\n' + line + '\n\n',
+            (acc, { speaker, line }) => `${acc}${speaker}\n\n${line}'\n\n`,
             ''
         );
         if (report.footnote) out += `Footnote: ${report.footnote}\n\n`;
@@ -126,7 +126,7 @@
             <dl class="mb-2">
                 <dt class="text-lg font-bold">{dialogue.speaker}</dt>
                 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                <dd>{@html dialogue.line_html}</dd>
+                <dd class="whitespace-pre-line">{@html dialogue.line_html}</dd>
             </dl>
         {/each}
     </section>
