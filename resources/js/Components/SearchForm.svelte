@@ -4,6 +4,7 @@
     import route from '@/lib/route.js';
     import Lens from '@/components/icons/Lens.svelte';
     import SortBy from '@/components/SortBy.svelte';
+    import TagFilter from '@/components/TagFilter.svelte';
     import pickBy from 'lodash/pickBy';
 
     let className;
@@ -41,7 +42,7 @@
 <form
     class={cn('flex flex-col gap-2', className)}
     on:submit|preventDefault={submit}>
-    <div class="group flex h-14 w-full justify-center">
+    <div class="group flex h-14 w-full items-start justify-center">
         <div
             class="relative m-0 h-full flex-1 border-2 border-primary-500 bg-black p-1.5 shadow-[0_0_0_0.10rem] shadow-transparent transition-all duration-500 focus-within:shadow-surface-500 group-hover:border-tertiary-500 group-hover:shadow-surface-500 group-active:border-tertiary-500 group-active:shadow-surface-500">
             <label for="simple-search" class="sr-only">Search</label>
@@ -60,28 +61,11 @@
         </button>
     </div>
     {#if advanced}
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col justify-between gap-2 md:flex-row">
             {#if !!tags.length}
-                <!-- <div class="select-theme include"> -->
-                <!--     <label for="includeTags">Include Tags</label> -->
-                <!--     <Select -->
-                <!--         bind:items={tags} -->
-                <!--         bind:value={includeTags} -->
-                <!--         multiple={true} -->
-                <!--         placeholder="Select tags" -->
-                <!--         clearable /> -->
-                <!-- </div> -->
-                <!-- <div class="select-theme exclude"> -->
-                <!--     <label for="excludeTags">Exclude Tags</label> -->
-                <!--     <Select -->
-                <!--         bind:items={tags} -->
-                <!--         bind:value={excludeTags} -->
-                <!--         multiple={true} -->
-                <!--         placeholder="Select tags" -->
-                <!--         clearable /> -->
-                <!-- </div> -->
+                <TagFilter availableTags={tags} class="flex-1" />
             {/if}
-            <div class="self-end">
+            <div>
                 <SortBy
                     class="w-auto"
                     bind:state={sortState}

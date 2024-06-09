@@ -1,12 +1,22 @@
 <script>
     import { page } from '@inertiajs/svelte';
     import { initializeStores, Drawer } from '@skeletonlabs/skeleton';
+    import {
+        computePosition,
+        autoUpdate,
+        offset,
+        shift,
+        flip,
+        arrow,
+    } from '@floating-ui/dom';
+    import { storePopup } from '@skeletonlabs/skeleton';
 
     import AppShell from '@/Layouts/AppShell.svelte';
     import Footer from '@/components/footer/Footer.svelte';
     import Header from '@/components/Header.svelte';
     import Navigation from '@/components/Navigation.svelte';
 
+    storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
     initializeStores();
 
     // import { addFlash } from '@/stores/toast.js';

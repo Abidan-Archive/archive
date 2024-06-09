@@ -36,6 +36,7 @@
         "vite-plugin-tailwind-purgecss": "^0.2.0"
     },
     "dependencies": {
+        "@floating-ui/dom": "^1.6.5",
         "class-variance-authority": "^0.7.0",
         "clsx": "^1.2.1",
         "konva": "8.3.10",

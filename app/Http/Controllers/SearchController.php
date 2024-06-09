@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
 use App\Models\Report;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
 class SearchController extends Controller
 {
-    public function search(Request $request): Response {
+    public function search(Request $request): Response
+    {
 
         $search = Report::search($request->input('query') ?? '');
 
@@ -34,6 +35,7 @@ class SearchController extends Controller
 
         // We always pass all the tags
         $tags = Tag::select('name')->get()->pluck('name');
+
         return inertia('Search', compact('reports', 'tags'));
     }
 }
