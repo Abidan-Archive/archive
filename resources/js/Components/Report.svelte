@@ -138,7 +138,7 @@
                 <p>{report.footnote}</p>
             {/if}
         </section>
-        <section class="flex gap-2">
+        <section class="flex items-end gap-2">
             {#each report.tags || [] as tag}
                 <Tag {tag} />
             {/each}

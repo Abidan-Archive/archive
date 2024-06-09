@@ -14,8 +14,8 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('query') || '';
-    let includeTags = urlParams.get('includeTags')?.split(',') || null;
-    let excludeTags = urlParams.get('excludeTags')?.split(',') || null;
+    let includeTags = urlParams.get('includeTags')?.split(',') || [];
+    let excludeTags = urlParams.get('excludeTags')?.split(',') || [];
     const orderBy = urlParams.get('orderBy')?.split(',') || null;
     let sortState = orderBy
         ? {
@@ -25,11 +25,10 @@
         : null;
 
     function submit() {
-        console.log(includeTags);
         const values = pickBy({
             query,
-            includeTags: includeTags?.map((o) => o.value).join(','),
-            excludeTags: excludeTags?.map((o) => o.value).join(','),
+            includeTags: includeTags.join(','),
+            excludeTags: excludeTags.join(','),
             orderBy: sortState
                 ? `${sortState.key},${sortState.direction > 0 ? 'ASC' : 'DESC'}`
                 : null,
@@ -63,7 +62,11 @@
     {#if advanced}
         <div class="flex flex-col justify-between gap-2 md:flex-row">
             {#if !!tags.length}
-                <TagFilter availableTags={tags} class="flex-1" />
+                <TagFilter
+                    bind:includeValue={includeTags}
+                    bind:excludeValue={excludeTags}
+                    availableTags={tags}
+                    class="flex-1" />
             {/if}
             <div>
                 <SortBy
