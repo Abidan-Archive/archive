@@ -30,9 +30,7 @@
     ];
 </script>
 
-<footer
-    {...$$restProps}
-    class={`mt-10 w-full bg-surface-500 p-5 ${$$props.class}`}>
+<div {...$$restProps} class={`w-full bg-surface-500 p-5 ${$$props.class}`}>
     <div class="sm:mx-auto sm:flex sm:items-center sm:justify-between">
         <nav
             class="flex items-center justify-between gap-2 text-sm text-on-surface-token sm:text-center">
@@ -50,4 +48,4 @@
             {/each}
         </nav>
     </div>
-</footer>
+</div>

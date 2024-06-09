@@ -1,9 +1,10 @@
 <script>
     import { page } from '@inertiajs/svelte';
-    import { AppShell, initializeStores, Drawer } from '@skeletonlabs/skeleton';
+    import { initializeStores, Drawer } from '@skeletonlabs/skeleton';
 
-    import Header from '@/components/Header.svelte';
+    import AppShell from '@/Layouts/AppShell.svelte';
     import Footer from '@/components/footer/Footer.svelte';
+    import Header from '@/components/Header.svelte';
     import Navigation from '@/components/Navigation.svelte';
 
     initializeStores();
@@ -26,9 +27,9 @@
     <Navigation column={true} />
 </Drawer>
 <AppShell>
-    <svelte:fragment slot="header"><Header /></svelte:fragment>
+    <Header slot="header" />
     <slot />
-    <svelte:fragment slot="pageFooter"><Footer /></svelte:fragment>
+    <Footer slot="footer" />
 </AppShell>
 
 <style @global lang="postcss">
