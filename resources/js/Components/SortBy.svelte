@@ -3,7 +3,7 @@
     import { ChevronUp, ChevronDown, ChevronUpDown } from '@/components/icons';
 
     export let state;
-    let className;
+    let className = '';
     export { className as class };
 
     let sortKey;

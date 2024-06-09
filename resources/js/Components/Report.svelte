@@ -3,6 +3,7 @@
     import { addToast } from '@/stores/toast';
     import { cn, route, Oddment } from '@/lib';
     import { inertia, router } from '@inertiajs/svelte';
+    import Tag from '@/components/Tag.svelte';
 
     let className = '';
     export { className as class };
@@ -130,10 +131,17 @@
             </dl>
         {/each}
     </section>
-    {#if !!report.footnote}
+    <div class="flex justify-between">
         <section>
-            <h5>Footnote:</h5>
-            <p>{report.footnote}</p>
+            {#if !!report.footnote}
+                <h5>Footnote:</h5>
+                <p>{report.footnote}</p>
+            {/if}
         </section>
-    {/if}
+        <section class="flex gap-2">
+            {#each report.tags || [] as tag}
+                <Tag {tag} />
+            {/each}
+        </section>
+    </div>
 </article>
