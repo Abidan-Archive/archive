@@ -8,6 +8,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\StubController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,7 @@ Route::resource('event.source.stub', StubController::class)->except(['index', 'u
 Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
 Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
 Route::get('reports', [ReportController::class, 'index'])->name('report.index');
+Route::resource('user', UserController::class)->only(['show', 'edit', 'update']);
 // Route::get('test', fn() => inertia('Test'));
 
 Route::resource('tag', TagController::class);

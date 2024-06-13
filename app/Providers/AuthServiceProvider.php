@@ -21,20 +21,22 @@ class AuthServiceProvider extends ServiceProvider
         \App\Models\Event::class => \App\Policies\EventPolicy::class,
         \App\Models\Report::class => \App\Policies\ReportPolicy::class,
         \App\Models\Tag::class => \App\Policies\TagPolicy::class,
+        \App\Models\User::class => \App\Policies\UserPolicy::class,
     ];
 
     /**
      * Register any authentication / authorization services.
      */
-    public function boot(): void {
+    public function boot(): void
+    {
         $this->registerPolicies();
 
-        if (!$this->app->environment('deployment') && Schema::hasTable('permissions')) {
+        if (! $this->app->environment('deployment') && Schema::hasTable('permissions')) {
             // Get all the permissions
             $permissions = Permission::with('roles')->get();
             // Dynamically register permissions with Laravel's Gate
             foreach ($permissions as $permission) {
-                Gate::define($permission->name, function(User $user) use ($permission) {
+                Gate::define($permission->name, function (User $user) use ($permission) {
                     return $user->hasPermission($permission);
                 });
             }
@@ -43,8 +45,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('like', [LikePolicy::class, 'like']);
         Gate::define('unlike', [LikePolicy::class, 'unlike']);
 
-        Password::defaults(function() {
+        Password::defaults(function () {
             $rule = Password::min(9);
+
             return $this->app->isProduction()
                 ? $rule->letters()
                     ->mixedCase()
@@ -54,5 +57,4 @@ class AuthServiceProvider extends ServiceProvider
                 : $rule;
         });
     }
-
 }
