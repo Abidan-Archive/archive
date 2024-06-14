@@ -6,6 +6,7 @@
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
     import { addToast } from '@/stores/toast';
+    import recaptcha from '@/lib/recaptcha';
 
     onMount(() => {
         if ($page.props.status)
@@ -14,10 +15,14 @@
 
     let form = useForm('ForgotPassword', {
         email: null,
+        recaptcha: null,
     });
 
     function submit() {
-        $form.post(route('password.email'));
+        recaptcha('password.email', (token) => {
+            $form.recaptcha = token;
+            $form.post(route('password.email'));
+        });
     }
 </script>
 

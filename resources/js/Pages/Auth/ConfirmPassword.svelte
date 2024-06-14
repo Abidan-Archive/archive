@@ -2,15 +2,20 @@
     import Page from '@/components/Page.svelte';
     import Card from '@/components/Card.svelte';
     import route from '@/lib/route';
+    import recaptcha from '@/lib/recaptcha';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
         password: null,
+        recaptcha: null,
     });
 
     function submit() {
-        $form.post(route('password.confirm'));
+        recaptcha('password.confirm', (token) => {
+            $form.recaptcha = token;
+            $form.post(route('password.confirm'));
+        });
     }
 </script>
 

@@ -2,7 +2,7 @@
     import DiscordLogo from '@/components/DiscordLogo.svelte';
     import Page from '@/components/Page.svelte';
     import Card from '@/components/Card.svelte';
-    import { cn, route } from '@/lib';
+    import { cn, recaptcha, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm, inertia, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
@@ -17,10 +17,14 @@
         email: null,
         password: null,
         remember: false,
+        recaptcha: null,
     });
 
     function submit() {
-        $form.post(route('login'));
+        recaptcha('login', (token) => {
+            $form.recaptcha = token;
+            $form.post(route('login'));
+        });
     }
 </script>
 

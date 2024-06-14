@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Rules\ReCaptchaV3;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,6 @@ class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
-     *
      */
     public function create(): Response
     {
@@ -26,7 +26,6 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -36,6 +35,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'confirmed', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'recaptcha' => ['required', new ReCaptchaV3('register', 0.5)],
         ]);
 
         $user = User::create([

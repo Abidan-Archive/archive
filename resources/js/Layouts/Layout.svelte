@@ -55,4 +55,7 @@
     :global(main a) {
         @apply text-surface-100 underline hover:text-surface-300;
     }
+    :global(.grecaptcha-badge) {
+        visibility: hidden;
+    }
 </style>

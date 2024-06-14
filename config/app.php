@@ -213,15 +213,4 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Custom Configs
-    |--------------------------------------------------------------------------
-    */
-
-    'links' => [
-        'discord' => 'https://discord.gg/tCg94qy',
-        'wiki' => 'https://wiki.abidanarchive.com',
-    ],
-
 ];
