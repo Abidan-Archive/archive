@@ -1,4 +1,4 @@
-/*global grecaptcha */
+/*global grecaptcha, grecaptcha_sitekey */
 /**
  * Run Run recaptchav3
  * @param {string} action The action to match in the controller
@@ -8,7 +8,7 @@
 export default function recaptcha(action, callback) {
     grecaptcha.ready(() => {
         return grecaptcha
-            .execute(import.meta.env.GOOGLE_RECAPTCHA_V3_SITE_KEY, { action })
+            .execute(grecaptcha_sitekey, { action })
             .then(callback);
     });
 }
