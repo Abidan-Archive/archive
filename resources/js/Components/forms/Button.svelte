@@ -2,10 +2,10 @@
     import cn from '@/lib/cn';
     import { cva } from 'class-variance-authority';
 
-    let className;
+    let className = '';
     export { className as class };
-    export let href;
-    export let type;
+    export let href = undefined;
+    export let type = 'submit';
     export let variant = 'default';
     export let size = 'default';
 
@@ -40,7 +40,7 @@
 <svelte:element
     this={href ? 'a' : 'button'}
     role={href ? 'link' : 'button'}
-    type={href ? 'undefined' : type}
+    type={href ? undefined : type}
     {href}
     class={cn(buttonVariants({ variant, size, className }))}
     {...$$restProps}
