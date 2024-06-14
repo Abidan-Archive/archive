@@ -28,7 +28,7 @@
     }
 </script>
 
-<Page class="w-1/2" header="Login">
+<Page class="w-full md:w-1/2" header="Login">
     <Card>
         <form method="POST" on:submit|preventDefault={submit}>
             <div>

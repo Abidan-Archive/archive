@@ -10,7 +10,7 @@
     let className;
     export { className as class };
     export let advanced = false;
-    export let tags = null;
+    export let tags = [];
 
     const urlParams = new URLSearchParams(window.location.search);
     let query = urlParams.get('query') || '';
@@ -54,14 +54,14 @@
         </div>
         <button
             type="submit"
-            class="z-10 flex h-full w-20 items-center justify-center bg-primary-500 px-3 py-2 transition-colors duration-500 group-hover:bg-tertiary-500 group-active:bg-tertiary-500">
+            class="z-0 flex h-full w-20 items-center justify-center bg-primary-500 px-3 py-2 transition-colors duration-500 group-hover:bg-tertiary-500 group-active:bg-tertiary-500">
             <Lens class="block h-5 w-5 text-on-surface-token" />
             <span class="sr-only">Search Button</span>
         </button>
     </div>
     {#if advanced}
         <div class="flex flex-col justify-between gap-2 md:flex-row">
-            {#if !!tags.length}
+            {#if tags.length > 0}
                 <TagFilter
                     bind:includeValue={includeTags}
                     bind:excludeValue={excludeTags}

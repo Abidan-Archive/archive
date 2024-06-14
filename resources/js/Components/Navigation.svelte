@@ -29,7 +29,7 @@
                   icon: Scale,
               }
             : null,
-        !window.location.pathname
+        location.pathname !== '/'
             ? {
                   label: 'Home',
                   href: route('home'),

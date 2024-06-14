@@ -65,7 +65,7 @@
                 placeholder="Sort" />
         </div>
     </div>
-    <div class="flex flex-wrap gap-2">
+    <div class="flex flex-wrap justify-center gap-2">
         {#each data as tag}
             <Tag {tag} showCount class="ease-in-out" />
         {:else}

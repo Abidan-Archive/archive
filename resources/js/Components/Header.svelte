@@ -1,6 +1,6 @@
 <script>
-    import { inertia, page } from '@inertiajs/svelte';
-    import { AppBar } from '@skeletonlabs/skeleton';
+    import { inertia, page, router } from '@inertiajs/svelte';
+    import { AppBar, popup } from '@skeletonlabs/skeleton';
     import Logo from '@/components/Logo.svelte';
     import { Hamburger, User } from '@/components/icons';
     import route from '@/lib/route';
@@ -15,12 +15,16 @@
             rounded: 'rounded-none',
         });
     }
-    function openRightNavSidebar() {
-        drawerStore.open({
-            position: 'right',
-            width: 'w-64',
-            rounded: 'rounded-none',
-        });
+    /** @type {import('@skeletonlabs/skeleton').PopupSettings} */
+    const authPopupNav = {
+        event: 'click',
+        target: 'authPopup',
+        placement: 'bottom',
+        closeQuery: '.listbox-item',
+    };
+
+    function onLogout() {
+        router.post(route('logout'));
     }
 </script>
 
@@ -54,10 +58,47 @@
         <Navigation class="hidden lg:block" />
         <div>
             {#if !!$page.props.auth.user}
-                <button class="flex gap-2" on:click={openRightNavSidebar}>
-                    <User class="h-6 w-6" />
+                <button
+                    type="button"
+                    class="flex gap-2"
+                    use:popup={authPopupNav}>
+                    <User class="hidden h-6 w-6 sm:inline" />
                     {$page.props.auth.user?.username}
                 </button>
+                <div data-popup="authPopup">
+                    <nav class="card list-nav z-50 py-2 shadow-xl">
+                        <ul>
+                            <li>
+                                <a
+                                    use:inertia
+                                    href={route(
+                                        'user.show',
+                                        $page.props.auth.user
+                                    )}>
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    use:inertia
+                                    href={route(
+                                        'user.edit',
+                                        $page.props.auth.user
+                                    )}>
+                                    Settings
+                                </a>
+                            </li>
+                            <hr />
+                            <li>
+                                <form
+                                    method="post"
+                                    on:submit|preventDefault={onLogout}>
+                                    <button type="submit">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             {:else}
                 <a use:inertia href={route('login')} class="flex gap-2">
                     <User class="hidden h-6 w-6 sm:block" />
