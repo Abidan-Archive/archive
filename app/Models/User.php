@@ -7,7 +7,9 @@ use App\Models\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,6 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function bans(): MorphToMany
+    {
+        return $this->morphToMany(Ban::class, 'bannable')->withTimestamps();
+    }
+
+    public function ips(): BelongsToMany
+    {
+        return $this->belongsToMany(Ip::class)->withTimestamps();
+    }
 
     public function likes(): HasMany
     {

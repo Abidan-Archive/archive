@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Response;
 
@@ -38,7 +39,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
+    public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         if ($request->username != null && $request->username != $user->username) {
             $user->username = $request->username;
@@ -59,7 +60,6 @@ class UserController extends Controller
 
         return to_route('user.edit', compact('user'))
             ->with('flash', ['message' => 'Account successfully updated.']);
-
     }
 
     /**
