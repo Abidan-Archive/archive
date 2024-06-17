@@ -40,16 +40,20 @@ class Ban extends Model
             }
             $bannable->bans()->save($ban);
 
-            Log::channel('ban')->notice('{class} {bannable} ({bannable_id}) recieved displinary {ban} ({ban_id}) from {mod} ({mod_id}) until {duration} ({discord}): {reason}', [
+            Log::channel('ban')->notice('{class} {bannable} ({bannable_id}) recieved displinary {ban} ban ({ban_id}) from {mod} ({mod_id}) until {duration} ({discord}): {reason}', [
                 'class' => get_class($bannable),
                 'bannable' => $bannable->username ?? $bannable->ip,
                 'bannable_id' => $bannable->id,
                 'ban' => $type->name,
                 'ban_id' => $ban->id,
-                'mod' => auth()->user->username,
-                'mod_id' => auth()->user->id,
-                'duration' => $expires->toDateTimeString(),
-                'discord' => '<t:'.$expires->format('X').':R>',
+                'mod' => auth()->user()->username,
+                'mod_id' => auth()->user()->id,
+                'duration' => $expires != null ?
+                    $expires->toDateTimeString() :
+                    'never',
+                'discord' => $expires != null ?
+                    '<t:'.$expires->format('X').':R>' :
+                    'never',
                 'reason' => $reason,
             ]);
         }
