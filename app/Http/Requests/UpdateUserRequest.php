@@ -19,10 +19,10 @@ class UpdateUserRequest extends FormRequest
         $user = $this->route('user');
 
         return [
-            'username' => ['string', 'max:255'],
-            'email' => ['confirmed', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
-            'new_password' => ['confirmed', Rules\Password::defaults()],
-            'password' => ['required', 'current_password:api'],
+            'username' => ['sometimes', 'string', 'max:255'],
+            'email' => ['sometimes', 'confirmed', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
+            'new_password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'current_password'],
             'recaptcha' => ['required', new ReCaptchaV3('user/update', 0.5)],
         ];
     }

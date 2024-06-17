@@ -36,7 +36,6 @@ Route::apiResource('event.source', SourceController::class)->except(['index']); 
 Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
 Route::get('reports', [ReportController::class, 'index'])->name('report.index');
 Route::resource('user', UserController::class)->only(['show', 'edit', 'update']);
-// Route::get('test', fn() => inertia('Test'));
 
 Route::resource('tag', TagController::class);
 

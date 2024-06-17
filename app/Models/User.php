@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Contracts\Likeable;
 use App\Models\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +17,9 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use  HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+
+    protected $appends = ['is_sso'];
 
     /**
      * The attributes that are mass assignable.
@@ -57,37 +60,50 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasLiked(Likeable $likeable): bool
     {
-        if (!$likeable->exists) return false;
+        if (! $likeable->exists) {
+            return false;
+        }
+
         return $likeable->likes()
-            ->whereHas('user', fn($q) => $q->whereId($this->id))
+            ->whereHas('user', fn ($q) => $q->whereId($this->id))
             ->exists();
     }
 
     public function like(Likeable $likeable): self
     {
-        if ($this->hasLiked($likeable)) return $this;
+        if ($this->hasLiked($likeable)) {
+            return $this;
+        }
 
         (new Like())
             ->user()->associate($this)
             ->likeable()->associate($likeable)
             ->save();
-        if (method_exists($likeable, 'searchable'))
+        if (method_exists($likeable, 'searchable')) {
             $likeable->refresh()->searchable();
-
+        }
 
         return $this;
     }
 
     public function unlike(Likeable $likeable): self
     {
-        if (!$this->hasLiked($likeable)) return $this;
+        if (! $this->hasLiked($likeable)) {
+            return $this;
+        }
 
         $likeable->likes()
-            ->whereHas('user', fn($q) => $q->whereId($this->id))
+            ->whereHas('user', fn ($q) => $q->whereId($this->id))
             ->delete();
-        if (method_exists($likeable, 'searchable'))
-          $likeable->refresh()->searchable();
+        if (method_exists($likeable, 'searchable')) {
+            $likeable->refresh()->searchable();
+        }
 
         return $this;
+    }
+
+    protected function isSso(): Attribute
+    {
+        return Attribute::make(get: fn ($value, $attr): bool => ! is_null($this->discord_id));
     }
 }

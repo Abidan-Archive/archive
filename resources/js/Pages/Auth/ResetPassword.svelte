@@ -15,7 +15,7 @@
     });
 
     function submit() {
-        recaptcha('password.update', (token) => {
+        recaptcha('password/update', (token) => {
             $form.recaptcha = token;
             $form.post(route('password.update'));
         });

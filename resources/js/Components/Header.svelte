@@ -20,7 +20,6 @@
         event: 'click',
         target: 'authPopup',
         placement: 'bottom',
-        closeQuery: '.listbox-item',
     };
 
     function onLogout() {
@@ -66,7 +65,7 @@
                     {$page.props.auth.user?.username}
                 </button>
                 <div data-popup="authPopup">
-                    <nav class="card list-nav z-50 py-2 shadow-xl">
+                    <nav class="card list-nav z-50 w-48 shadow-xl">
                         <ul>
                             <li>
                                 <a
@@ -93,7 +92,8 @@
                                 <form
                                     method="post"
                                     on:submit|preventDefault={onLogout}>
-                                    <button type="submit">Logout</button>
+                                    <button type="submit" class="w-full"
+                                        >Logout</button>
                                 </form>
                             </li>
                         </ul>

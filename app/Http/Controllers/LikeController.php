@@ -8,8 +8,8 @@ use Illuminate\Http\RedirectResponse;
 
 class LikeController extends Controller
 {
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -17,13 +17,13 @@ class LikeController extends Controller
     {
         $request->user()->like($request->likeable());
 
-        return redirect()->back();
+        return back();
     }
 
     public function unlike(UnlikeRequest $request): RedirectResponse
     {
         $request->user()->unlike($request->likeable());
 
-        return redirect()->back();
+        return back();
     }
 }

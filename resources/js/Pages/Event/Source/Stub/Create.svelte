@@ -5,12 +5,14 @@
 
     import { Button, IconButton } from '@/components/forms';
     import { Play, Pause, Trash } from '@/components/icons';
-    import { addFlash } from '@/stores/toast.js';
     import Card from '@/components/Card.svelte';
     import Dialog from '@/components/modals/Dialog.svelte';
     import MediaControls from '@/components/audio/MediaControls.svelte';
     import Page from '@/components/Page.svelte';
     import route from '@/lib/route.js';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+
+    const toastStore = getToastStore();
 
     // Todo:
     // - Handle errors / form validation for stubs
@@ -38,7 +40,7 @@
 
     const { open } = getContext('simple-modal');
 
-    addFlash($page.props?.flash);
+    toastStore.trigger({ message: $page.props?.flash });
 
     onMount(() => {
         initPeaks();
@@ -245,7 +247,7 @@
             route('event.source.stub.store', [event.id, source.id]),
             { stubs },
             {
-                onSuccess: () => addFlash($page.props?.flash),
+                onSuccess: () => null, //toastStore.trigger({message: $page.props?.flash}), // Check if this works
             }
         );
     }

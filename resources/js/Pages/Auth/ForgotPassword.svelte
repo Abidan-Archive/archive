@@ -5,21 +5,26 @@
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import { addToast } from '@/stores/toast';
     import recaptcha from '@/lib/recaptcha';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+
+    const toastStore = getToastStore();
 
     onMount(() => {
         if ($page.props.status)
-            addToast({ message: status, type: 'success', timeout: false });
+            toastStore.trigger({
+                message: $page.props.status,
+                background: 'variant-filled-success',
+            });
     });
 
-    let form = useForm('ForgotPassword', {
+    let form = useForm({
         email: null,
         recaptcha: null,
     });
 
     function submit() {
-        recaptcha('password.email', (token) => {
+        recaptcha('password/email', (token) => {
             $form.recaptcha = token;
             $form.post(route('password.email'));
         });

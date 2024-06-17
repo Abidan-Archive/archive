@@ -11,25 +11,26 @@ use Inertia\Response;
 
 class EventController extends Controller
 {
-
     /**
      * Instantiate a new controller instance.
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth')
-             ->except('index', 'show');
+            ->except('index', 'show');
         $this->authorizeResource(Event::class, 'event');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response {
+    public function index(): Response
+    {
         $events = Event::with('reports')
             ->paginate(20)
-            ->through(fn($event) => [
+            ->through(fn ($event) => [
                 'id' => $event->id,
                 'name' => $event->name,
                 'date' => $event->date,
@@ -43,7 +44,8 @@ class EventController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): Response {
+    public function create(): Response
+    {
         return inertia('Event/Create');
     }
 
@@ -54,8 +56,9 @@ class EventController extends Controller
     {
         $validated = $request->validated();
         $event = Event::create($validated);
-        foreach (($validated['sources'] ?? []) as $i => $file)
+        foreach (($validated['sources'] ?? []) as $i => $file) {
             Source::createFromFile($event, $file, $i);
+        }
 
         return to_route('event.update', compact('event'))->with('flash', ['message' => 'Event successfully created!']);
     }
@@ -66,6 +69,7 @@ class EventController extends Controller
     public function show(Event $event): Response
     {
         $reports = $event->reports()->paginate(20);
+
         return inertia('Event/Show', compact('event', 'reports'));
     }
 
@@ -75,6 +79,7 @@ class EventController extends Controller
     public function edit(Event $event): Response
     {
         $event->sources;
+
         return inertia('Event/Edit', compact('event'));
     }
 
@@ -85,9 +90,10 @@ class EventController extends Controller
     {
         $validated = $request->validated();
         $event->update($validated);
-        $max = $event->sources->max('id');// Get max, not count
-        foreach (($validated['sources'] ?? []) as $i => $file)
+        $max = $event->sources->max('id'); // Get max, not count
+        foreach (($validated['sources'] ?? []) as $i => $file) {
             Source::createFromFile($event, $file, $max + 1 + $i);
+        }
 
         return to_route('event.update', compact('event'))->with('flash', ['message' => 'Event successfully updated!']);
     }
@@ -99,7 +105,6 @@ class EventController extends Controller
     {
         $event->delete();
 
-        return to_route('event.index')->with('status', 'Event successfully deleted!');
+        return to_route('event.index')->with('flash', ['message' => 'Event successfully deleted!']);
     }
-
 }

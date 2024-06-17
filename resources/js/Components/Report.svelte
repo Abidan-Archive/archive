@@ -1,9 +1,11 @@
 <script>
     import { Copy, Heart, Link } from '@/components/icons';
-    import { addToast } from '@/stores/toast';
     import { cn, route, Oddment } from '@/lib';
     import { inertia, router } from '@inertiajs/svelte';
     import Tag from '@/components/Tag.svelte';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+
+    const toastStore = getToastStore();
 
     let className = '';
     export { className as class };
@@ -27,10 +29,14 @@
         'lured with a small piece of cheese': 1,
         yoinked: 1,
     });
+    const likedVerbs = new Oddment({
+        Liked: 20,
+        Licked: 1,
+    });
 
     async function linkClicked() {
         await navigator.clipboard.writeText(report.permalink);
-        addToast({
+        toastStore.trigger({
             message: `Report permalink ${copyVerbs.pick()} into your clipboard`,
         });
     }
@@ -45,7 +51,9 @@
         out += report.permalink;
 
         await navigator.clipboard.writeText(out);
-        addToast({ message: `Report ${copyVerbs.pick()} into your clipboard` });
+        toastStore.trigger({
+            message: `Report ${copyVerbs.pick()} into your clipboard`,
+        });
     }
     function likeClicked() {
         if (!report.is_liked) {
@@ -53,9 +61,8 @@
                 likeable_type: 'App\\Models\\Report',
                 id: report.id,
             });
-            addToast({
-                message: `Liked Report #${report.id}`,
-                type: 'success',
+            toastStore.trigger({
+                message: `${likedVerbs.pick()} Report #${report.id}`,
             });
         } else {
             // router delete doesn't allow payload, so we're faking it with _method
@@ -65,11 +72,10 @@
                 id: report.id,
             });
 
-            addToast({
+            toastStore.trigger({
                 message: `Report #${
                     report.id
                 } ${removeVerbs.pick()} from your likes`,
-                type: 'success',
             });
         }
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Response;
 
 class UserController extends Controller
@@ -37,21 +38,19 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\Response
+    public function update(UpdateUserRequest $request, User $user): \Illuminate\Http\RedirectResponse
     {
-        $validated = $request->validated();
-
-        if ($validated['username'] != null || $validated['username'] != $user->username) {
-            $user->username = $validated['username'];
+        if ($request->username != null && $request->username != $user->username) {
+            $user->username = $request->username;
         }
 
-        if ($validated['email'] != null || $validated['email'] != $user->email) {
-            $user->email = $validated['email'];
+        if ($request->email != null && $request->email != $user->email) {
+            $user->email = $request->email;
             $user->email_verified_at = null;
         }
 
-        if ($validated['new_password'] != null) {
-
+        if ($request->new_password != null) {
+            $user->password = Hash::make($request->new_password);
         }
 
         if ($user->isDirty()) {

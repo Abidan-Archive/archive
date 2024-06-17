@@ -3,8 +3,10 @@
     import cn from '@/lib/cn';
     import route from '@/lib/route';
     import { Link } from '@/components/icons';
-    import { addToast } from '@/stores/toast';
     import { inertia } from '@inertiajs/svelte';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+
+    const toastStore = getToastStore();
 
     const copyVerbs = new Oddment({
         copied: 20,
@@ -17,7 +19,7 @@
     const formattedDate = new Date(event.date).toLocaleDateString('en-US');
     async function copyLinkClicked() {
         await navigator.clipboard.writeText(route('event.show', event));
-        addToast({
+        toastStore.trigger({
             message: `Event link ${copyVerbs.pick()} into your clipboard.`,
         });
     }

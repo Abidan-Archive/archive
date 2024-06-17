@@ -4,14 +4,7 @@
     import Card from '@/components/Card.svelte';
     import { cn, recaptcha, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
-    import { useForm, inertia, page } from '@inertiajs/svelte';
-    import { onMount } from 'svelte';
-    import { addToast } from '@/stores/toast';
-
-    onMount(() => {
-        if ($page.props.status)
-            addToast({ message: status, type: 'success', timeout: false });
-    });
+    import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm({
         email: null,

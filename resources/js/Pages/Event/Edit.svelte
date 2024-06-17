@@ -1,14 +1,17 @@
 <script>
     import Card from '@/components/Card.svelte';
     import CircleX from '@/components/icons/CircleX.svelte';
-    import Dialog from '@/components/modals/Dialog.svelte';
     import { formatToInputDateString, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
-    import { getContext } from 'svelte';
-    import { addToast, addFlash } from '@/stores/toast';
+    import {
+        FileDropzone,
+        getModalStore,
+        getToastStore,
+    } from '@skeletonlabs/skeleton';
 
-    const { open } = getContext('simple-modal');
+    const toastStore = getToastStore();
+    const modalStore = getModalStore();
 
     export let event;
 
@@ -28,8 +31,10 @@
     }
 
     function handleRemoveFile(index) {
-        $form.sources.splce(index, 1);
-        $form.sources = [...$form.sources];
+        console.log({ index, sources: $form.sources });
+        return;
+        // $form.sources.splice(index, 1);
+        // $form.sources = [...$form.sources];
     }
 
     function handleRemoveAllFiles() {
@@ -60,29 +65,41 @@
             route('event.source.update', [source.event_id, source.id]),
             {
                 // Handle via toast
-                onSuccess: () => addFlash($page.props.flash),
+                onSuccess: () =>
+                    toastStore.trigger({
+                        message: $page.props.flash,
+                        background: 'variant-filled-success',
+                    }),
                 onError: () =>
-                    addToast({
+                    toastStore.trigger({
                         message: $renameSource.errors.name,
-                        type: 'error',
+                        background: 'variant-filled-error',
                     }),
             }
         );
     }
 
-    function handleDeleteSourceSubmit(source) {
-        router.delete(
-            route('event.source.destroy', [source.event_id, source.id]),
-            {
-                onSuccess: () => addFlash($page.props.flash),
-                onError: () =>
-                    addToast({
-                        message: 'Uh oh something went wrong.',
-                        type: 'error',
-                    }),
-            }
-        );
-    }
+    /** @type {import('@skeletonlabs/skeleton').ModalSettings} */
+    const deleteModal = {
+        type: 'confirm',
+        title: 'Confirm Delete',
+        body: 'Are you sure you want to delete this source? All attached stubs will be deleted regardless of completion.',
+        response: (r) => console.log(r),
+    };
+
+    // function handleDeleteSourceSubmit(source) {
+    //     router.delete(
+    //         route('event.source.destroy', [source.event_id, source.id]),
+    //         {
+    //             onSuccess: () => undefined, //addFlash($page.props.flash),
+    //             onError: () => undefined,
+    //             // addToast({
+    //             //     message: 'Uh oh something went wrong.',
+    //             //     type: 'error',
+    //             // }),
+    //         }
+    //     );
+    // }
 </script>
 
 <section class="contianer mx-auto mt-10">
@@ -122,11 +139,7 @@
             </div>
             <div id="dropzone-container" class="mt-4 block">
                 <Label for="dropzone">Add Additional Audio Sources</Label>
-                <!-- <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple> -->
-                <!--     <button>Choose audio files to upload</button> -->
-                <!--     <p>or</p> -->
-                <!--     <p>Drag and drop them here</p> -->
-                <!-- </Dropzone> -->
+                <FileDropzone name="sources" bind:files={$form.sources} />
                 {#each $form.sources as item, i}
                     <ErrorMessage
                         message={($form.errors['sources.' + i] || '').replace(
@@ -140,6 +153,7 @@
                         <div class="flex justify-between">
                             <span>Files</span>
                             <button
+                                type="button"
                                 class="text-red-400"
                                 on:click={handleRemoveAllFiles}
                                 >Remove All</button>
@@ -148,6 +162,7 @@
                             <div class="mt-2 flex gap-2">
                                 <span>{item.name}</span>
                                 <button
+                                    type="button"
                                     class="text-red-400"
                                     aria-label="Remove File"
                                     on:click={() => handleRemoveFile(i)}
@@ -188,15 +203,11 @@
                 <audio src={source.url} controls class="z-0" />
                 <Button
                     variant="danger"
-                    on:click={() => {
-                        open(Dialog, {
-                            message:
-                                'Are you sure you want to delete this source? All attached stubs will be deleted regardless of completion.',
-                            onOkay: () => handleDeleteSourceSubmit(source),
-                            closeButton: false,
-                            closeOnOuterClick: false,
-                        });
-                    }}>
+                    on:click={() =>
+                        modalStore.trigger({
+                            ...deleteModal,
+                            meta: { source },
+                        })}>
                     Delete
                 </Button>
             </Card>
