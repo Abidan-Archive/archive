@@ -18,7 +18,7 @@ use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
  */
 class Stub extends Model
 {
-    use HasFactory, BelongsToThroughTrait;
+    use BelongsToThroughTrait, HasFactory;
 
     const DIRECTORY = 'sources';
 
@@ -27,9 +27,10 @@ class Stub extends Model
     protected $appends = ['audio_url'];
 
     /**
-    * Register methods to model hooks
-    */
-    protected static function booted(): void {
+     * Register methods to model hooks
+     */
+    protected static function booted(): void
+    {
         // Delete associated files in storage when model deleted
         static::deleting(function (Stub $model) {
             Storage::delete(self::DIRECTORY.'/'.$model->filename);
@@ -39,30 +40,34 @@ class Stub extends Model
         });
     }
 
-    public function event(): BelongsToThrough  {
+    public function event(): BelongsToThrough
+    {
         return $this->belongsToThrough(Event::class, Source::class);
     }
 
-    public function source(): BelongsTo {
+    public function source(): BelongsTo
+    {
         return $this->belongsTo(Source::class);
     }
 
-    public function audioUrl(): Attribute {
-        return Attribute::make(get: fn($value, $attributes) =>
-            $attributes['filename'] !== null
+    public function audioUrl(): Attribute
+    {
+        return Attribute::make(get: fn ($value, $attributes) => $attributes['filename'] !== null
             ? Storage::url(self::DIRECTORY.'/'.$attributes['filename'])
             : null);
     }
 
-    private function createFile(): void {
+    private function createFile(): void
+    {
         $input = Storage::disk('public')->path(Source::DIRECTORY).'/'.$this->source->filename;
         $filename = implode('_', [$this->source->id, $this->id, Str::random(40)]).'.'.pathinfo($input, PATHINFO_EXTENSION);
         $output = Storage::disk('public')->path(self::DIRECTORY).'/'.$filename;
         $process = new Process(['ffmpeg', '-ss', $this->from, '-t', $this->to - $this->from, '-c copy', '-i', $input, '-o', $output]);
         $process->run();
-        if (!$process->isSuccessful()) throw new ProcessFailedException($process);
+        if (! $process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
         $this->filename = $filename;
         $this->save();
     }
-
 }

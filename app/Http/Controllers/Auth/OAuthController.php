@@ -12,20 +12,24 @@ use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
 {
-    private function redirectWithError(string $message): RedirectResponse {
+    private function redirectWithError(string $message): RedirectResponse
+    {
         return to_route('login')->with('flash', [
             'message' => $message ?? __('auth.oauth.error'),
             'type' => 'error',
-            'timeout' => null
+            'timeout' => null,
         ]);
     }
 
     /**
      * For Login and account creation only
      * cannot associate existing account with discord easily.
-    */
-    public function discord(Request $request): RedirectResponse {
-        if ($request->query('error')) return $this->redirectWithError();
+     */
+    public function discord(Request $request): RedirectResponse
+    {
+        if ($request->query('error')) {
+            return $this->redirectWithError();
+        }
 
         // Get data from oauth service
         $discordUser = Socialite::driver('discord')->user();
@@ -35,12 +39,13 @@ class OAuthController extends Controller
 
         // If not found, we intend to create
         if ($user == null) {
-            if (User::whereEmail($discordUser->email)->exists())
+            if (User::whereEmail($discordUser->email)->exists()) {
                 return to_route('login')->with('flash', [
                     'message' => __('auth.oauth.email'),
                     'type' => 'warn',
-                    'timeout' => null
+                    'timeout' => null,
                 ]);
+            }
             $user = User::create([
                 'discord_id' => $discordUser->id,
                 'email' => $discordUser->email,
@@ -53,8 +58,7 @@ class OAuthController extends Controller
             $user->update([
                 'email' => $discordUser->email,
                 'username' => $discordUser->nickname,
-                'email_verified_at' =>
-                    $user->email == $discordUser->email
+                'email_verified_at' => $user->email == $discordUser->email
                         ? $user->email_verified_at
                         : null,
             ]);

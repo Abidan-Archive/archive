@@ -19,6 +19,7 @@ use League\CommonMark\CommonMarkConverter;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Report|null $report
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue query()
@@ -29,6 +30,7 @@ use League\CommonMark\CommonMarkConverter;
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue whereReportId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue whereSpeaker($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dialogue whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  * @mixin IdeHelperDialogue
  */
@@ -40,18 +42,20 @@ class Dialogue extends Model
 
     protected $fillable = ['speaker', 'line', 'order'];
 
-    public function report(): BelongsTo {
+    public function report(): BelongsTo
+    {
         return $this->belongsTo(Report::class);
     }
 
     /**
      * Get the html of the line in markdown format
      */
-    protected function lineHtml(): Attribute {
+    protected function lineHtml(): Attribute
+    {
         $converter = new CommonMarkConverter(config('commonmark'));
+
         return Attribute::make(
             get: fn ($value, $attributes) => $converter->convert($attributes['line'])->getContent()
         );
-     }
-
+    }
 }

@@ -13,17 +13,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Event extends Model
 {
-    use HasFactory, SoftDeletes, InertiaPaginate;
+    use HasFactory, InertiaPaginate, SoftDeletes;
 
     protected $casts = ['date' => 'date'];
 
     protected $fillable = ['name', 'date', 'location'];
 
-    public function reports(): HasMany {
+    public function reports(): HasMany
+    {
         return $this->hasMany(Report::class);
     }
 
-    public function sources(): HasMany {
+    public function sources(): HasMany
+    {
         return $this->hasMany(Source::class);
     }
 }

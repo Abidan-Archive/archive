@@ -11,8 +11,8 @@ trait Likes
      * Get the like relation to the likable thing.
      * Comes with laravel aggregate functions.
      */
-    public function likes(): MorphMany {
+    public function likes(): MorphMany
+    {
         return $this->morphMany(Like::class, 'likeable');
     }
-
 }

@@ -4,14 +4,13 @@ namespace App\Policies;
 
 use App\Models\Report;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ReportPolicy
 {
     /**
      * Perofrm pre-authorization check for admin
      */
-    public function before(User $user, string $ability): bool|null
+    public function before(User $user, string $ability): ?bool
     {
         return $user->hasRole('admin') ? true : null;
     }

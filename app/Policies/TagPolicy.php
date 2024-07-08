@@ -4,14 +4,13 @@ namespace App\Policies;
 
 use App\Models\Tag;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TagPolicy
 {
     /**
      * Perofrm pre-authorization check for admin
      */
-    public function before(User $user, string $ability): bool|null
+    public function before(User $user, string $ability): ?bool
     {
         return $user->hasRole('admin') ? true : null;
     }

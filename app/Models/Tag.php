@@ -19,11 +19,13 @@ class Tag extends Model
 
     protected $aapends = ['color'];
 
-    public function reports(): BelongsToMany  {
+    public function reports(): BelongsToMany
+    {
         return $this->belongsToMany(Report::class);
     }
 
-    protected function color(): Attribute {
+    protected function color(): Attribute
+    {
         return Attribute::make(
             get: fn (string $value) => '#'.$value,
             set: fn (string $value) => trim($value, ' #'),

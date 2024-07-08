@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use App\Contracts\Likeable;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,6 +18,7 @@ class LikeRequest extends FormRequest
     public function authorize(): bool
     {
         $this->getValidatorInstance()->validate();
+
         return $this->user()->can('like', $this->likeable());
     }
 
@@ -35,27 +36,27 @@ class LikeRequest extends FormRequest
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
-                    if (!class_exists($value, true)) {
-                        $fail($value . " is not an existing class");
+                    if (! class_exists($value, true)) {
+                        $fail($value.' is not an existing class');
                     }
 
-                    if(!in_array(Model::class, class_parents($value))) {
-                        $fail($value . " is not Illuminate\Database\Eloquent\Model");
+                    if (! in_array(Model::class, class_parents($value))) {
+                        $fail($value." is not Illuminate\Database\Eloquent\Model");
                     }
 
-                    if(!in_array(Likeable::class, class_implements($value))) {
-                        $fail($value . " is not App\Contracts\Likeable");
+                    if (! in_array(Likeable::class, class_implements($value))) {
+                        $fail($value." is not App\Contracts\Likeable");
                     }
                 },
             ],
             // the id of the liked object
             'id' => [
-                "required",
+                'required',
                 function ($attribute, $value, $fail) {
                     $class = $this->input('likeable_type');
 
-                    if(!$class::where('id', $value)->exists()) {
-                        $fail($value . " does not exist in database");
+                    if (! $class::where('id', $value)->exists()) {
+                        $fail($value.' does not exist in database');
                     }
                 },
             ],

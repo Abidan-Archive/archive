@@ -15,7 +15,7 @@ class StoreTagRequest extends FormRequest
     {
         return [
             'name' => 'required|max:64|unique:tags',
-            'color' => 'required|max:7|hex_color|unique:tags'
+            'color' => 'required|max:7|hex_color|unique:tags',
         ];
     }
 }

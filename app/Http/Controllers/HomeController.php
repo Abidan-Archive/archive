@@ -11,7 +11,8 @@ use Inertia\Response;
 
 class HomeController extends Controller
 {
-    public function home(): Response {
+    public function home(): Response
+    {
         $quote = Inspiring::quote();
         $events = Event::select('id', 'name')
             ->orderBy('date', 'desc')
@@ -22,12 +23,14 @@ class HomeController extends Controller
             ->latest()
             ->take(5)
             ->get()
-            ->filter(fn($m) => $m->likes_count > 0);
+            ->filter(fn ($m) => $m->likes_count > 0);
         $contributors = [];
+
         return inertia('Home', compact('events', 'mostLiked', 'quote', 'contributors'));
     }
 
-    public function about(): Response {
+    public function about(): Response
+    {
         return inertia('About');
     }
 
@@ -36,17 +39,20 @@ class HomeController extends Controller
      * Use these parameters to figure out where to redirect them
      * and with what data
      */
-    public function handleRedirect(Request $request): RedirectResponse {
+    public function handleRedirect(Request $request): RedirectResponse
+    {
         $type = $request->input('type');
         $context = $request->input('context');
 
-        switch($type) {
+        switch ($type) {
             case 'report':
                 $report = Report::where('legacy_permalink', $context)->first();
-                if ($report != null)
+                if ($report != null) {
                     return to_route('report.show', $report);
+                }
                 break;
         }
+
         return to_route('home');
     }
 
@@ -59,7 +65,8 @@ class HomeController extends Controller
      * the user to the handleRedirect route where they are finally
      * redirected to the appropriate location
      */
-    public function redirect(): Response {
+    public function redirect(): Response
+    {
         return inertia('Redirect');
     }
 }

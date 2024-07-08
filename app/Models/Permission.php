@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission query()
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereLabel($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Permission whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  * @mixin IdeHelperPermission
  */
@@ -34,9 +36,10 @@ class Permission extends Model
     protected $fillable = ['name', 'label'];
 
     /**
-    * A permission can be applied to roles.
-    */
-    public function roles(): BelongsToMany {
+     * A permission can be applied to roles.
+     */
+    public function roles(): BelongsToMany
+    {
         return $this->belongsToMany(Role::class);
     }
 }

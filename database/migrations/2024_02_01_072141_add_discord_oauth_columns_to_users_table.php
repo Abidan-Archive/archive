@@ -15,8 +15,8 @@ return new class extends Migration
             // Uses twitter's snowflake type, 64bit unsigned int
             // https://discord.com/developers/docs/reference#snowflakes
             $table->bigInteger('discord_id')
-                    ->unsigned()
-                    ->nullable();
+                ->unsigned()
+                ->nullable();
             $table->string('password')->nullable()->change();
         });
     }
