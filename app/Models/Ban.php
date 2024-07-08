@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Log;
 
+/**
+ * @mixin IdeHelperBan
+ */
 class Ban extends Model
 {
     use SoftDeletes;
