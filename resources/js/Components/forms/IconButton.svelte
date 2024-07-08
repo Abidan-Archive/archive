@@ -1,7 +1,7 @@
 <script>
     import cn from '@/lib/cn';
 
-    let className;
+    let className = '';
     export let large = false;
     export let marked = false;
     export let light = false;
