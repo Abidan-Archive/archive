@@ -15,9 +15,14 @@ class Event extends Model
 {
     use HasFactory, InertiaPaginate, SoftDeletes;
 
-    protected $casts = ['date' => 'date'];
-
     protected $fillable = ['name', 'date', 'location'];
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date'
+        ];
+    }
 
     public function reports(): HasMany
     {
