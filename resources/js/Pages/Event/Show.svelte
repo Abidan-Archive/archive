@@ -4,6 +4,7 @@
     import Page from '@/components/Page.svelte';
     import Paginator from '@/components/Paginator.svelte';
     import Report from '@/components/Report.svelte';
+    import isValidUrl from '@/lib/url';
 
     export let event;
     export let reports;
@@ -25,8 +26,16 @@
             <dd>{reports.total}</dd>
         </dl>
         <dl>
-            <dt class="font-semibold">Location:</dt>
-            <dd>{event.location || 'n/a'}</dd>
+            <dt class="font-semibold">Source:</dt>
+            <dd>
+                {#if event.location && isValidUrl(event.location)}
+                    <a href={event.location} target="_blank">
+                        {event.location}
+                    </a>
+                {:else}
+                    {event.location || 'n/a'}
+                {/if}
+            </dd>
         </dl>
     </div>
     <div class="flex flex-col items-center gap-5">

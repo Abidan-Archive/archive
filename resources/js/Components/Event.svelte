@@ -1,6 +1,7 @@
 <script>
     import Oddment from '@/lib/oddment.js';
     import cn from '@/lib/cn';
+    import isValidUrl from '@/lib/url';
     import route from '@/lib/route';
     import { Link } from '@/components/icons';
     import { inertia } from '@inertiajs/svelte';
@@ -54,7 +55,14 @@
     </section>
     <section class="flex justify-between">
         <span class="hidden text-sm text-typo-600 sm:flex">
-            Source: {event.location || 'Dubious Forums'}
+            Source:
+            {#if event.location && isValidUrl(event.location)}
+                <a href={event.location} target="_blank" class="pl-1">
+                    {event.location}
+                </a>
+            {:else}
+                {event.location || 'n/a'}
+            {/if}
         </span>
         <span class="text-sm text-typo-600">
             {event.reports || 0} reports
