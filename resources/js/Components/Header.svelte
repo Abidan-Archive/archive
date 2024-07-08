@@ -56,13 +56,13 @@
     <svelte:fragment slot="trail">
         <Navigation class="hidden lg:block" />
         <div>
-            {#if !!$page.props.auth.user}
+            {#if !!$page.props.auth?.user}
                 <button
                     type="button"
                     class="flex gap-2"
                     use:popup={authPopupNav}>
                     <User class="hidden h-6 w-6 sm:inline" />
-                    {$page.props.auth.user?.username}
+                    {$page.props.auth.user.username}
                 </button>
                 <div data-popup="authPopup">
                     <nav class="card list-nav z-50 w-48 shadow-xl">
