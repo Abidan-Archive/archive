@@ -32,7 +32,7 @@ class Report extends Model implements Likeable
     protected function casts(): array
     {
         return [
-            'date' => 'date'
+            'date' => 'date',
         ];
     }
 
