@@ -21,7 +21,7 @@
     <Star>
         <div class="mx-auto grid h-full grid-rows-2 px-8">
             <div
-                class="mx-auto my-8 self-end text-center text-xl sm:w-1/2 md:w-2/3 md:text-3xl lg:text-4xl">
+                class="mx-auto my-8 self-end text-center text-xl font-extrabold sm:w-1/2 md:w-2/3 md:text-3xl md:font-normal lg:text-4xl">
                 {quote}
             </div>
             <SearchForm
@@ -103,17 +103,19 @@
             {/each}
         </ul>
     </section>
-    <section>
-        <h2 class="text-3xl font-thin uppercase">Points Leaderboard</h2>
-        <ol>
-            {#each contributors as them}
-                <li>{them}</li>
-            {:else}
-                <li>Slackers.</li>
-            {/each}
-            <ol />
-        </ol>
-    </section>
+    {#if false}
+        <section>
+            <h2 class="text-3xl font-thin uppercase">Points Leaderboard</h2>
+            <ol>
+                {#each contributors as them}
+                    <li>{them}</li>
+                {:else}
+                    <li>Slackers.</li>
+                {/each}
+                <ol />
+            </ol>
+        </section>
+    {/if}
 </div>
 
 <style lang="postcss">
