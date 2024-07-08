@@ -1,5 +1,5 @@
 <script>
-    import AdminSidebar from './components/AdminSidebar.svelte';
+    import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
     import ChevronDown from '@/components/icons/ChevronDown.svelte';
     import Page from '@/components/Page.svelte';
     import route from '@/lib/route';

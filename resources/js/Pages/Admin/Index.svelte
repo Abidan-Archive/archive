@@ -1,5 +1,5 @@
 <script>
-    import AdminSidebar from './components/AdminSidebar.svelte';
+    import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
     import Page from '@/components/Page.svelte';
 </script>
 
