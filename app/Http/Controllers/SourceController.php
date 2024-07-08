@@ -31,13 +31,13 @@ class SourceController extends Controller
         ]);
         $source->update($validated);
 
-        return redirect()->back()->with('flash', ['type' => 'success', 'message' => 'Successfully changed the name!']);
+        return redirect()->back()->with('flash', ['message' => 'Successfully changed the name!']);
     }
 
     public function destroy(Event $event, Source $source): RedirectResponse
     {
         $source->delete();
 
-        return redirect()->back()->with('flash', ['type' => 'success', 'message' => 'Successfully deleted the name!']);
+        return redirect()->back()->with('flash', ['message' => 'Successfully deleted the name!']);
     }
 }

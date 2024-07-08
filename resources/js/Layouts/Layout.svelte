@@ -25,10 +25,16 @@
     storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
     initializeStores();
 
+    const flashType = {
+        success: 'variant-filled-success',
+        error: 'variant-filled-error',
+        warn: 'variant-filled-warn',
+    };
+
     const toastStore = getToastStore();
-    $: $page.props.flash &&
+    $page.props.flash &&
         toastStore.trigger({
-            ...{ background: 'variant-filled-success' },
+            ...{ background: flashType[$page.props.flash?.type || 'success'] },
             ...$page.props.flash,
         });
 </script>
