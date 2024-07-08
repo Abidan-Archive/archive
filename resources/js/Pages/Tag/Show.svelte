@@ -10,7 +10,7 @@
 
     const edit =
         ['admin', 'moderator'].some((role) =>
-            $page.props.auth.user.roles.includes(role)
+            $page.props.auth.user?.roles.includes(role)
         ) && route('tag.edit', tag);
 </script>
 
