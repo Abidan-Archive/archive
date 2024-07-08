@@ -21,7 +21,7 @@
         "marvinlabs/laravel-discord-logger": "^1.4",
         "meilisearch/meilisearch-php": "^1.5",
         "socialiteproviders/discord": "^4.2",
-        "staudenmeir/belongs-to-through": "^2.16",
+        "staudenmeir/eloquent-has-many-deep": "^1.20",
         "symfony/process": "^7.0",
         "tightenco/ziggy": "^1.5"
     },

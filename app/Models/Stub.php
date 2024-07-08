@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Storage;
+use Staudenmeir\EloquentHasManyDeep\HasOneDeep;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Znck\Eloquent\Relations\BelongsToThrough;
-use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 /**
  * @mixin IdeHelperStub
  */
 class Stub extends Model
 {
-    use BelongsToThroughTrait, HasFactory;
+    use HasFactory, \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     const DIRECTORY = 'sources';
 
@@ -40,9 +39,10 @@ class Stub extends Model
         });
     }
 
-    public function event(): BelongsToThrough
+    public function event(): HasOneDeep
     {
-        return $this->belongsToThrough(Event::class, Source::class);
+        // return $this->belongsToThrough(Event::class, Source::class);
+        return $this->hasOneDeep(Event::class, [Source::class]);
     }
 
     public function source(): BelongsTo

@@ -5,15 +5,26 @@ namespace App\Models\Concerns;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 trait HasRoles
 {
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
     /**
      * A user may have multiple roles.
      */
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * A user may have multiple permissions.
+     */
+    public function permissions(): HasManyDeep
+    {
+        return $this->hasManyDeep(Permission::class, ['role_user', Role::class, 'permission_role']);
     }
 
     /**
