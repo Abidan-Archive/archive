@@ -46,6 +46,11 @@ class Report extends Model implements Likeable
         return $this->hasMany(Dialogue::class);
     }
 
+    public function proffers(): HasMany
+    {
+        return $this->hasMany(Proffer::class);
+    }
+
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
