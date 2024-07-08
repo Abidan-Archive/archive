@@ -52,16 +52,20 @@ class AclSeeder extends Seeder
 
         // Administration
         $viewAdministration = Permission::create([
-            'name' => 'view_admin',
+            'name' => 'admin_view',
             'label' => 'View Administration Pages',
         ]);
         $managePermissions = Permission::create([
-            'name' => 'manage_permissions',
+            'name' => 'admin_manage_permissions',
             'label' => 'Manage Permissions',
         ]);
         $assumeUser = Permission::create([
-            'name' => 'assume_user',
+            'name' => 'admin_assume_user',
             'label' => 'Assume the Identify of a User',
+        ]);
+        $resetPassword = Permission::create([
+            'name' => 'admin_reset_password',
+            'label' => 'Sets a Users password to a random string and asks them to reset via email',
         ]);
 
         // Role Permissions
@@ -71,6 +75,7 @@ class AclSeeder extends Seeder
             $editReport,
             $reviewReport,
             $editTag,
+            $resetPassword,
         ]);
         $admin->permissions()->saveMany(Permission::all());
     }

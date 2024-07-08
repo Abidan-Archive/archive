@@ -10,10 +10,14 @@
 </script>
 
 <Page header="All Stubs">
-    <div class="mx-auto flex w-1/2 flex-col gap-3">
-        <p>Stubs are audio snippets that need transcription.</p>
+    <div class="mx-auto flex flex-col gap-3">
+        <p class="text-center">
+            Stubs are audio snippets that need transcription.
+        </p>
         {#if !stubs.data.length}
-            <p>Currently there is no work to be done! Woohoo!</p>
+            <p class="text-center">
+                Currently there is no work to be done! Woohoo!
+            </p>
         {:else}
             <Paginator {...stubs} />
             {#each stubs.data as stub}

@@ -1,4 +1,5 @@
 <script>
+    import Page from '@/components/Page.svelte';
     import Card from '@/components/Card.svelte';
     import CircleX from '@/components/icons/CircleX.svelte';
     import route from '@/lib/route';
@@ -35,8 +36,7 @@
     }
 </script>
 
-<section class="contianer mx-auto mt-10">
-    <h2 class="my-5 text-2xl">Create Event</h2>
+<Page header="Create Event">
     <Card>
         <form method="POST" on:submit|preventDefault={submit}>
             <div class="block">
@@ -114,7 +114,7 @@
             </div>
         </form>
     </Card>
-</section>
+</Page>
 
 <style lang="postcss">
     #dropzone-container :global(.dropzone) {

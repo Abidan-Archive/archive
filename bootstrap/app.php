@@ -33,8 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            // $inertiaEnvs = ['local', 'testing'];
-            $inertiaEnvs = ['testing'];
+            $inertiaEnvs = ['local', 'testing'];
             if (! app()->environment($inertiaEnvs) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
                 return Inertia::render('Error', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
