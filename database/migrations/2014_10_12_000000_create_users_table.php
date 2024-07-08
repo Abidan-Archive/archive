@@ -16,8 +16,16 @@ return new class extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+
+            $table->string('password')->nullable();
             $table->rememberToken();
+
+            // Uses twitter's snowflake type, 64bit unsigned int
+            // https://discord.com/developers/docs/reference#snowflakes
+            $table->bigInteger('discord_id')
+                ->unsigned()
+                ->nullable();
+
             $table->timestamps();
         });
     }

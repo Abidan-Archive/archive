@@ -18,7 +18,7 @@ class UpdateEventRequest extends FormRequest
             'date' => 'date',
             'location' => 'max:255',
             'sources' => 'array',
-            'sources.*' => 'file|mimes:mpga,wav,mp4,mpeg,mp3'
+            'sources.*' => 'file|mimes:mpga,wav,mp4,mpeg,mp3',
         ];
     }
 }

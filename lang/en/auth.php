@@ -13,10 +13,6 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
     'oauth' => [
         'error' => 'Interesting, interesting...Yeah Something went wrong. Try again?',
         'email' => 'The email associated with this account already exists. Please log in with your password.',

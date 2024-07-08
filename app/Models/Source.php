@@ -26,9 +26,10 @@ class Source extends Model
     protected $appends = ['audio_url', 'dat_url'];
 
     /**
-    * Register methods to model hooks
-    */
-    protected static function booted(): void {
+     * Register methods to model hooks
+     */
+    protected static function booted(): void
+    {
         // Delete associated files in storage when model deleted
         static::deleting(function (Source $model) {
             Storage::delete(self::DIRECTORY.'/'.$model->filename);
@@ -36,37 +37,41 @@ class Source extends Model
         });
     }
 
-    public function event(): BelongsTo {
+    public function event(): BelongsTo
+    {
         return $this->belongsTo(Event::class);
     }
 
-    public function stubs(): HasMany {
+    public function stubs(): HasMany
+    {
         return $this->hasMany(Stub::class);
     }
 
-    protected function dat(): Attribute {
-        return Attribute::make(get: fn($value, $attributes) =>
-            pathinfo($attributes['filename'], PATHINFO_FILENAME).'.dat');
+    protected function dat(): Attribute
+    {
+        return Attribute::make(get: fn ($value, $attributes) => pathinfo($attributes['filename'], PATHINFO_FILENAME).'.dat');
     }
 
-    protected function datUrl(): Attribute {
-        return Attribute::make(get: fn($value, $attributes) =>
-            Storage::url(self::DIRECTORY.'/'.pathinfo($attributes['filename'], PATHINFO_FILENAME).'.dat'));
+    protected function datUrl(): Attribute
+    {
+        return Attribute::make(get: fn ($value, $attributes) => Storage::url(self::DIRECTORY.'/'.pathinfo($attributes['filename'], PATHINFO_FILENAME).'.dat'));
     }
 
-    protected function audioUrl(): Attribute {
-        return Attribute::make(get: fn($value, $attributes) =>
-            Storage::url(self::DIRECTORY.'/'.$this->filename));
+    protected function audioUrl(): Attribute
+    {
+        return Attribute::make(get: fn ($value, $attributes) => Storage::url(self::DIRECTORY.'/'.$this->filename));
     }
 
     /**
      * Creates a new source relative to event from file
      */
-    public static function createFromFile(Event $event, UploadedFile $file, int $id): self {
+    public static function createFromFile(Event $event, UploadedFile $file, int $id): self
+    {
         $filename = implode('_', [$event->id, $id, $file->hashName()]); // <event_id>_<source_id>_<random_hash>.<ext>
         // Directory, Name, Disk
         $file->storeAs(self::DIRECTORY, $filename, 'public'); // storage/app/public/sources/<FILENAME>
         self::createDat($filename);
+
         return $event->sources()->create([
             'id' => $id,
             'name' => $file->getClientOriginalName(),
@@ -77,11 +82,14 @@ class Source extends Model
     /**
      * Create a dat file from audiowaveform for fast waveform rendering when scrubbing
      */
-    private static function createDat(string $filename): void {
+    private static function createDat(string $filename): void
+    {
         $dir = Storage::disk('public')->path(self::DIRECTORY);
         $out = pathinfo($filename, PATHINFO_FILENAME).'.dat';
         $process = new Process(['audiowaveform', '-q', '-b 8', '-i', "$dir/$filename", '-o', "$dir/$out"]);
         $process->run();
-        if (!$process->isSuccessful()) throw new ProcessFailedException($process);
+        if (! $process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
     }
 }

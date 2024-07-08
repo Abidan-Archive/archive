@@ -15,7 +15,7 @@ class UpdateTagRequest extends FormRequest
     {
         return [
             'name' => 'required|max:64|unique:tags,id,'.$this->tag->id,
-            'color' => 'required|max:7|hex_color|unique:tags,id,'.$this->tag->id
+            'color' => 'required|max:7|hex_color|unique:tags,id,'.$this->tag->id,
         ];
     }
 }

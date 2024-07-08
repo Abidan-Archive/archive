@@ -23,13 +23,18 @@ class Report extends Model implements Likeable
 
     protected $appends = ['permalink', 'is_liked'];
 
-    protected $casts = ['date' => 'date'];
-
     protected $fillable = ['footnote', 'date', 'source_label', 'source_href', 'legacy_permalink'];
 
     protected $with = ['event', 'dialogues', 'tags'];
 
     protected $withCount = ['likes'];
+
+    protected function casts(): array
+    {
+        return [
+            'date' => 'date',
+        ];
+    }
 
     public function event(): BelongsTo
     {

@@ -6,7 +6,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 trait InertiaPaginate
 {
-    public function inertiaPaginate(...$args) {
+    public function inertiaPaginate(...$args)
+    {
         /**
          * Type hinting to workaround ide-helper bug
          * Can't change chain the methods without false positive errors thrown errors
@@ -17,7 +18,7 @@ trait InertiaPaginate
         $paginate = $paginate->toArray();
         $data = $paginate['data'];
         unset($paginate['data']);
+
         return [$data, $paginate];
     }
-
 }

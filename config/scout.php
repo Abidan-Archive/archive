@@ -139,7 +139,7 @@ return [
                 'filterableAttributes' => ['tags'],
                 'sortableAttributes' => ['id', 'date', 'likes'],
             ],
-        ]
+        ],
     ],
 
 ];

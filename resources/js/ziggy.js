@@ -7,18 +7,6 @@ const Ziggy = {
             uri: 'sanctum/csrf-cookie',
             methods: ['GET', 'HEAD'],
         },
-        'ignition.healthCheck': {
-            uri: '_ignition/health-check',
-            methods: ['GET', 'HEAD'],
-        },
-        'ignition.executeSolution': {
-            uri: '_ignition/execute-solution',
-            methods: ['POST'],
-        },
-        'ignition.updateConfig': {
-            uri: '_ignition/update-config',
-            methods: ['POST'],
-        },
         home: { uri: '/', methods: ['GET', 'HEAD'] },
         about: { uri: 'about', methods: ['GET', 'HEAD'] },
         search: { uri: 'search', methods: ['GET', 'HEAD'] },

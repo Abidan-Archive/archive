@@ -13,5 +13,4 @@ class UnlikeRequest extends LikeRequest
     {
         return $this->user()->can('unlike', $this->likeable());
     }
-
 }

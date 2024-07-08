@@ -1,11 +1,10 @@
 <?php
 
+use App\Inspiring;
+use App\Models\Dialogue;
 use App\Models\Event;
 use App\Models\Report;
-use App\Models\Dialogue;
 use App\Models\Tag;
-use App\Inspiring;
-
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -23,25 +22,27 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Artisan::command('consume {jsonPath}', function(String $jsonPath) {
+Artisan::command('consume {jsonPath}', function (string $jsonPath) {
     $data = json_decode(file_get_contents($jsonPath), true);
 
-    foreach($data as $i => $e) {
+    foreach ($data as $i => $e) {
         $event = Event::create($e);
 
-        if ($i > 0) $this->newLine();
+        if ($i > 0) {
+            $this->newLine();
+        }
         $this->line("Consuming $event->name");
         $this->withProgressBar($e['reports'], function ($r) use ($event) {
             try {
                 $report = $event->reports()->create($r);
                 $report->refresh();
 
-                foreach($r['dialogues'] as $i => $d) {
+                foreach ($r['dialogues'] as $i => $d) {
                     $d['order'] = $i;
                     $report->dialogues()->create($d);
                 }
 
-                foreach($r['tags'] as $t) {
+                foreach ($r['tags'] as $t) {
                     $tag = Tag::firstOrCreate(
                         ['name' => $t],
                         ['color' => str_pad(dechex(mt_rand(0, 0xFFFFFF)), 6, '0', STR_PAD_LEFT)]
@@ -50,14 +51,14 @@ Artisan::command('consume {jsonPath}', function(String $jsonPath) {
                 }
             } catch (Exception $e) {
                 $this->newLine();
-                $this->error("Error on ".$r['id']);
+                $this->error('Error on '.$r['id']);
                 $this->newLine();
             }
         });
     }
 })->purpose('Import all the scraped web data');
 
-Artisan::command('killReports', function() {
+Artisan::command('killReports', function () {
     // Clear out everything since we're testing
     Event::truncate();
     Report::truncate();
