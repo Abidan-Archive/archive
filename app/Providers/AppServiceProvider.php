@@ -7,9 +7,9 @@ use App\Models\User;
 use App\Policies\LikePolicy;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->bootAuth();
+        $this->bootSSO();
         $this->bootRoute();
     }
 
@@ -69,6 +70,13 @@ class AppServiceProvider extends ServiceProvider
                     ->symbols()
                     ->uncompromised()
                 : $rule;
+        });
+    }
+
+    public function bootSSO(): void
+    {
+        Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('discord', \SocialiteProviders\Discord\Provider::class);
         });
     }
 

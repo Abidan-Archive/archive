@@ -20,7 +20,7 @@ class LoginListener
         if (! $user->ips->contains($ip)) {
             $user->ips()->attach($ip);
         }
-        $user->login_at = now('UTC')->timestamp;
+        $user->login_at = now();
         $user->save();
     }
 }
