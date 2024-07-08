@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('id_user', function (Blueprint $table) {
+        Schema::create('ip_user', function (Blueprint $table) {
             $table->foreignIdFor(Ip::class);
             $table->foreignIdFor(User::class);
             $table->timestamps();
