@@ -1,6 +1,5 @@
 <?php
 
-use App\Inspiring;
 use App\Models\Dialogue;
 use App\Models\Event;
 use App\Models\Report;
@@ -17,10 +16,6 @@ use Illuminate\Support\Facades\Artisan;
 | simple approach to interacting with each command's IO methods.
 |
 */
-
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
 
 Artisan::command('consume {jsonPath}', function (string $jsonPath) {
     $data = json_decode(file_get_contents($jsonPath), true);

@@ -25,22 +25,23 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('search', [SearchController::class, 'search'])->name('search');
 
-// Redirects for legacy
-Route::get('events/{event}', [HomeController::class, 'redirect']);
-Route::get('redirect', [HomeController::class, 'handleRedirect'])->name('handleRedirect');
+Route::get('reports', [ReportController::class, 'index'])->name('report.index');
+Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
 Route::resource('event.source.stub', StubController::class)->except(['index', 'update']); // Only patch
 Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
-Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
-Route::get('reports', [ReportController::class, 'index'])->name('report.index');
-Route::resource('user', UserController::class)->only(['show', 'edit', 'update']);
 
 Route::resource('tag', TagController::class);
 
+Route::resource('user', UserController::class)->only(['show', 'edit', 'update']);
 Route::post('like', [LikeController::class, 'like'])->name('like');
 Route::delete('like', [LikeController::class, 'unlike'])->name('unlike');
+
+// Redirects for legacy
+Route::get('events/{event}', [HomeController::class, 'redirect']);
+Route::get('redirect', [HomeController::class, 'handleRedirect'])->name('handleRedirect');
 
 require __DIR__.'/admin.php';
 require __DIR__.'/auth.php';
