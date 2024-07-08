@@ -84,7 +84,7 @@
 <article
     id={report.id}
     class={cn(
-        'rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
+        'w-full rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
         className
     )}>
     <section class="flex justify-between">
