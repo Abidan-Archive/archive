@@ -86,12 +86,13 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     virtualHosts = {
-      "abidanarchive.com" = {
+      # "abidanarchive.com" = {
+      "peach.abidanarchive.com" = {
         default = true;
         forceSSL = true;
         enableACME = true;
 
-        serverName = "abidanarchive.com";
+        # serverName = "abidanarchive.com";
         root = "/home/HOSTUSER/www/abidanarchive.com/current/public";
 
         locations."/".tryFiles = "$uri $uri/ /index.php?$query_string";
@@ -122,11 +123,11 @@
       };
 
       # Redirect 'www' to 'non-www'
-      "www.abidanarchive.com" = {
-        forceSSL = true;
-        enableACME = true;
-        globalRedirect = "abidanarchive.com";
-      };
+      # "www.abidanarchive.com" = {
+      #   forceSSL = true;
+      #   enableACME = true;
+      #   globalRedirect = "abidanarchive.com";
+      # };
     };
   };
 
