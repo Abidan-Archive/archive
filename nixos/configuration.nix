@@ -136,13 +136,22 @@
     acceptTerms = true;
     defaults.email = "hey@manning390.com";
     defaults.group = "nginx";
+    certs = {
+      "peach.abidanarchive.com" = {
+        dnsProvider = "linode";
+        webroot = null;
+        credentialFiles = {
+          "LINODE_TOKEN_FILE" = "/run/keys/linode-acme-key";
+        };
+      };
+    };
   };
 
   # /var/lib/acme.challenges must be writable by the ACME user
   # and readable by the nginx user.
   users.users.nginx.extraGroups = [ "acme" ];
 
-  services.phpfpm.pools."abidanarchive.com" = {
+  services.phpfpm.pools.mypool = {
     user = config.services.nginx.user;
     settings = {
         "listen.owner" = config.services.nginx.user;
