@@ -121,8 +121,7 @@ setup_laravel() {
     if [[ -z ${APP_KEY} ]]; then
         ./vendor/bin/sail up -d && \
         ./vendor/bin/sail art key:generate && \
-        ./vendor/bin/sail art migrate:install && \
-        ./vendor/bin/sail art migrate && \
+        ./vendor/bin/sail art migrate --seed&& \
         ./vendor/bin/sail art scout:import "App\Models\Report" && \
         ./vendor/bin/sail stop
     else
