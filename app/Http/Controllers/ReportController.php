@@ -40,7 +40,7 @@ class ReportController extends Controller
      */
     public function create(Event $event)
     {
-        dd('I dont yet know what this page is doing');
+        // Create without a stub
         $event->load('sources');
 
         return inertia('Report/Create', compact('event'));

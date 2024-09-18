@@ -21,6 +21,7 @@
         footnote: null,
         date: event.date,
         tags: [],
+        stub: stub.id,
     });
 
     function addDialogue() {
@@ -34,7 +35,7 @@
     function submit(e) {
         e.preventDefault();
         console.log($form);
-        // form.post(route(''))
+        // form.post(route('report.store'))
     }
 </script>
 
@@ -64,7 +65,8 @@
                     <textarea
                         class="w-full rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm focus:border-indigo-600 focus:ring-indigo-600"
                         id={'line-' + idx}
-                        bind:value={dialogue.line} />
+                        bind:value={dialogue.line}
+                        required />
                 </div>
                 <div>
                     <button
@@ -123,8 +125,9 @@
             <p>All reports are reviewed by a moderator.</p>
         </div>
         <div class="flex justify-end">
-            <Button type="submit" disabled={$form.processing}
-                >Create Report</Button>
+            <Button type="submit" disabled={$form.processing}>
+                Create Report
+            </Button>
         </div>
     </form>
 </Page>

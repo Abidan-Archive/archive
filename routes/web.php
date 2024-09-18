@@ -25,17 +25,17 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('about', [HomeController::class, 'about'])->name('about');
 Route::get('search', [SearchController::class, 'search'])->name('search');
 
-Route::get('reports', [ReportController::class, 'index'])->name('report.index');
-Route::get('stubs', [StubController::class, 'index'])->name('stub.index');
+Route::get('report', [ReportController::class, 'index'])->name('report.index');
+Route::get('stub', [StubController::class, 'index'])->name('stub.index');
 
 Route::resource('event', EventController::class);
 Route::resource('event.report', ReportController::class)->shallow();
-Route::resource('event.source.stub', StubController::class)->except(['index', 'update']); // Only patch
+Route::resource('event.source.stub', StubController::class)->only(['patch']);
 Route::apiResource('event.source', SourceController::class)->except(['index']); // No html routes
 
 Route::resource('tag', TagController::class);
 
-Route::resource('user', UserController::class)->only(['show', 'edit', 'update']);
+Route::resource('user', UserController::class)->only(['show', 'edit', 'update', 'destroy']);
 Route::post('like', [LikeController::class, 'like'])->name('like');
 Route::delete('like', [LikeController::class, 'unlike'])->name('unlike');
 

@@ -3,10 +3,15 @@
 
     let className = '';
     export { className as class };
+    export let is = 'div'; // Change the container html tag type
 </script>
 
-<div
-    class={cn('rounded-lg bg-base-700 p-4 shadow-md border-token', className)}
+<svelte:element
+    this={is}
+    class={cn(
+        'w-full rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
+        className
+    )}
     {...$$restProps}>
     <slot />
-</div>
+</svelte:element>

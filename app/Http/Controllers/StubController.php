@@ -78,6 +78,8 @@ class StubController extends Controller
      */
     public function destroy(Stub $stub): RedirectResponse
     {
-        //
+        $stub->delete();
+
+        return redirect()->back()->with('flash', ['message' => 'Destroyed stub successfully!']);
     }
 }

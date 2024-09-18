@@ -5,6 +5,7 @@
     import route from '@/lib/route';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
     import { useForm } from '@inertiajs/svelte';
+    import { FileDropzone } from '@skeletonlabs/skeleton';
 
     let form = useForm({
         name: null,
@@ -13,6 +14,8 @@
         sources: [],
     });
     let rejectedFiles = [];
+
+    $: console.log($form.sources);
 
     // Todo Add Skeleton UI dropzone
     // eslint-disable-next-line no-unused-vars
@@ -38,7 +41,10 @@
 
 <Page header="Create Event">
     <Card>
-        <form method="POST" on:submit|preventDefault={submit}>
+        <form
+            method="POST"
+            on:submit|preventDefault={submit}
+            class="flex flex-col gap-4">
             <div class="block">
                 <Label for="name">Name</Label>
                 <Input
@@ -49,7 +55,7 @@
                     required />
                 <ErrorMessage message={$form.errors.name} class="mt-2" />
             </div>
-            <div class="mt-4 block">
+            <div class="block">
                 <Label for="date">Date</Label>
                 <Input
                     id="date"
@@ -60,7 +66,7 @@
                     required />
                 <ErrorMessage message={$form.errors.date} class="mt-2" />
             </div>
-            <div class="mt-4 block">
+            <div class="block">
                 <Label for="location">Location (Place, Url, Etc.)</Label>
                 <Input
                     id="location"
@@ -70,8 +76,15 @@
                     required />
                 <ErrorMessage message={$form.errors.location} class="mt-2" />
             </div>
-            <div id="dropzone-container" class="mt-4 block">
+            <div class="block">
                 <Label for="dropzone">Audio Source</Label>
+                <FileDropzone
+                    name="sources"
+                    accept="audio/*"
+                    bind:files={$form.sources}>
+                    <svelte:fragment slot="meta"
+                        >Audio files accepted</svelte:fragment>
+                </FileDropzone>
                 <!-- <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple> -->
                 <!--     <button>Choose audio files to upload</button> -->
                 <!--     <p>or</p> -->
@@ -90,6 +103,7 @@
                         <div class="flex justify-between">
                             <span>Files</span>
                             <Button
+                                type="button"
                                 variant="destructive"
                                 on:click={handleRemoveAllFiles}
                                 aria-label="Remove all files"
@@ -99,6 +113,7 @@
                             <div class="mt-2 flex gap-2">
                                 <span>{item.name}</span>
                                 <button
+                                    type="button"
                                     class="text-red-400"
                                     aria-label="Remove File"
                                     on:click={() => handleRemoveFile(i)}
@@ -109,15 +124,9 @@
                 {/if}
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <Button class="ml-3">Create</Button>
+            <div class="flex items-center justify-end">
+                <Button type="submit" class="ml-3">Create</Button>
             </div>
         </form>
     </Card>
 </Page>
-
-<style lang="postcss">
-    #dropzone-container :global(.dropzone) {
-        @apply rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm focus:border-indigo-600 focus:ring-indigo-600;
-    }
-</style>

@@ -1,22 +1,21 @@
 <script>
-    import { onMount, onDestroy, getContext } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { page, router } from '@inertiajs/svelte';
     import Peaks from 'peaks.js';
 
     import { Button, IconButton } from '@/components/forms';
     import { Play, Pause, Trash } from '@/components/icons';
     import Card from '@/components/Card.svelte';
-    import Dialog from '@/components/modals/Dialog.svelte';
     import MediaControls from '@/components/audio/MediaControls.svelte';
     import Page from '@/components/Page.svelte';
     import route from '@/lib/route.js';
-    import { getToastStore } from '@skeletonlabs/skeleton';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
 
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
 
     // Todo:
     // - Handle errors / form validation for stubs
-    // - Delete dialog z-indexing issues
 
     export let event;
     export let source;
@@ -37,8 +36,6 @@
 
     let segments = [];
     let segmentPlaying = null;
-
-    const { open } = getContext('simple-modal');
 
     toastStore.trigger({ message: $page.props?.flash });
 
@@ -334,16 +331,15 @@
                         </div>
                         <IconButton
                             on:click={() => {
-                                open(Dialog, {
-                                    message:
-                                        'Are you sure you want to delete this clip?',
-                                    onOkay: () => {
-                                        if (!peaks) return;
+                                modalStore.trigger({
+                                    type: 'confirm',
+                                    title: 'Please Confirm',
+                                    body: 'Are you sure you want to delete this clip?',
+                                    response: (r) => {
+                                        if (!peaks && !r) return;
                                         console.log('segment deleted', segment);
                                         peaks.segments.removeById(segment.id);
                                     },
-                                    closeButton: false,
-                                    closeOnOuterClick: false,
                                 });
                             }}>
                             <Trash />

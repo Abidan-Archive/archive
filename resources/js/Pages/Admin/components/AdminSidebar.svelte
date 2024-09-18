@@ -8,7 +8,7 @@
         'Create Event': route('event.create'),
         'Create Tag': route('tag.create'),
         'Manage Users': route('admin.user'),
-        'Review Reports': route('home'),
+        // 'Review Reports': route('home'),
     };
 
     let className = '';

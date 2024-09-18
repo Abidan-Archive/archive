@@ -6,6 +6,7 @@
     import { XMark } from '@/components/icons';
     import { inertia, router } from '@inertiajs/svelte';
     import { popup } from '@skeletonlabs/skeleton';
+    import { getModalStore } from '@skeletonlabs/skeleton';
 
     export let users;
 
@@ -16,6 +17,7 @@
         placement: 'bottom',
     };
 
+    const modalStore = getModalStore();
     const managementActions = [
         {
             label: 'Reset Password',
@@ -27,11 +29,23 @@
         },
         {
             label: 'Ban',
-            handler: (user) => console.log('Ban', user),
+            handler: (user) =>
+                modalStore.trigger({
+                    type: 'component',
+                    component: 'banModal',
+                    meta: { bannable: user, type: 'user' },
+                }),
         },
         {
             label: 'Delete',
-            handler: (user) => console.log('Delete', user),
+            handler: (user) =>
+                modalStore.trigger({
+                    type: 'confirm',
+                    title: 'Please Confirm',
+                    body: 'Are you sure you want to delete this user?',
+                    response: (r) =>
+                        r && router.delete(route('user.destroy', user)),
+                }),
         },
     ];
 </script>
@@ -46,9 +60,9 @@
                         <th>Id</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <td>Login Method</td>
+                        <th>Login Method</th>
                         <th>Last Login <small>(UTC)</small></th>
-                        <th>Actions</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,8 +86,11 @@
                             </td>
                             <td>{user.is_sso ? 'discord' : 'password'}</td>
                             <td>{user.login_at}</td>
-                            <td class="text-center">
-                                <button type="button" use:popup={actionPopup}>
+                            <td>
+                                <button
+                                    type="button"
+                                    use:popup={actionPopup}
+                                    class="flex w-full justify-center">
                                     <ChevronDown />
                                 </button>
                                 <div data-popup="actionPopup">

@@ -95,7 +95,7 @@
                         <Heart
                             class="inline"
                             variant={report.is_liked ? 'filled' : 'outline'} /> &middot;
-                        <span class="underline">Report#{report.id}</span>
+                        <span class="underline">Report #{report.id}</span>
                     </a>
                 </li>
             {:else}

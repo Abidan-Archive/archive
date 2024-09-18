@@ -21,9 +21,19 @@ class Stub extends Model
 
     const DIRECTORY = 'sources';
 
-    protected $fillable = ['id', 'prompt', 'from', 'to'];
-
+    /**
+     * The calculated attributes that are appended to the model by default
+     *
+     * @var array<int, string>
+     */
     protected $appends = ['audio_url'];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = ['id', 'prompt', 'from', 'to'];
 
     /**
      * Register methods to model hooks
@@ -35,7 +45,7 @@ class Stub extends Model
             Storage::delete(self::DIRECTORY.'/'.$model->filename);
         });
         static::created(function (Stub $model) {
-            $model->createFile();
+            $model->createStubFile();
         });
     }
 
@@ -57,16 +67,21 @@ class Stub extends Model
             : null);
     }
 
-    private function createFile(): void
+    private function createStubFile(): void
     {
+        // Generate the string params for ffmpeg
         $input = Storage::disk('public')->path(Source::DIRECTORY).'/'.$this->source->filename;
         $filename = implode('_', [$this->source->id, $this->id, Str::random(40)]).'.'.pathinfo($input, PATHINFO_EXTENSION);
         $output = Storage::disk('public')->path(self::DIRECTORY).'/'.$filename;
+
+        // Run ffmpeg to generate our stub audio
         $process = new Process(['ffmpeg', '-ss', $this->from, '-t', $this->to - $this->from, '-c copy', '-i', $input, '-o', $output]);
         $process->run();
         if (! $process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+
+        // Associate the stub audio to this model
         $this->filename = $filename;
         $this->save();
     }

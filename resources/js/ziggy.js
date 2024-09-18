@@ -176,6 +176,12 @@ const Ziggy = {
             parameters: ['user'],
             bindings: { user: 'id' },
         },
+        'user.destroy': {
+            uri: 'user/{user}',
+            methods: ['DELETE'],
+            parameters: ['user'],
+            bindings: { user: 'id' },
+        },
         like: { uri: 'like', methods: ['POST'] },
         unlike: { uri: 'like', methods: ['DELETE'] },
         handleRedirect: { uri: 'redirect', methods: ['GET', 'HEAD'] },
@@ -187,6 +193,7 @@ const Ziggy = {
             parameters: ['user'],
             bindings: { user: 'id' },
         },
+        'admin.query': { uri: 'admin/query', methods: ['POST'] },
         register: { uri: 'register', methods: ['GET', 'HEAD'] },
         login: { uri: 'login', methods: ['GET', 'HEAD'] },
         'password.request': {

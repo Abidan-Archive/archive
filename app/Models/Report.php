@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Contracts\Likeable;
+use App\Contracts\Likeable as LikeableContract;
 use App\Models\Concerns\InertiaPaginate;
-use App\Models\Concerns\Likes;
+use App\Models\Concerns\Likeable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +17,9 @@ use Laravel\Scout\Searchable;
 /**
  * @mixin IdeHelperReport
  */
-class Report extends Model implements Likeable
+class Report extends Model implements LikeableContract
 {
-    use HasFactory, InertiaPaginate, Likes, Searchable, SoftDeletes;
+    use HasFactory, InertiaPaginate, Likeable, Searchable, SoftDeletes;
 
     protected $appends = ['permalink', 'is_liked'];
 

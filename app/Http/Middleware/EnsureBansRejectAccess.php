@@ -17,12 +17,12 @@ class EnsureBansRejectAccess
     public function handle(Request $request, Closure $next): Response
     {
         $ip = Ip::first(['ip', $request->ip()]);
-        if ($ip != null && $ip->bans()->where('expires', '>', now())->exists()) {
+        if ($ip !== null && $ip->bans()->active()->exists()) {
             abort(403);
         }
 
         $user = $request->user();
-        if ($user != null && $user->bans()->where('expires', '>', now())->exists()) {
+        if ($user !== null && $user->bans()->active()->exists()) {
             abort(403);
         }
 

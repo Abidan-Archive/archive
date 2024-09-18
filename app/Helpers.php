@@ -30,7 +30,7 @@ if (! function_exists('diff')) {
 }
 
 if (! function_exists('htmlDiff')) {
-    function htmlDiff($old, $new)
+    function htmlDiff($old, $new): string
     {
         $diff = diff(explode(' ', $old), explode(' ', $new));
         $ret = '';
@@ -49,7 +49,7 @@ if (! function_exists('htmlDiff')) {
 
 // https://www.codexworld.com/how-to/get-domain-name-from-url-php/
 if (! function_exists('getDomain')) {
-    function getDomain($url)
+    function getDomain($url): string
     {
         $pieces = parse_url($url);
         $domain = isset($pieces['host']) ? $pieces['host'] : '';
@@ -58,5 +58,12 @@ if (! function_exists('getDomain')) {
         }
 
         return null;
+    }
+}
+
+if (! function_exists('get_class_short')) {
+    function get_class_short($class): string
+    {
+        return substr(strrchr(get_class($class), '\\'), 1);
     }
 }

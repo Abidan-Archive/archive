@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
             ? [
                 ...$request->user()->only('id', 'username', 'email', 'is_sso'),
                 'roles' => $request->user()->roles->pluck('name'),
+                'permissions' => $request->user()->permissions->pluck('name'),
             ] :
             null,
         ]);

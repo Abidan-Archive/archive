@@ -21,6 +21,7 @@
     import Footer from '@/components/footer/Footer.svelte';
     import Header from '@/components/Header.svelte';
     import Navigation from '@/components/Navigation.svelte';
+    import BanModal from '@/components/modals/BanModal.svelte';
 
     storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
     initializeStores();
@@ -37,10 +38,20 @@
             ...{ background: flashType[$page.props.flash?.type || 'success'] },
             ...$page.props.flash,
         });
+
+    let validationCount = Object.keys($page.props.errors).length;
+    $: validationTitlePrefix = validationCount
+        ? `(${validationCount} errors) `
+        : '';
+    console.log({ validationCount, validationTitlePrefix });
+
+    const modalRegistry = {
+        banModal: { ref: BanModal },
+    };
 </script>
 
 <svelte:head>
-    <title>Abidan Archive</title>
+    <title>{validationTitlePrefix}Abidan Archive</title>
     <meta
         name="description"
         content="The Abidan Archive is website responsible for recording all of the Will Wight fanbase canon non-book external information on Will's various works." />
@@ -52,7 +63,7 @@
     <Navigation column={true} />
 </Drawer>
 <Toast />
-<Modal />
+<Modal components={modalRegistry} />
 <AppShell>
     <Header slot="header" />
     <slot />
@@ -60,7 +71,7 @@
 </AppShell>
 
 <style @global lang="postcss">
-    :global(html, body, .dark body, #app) {
+    :global(html, body, #app) {
         @apply h-full overflow-hidden;
     }
     :global(body) {

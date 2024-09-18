@@ -1,9 +1,10 @@
 <script>
-    import { Copy, Heart, Link } from '@/components/icons';
-    import { cn, route, Oddment } from '@/lib';
     import { inertia, router } from '@inertiajs/svelte';
-    import Tag from '@/components/Tag.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
+    import { Copy, Heart, Link } from '@/components/icons';
+    import Card from '@/components/Card.svelte';
+    import Tag from '@/components/Tag.svelte';
+    import { cn, route, Oddment } from '@/lib';
 
     const toastStore = getToastStore();
 
@@ -81,12 +82,7 @@
     }
 </script>
 
-<article
-    id={report.id}
-    class={cn(
-        'w-full rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
-        className
-    )}>
+<Card is="article" id={report.id} class={className}>
     <section class="flex justify-between">
         <div>
             <h3>
@@ -132,8 +128,10 @@
         {#each report.dialogues as dialogue}
             <dl class="mb-2">
                 <dt class="text-lg font-bold">{dialogue.speaker}</dt>
-                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                <dd class="whitespace-pre-line">{@html dialogue.line_html}</dd>
+                <dd class="whitespace-pre-line">
+                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+                    {@html dialogue.line_html}
+                </dd>
             </dl>
         {/each}
     </section>
@@ -150,4 +148,4 @@
             {/each}
         </section>
     </div>
-</article>
+</Card>

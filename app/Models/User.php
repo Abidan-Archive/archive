@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Contracts\Likeable;
+use App\Models\Concerns\HasLikes;
+use App\Models\Concerns\HasBans;
 use App\Models\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -19,15 +19,10 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+    use HasApiTokens, HasBans, HasFactory, HasLikes, HasRoles, Notifiable;
 
     protected $appends = ['is_sso'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'username',
         'email',
@@ -35,22 +30,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'discord_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
         'discord_id',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -58,67 +43,28 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function bans(): MorphToMany
-    {
-        return $this->morphToMany(Ban::class, 'bannable')->withTimestamps();
-    }
 
     public function ips(): BelongsToMany
     {
         return $this->belongsToMany(Ip::class)->withTimestamps();
     }
 
-    public function likes(): HasMany
-    {
-        return $this->hasMany(Like::class);
-    }
-
-    public function hasLiked(Likeable $likeable): bool
-    {
-        if (! $likeable->exists) {
-            return false;
-        }
-
-        return $likeable->likes()
-            ->whereHas('user', fn ($q) => $q->whereId($this->id))
-            ->exists();
-    }
-
-    public function like(Likeable $likeable): self
-    {
-        if ($this->hasLiked($likeable)) {
-            return $this;
-        }
-
-        (new Like())
-            ->user()->associate($this)
-            ->likeable()->associate($likeable)
-            ->save();
-        if (method_exists($likeable, 'searchable')) {
-            $likeable->refresh()->searchable();
-        }
-
-        return $this;
-    }
-
-    public function unlike(Likeable $likeable): self
-    {
-        if (! $this->hasLiked($likeable)) {
-            return $this;
-        }
-
-        $likeable->likes()
-            ->whereHas('user', fn ($q) => $q->whereId($this->id))
-            ->delete();
-        if (method_exists($likeable, 'searchable')) {
-            $likeable->refresh()->searchable();
-        }
-
-        return $this;
-    }
-
     protected function isSso(): Attribute
     {
         return Attribute::make(get: fn ($value, $attr): bool => ! is_null($this->discord_id));
+    }
+
+    /**
+    * Used for responding to autocomplete searches
+    */
+    public static function autocomplete(string $q): Collection {
+        return self::select('id', 'username', 'email')
+            ->whereAny(['id', 'username', 'email'], 'LIKE', $q)
+            ->get()
+            ->map(fn(User $user) => [
+                'value' => $user->id,
+                'label' => $user->username,
+                'keywords' => implode(', ', [$user->id, $user->email])
+            ]);
     }
 }

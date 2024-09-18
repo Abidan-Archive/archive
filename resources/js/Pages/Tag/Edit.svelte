@@ -5,11 +5,9 @@
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
     import { ErrorMessage, Label, Button, Input } from '@/components/forms';
-    import Dialog from '@/components/modals/Dialog.svelte';
+    import { getModalStore } from '@skeletonlabs/skeleton';
 
-    function open(...what) {
-        console.log(what);
-    }
+    const modalStore = getModalStore();
 
     export let tag;
 
@@ -17,19 +15,18 @@
         name: tag.name,
         color: tag.color,
     });
+
     function submit() {
         $form.put(route('tag.update', tag));
     }
+
     function handleDeleteClick() {
-        open(Dialog, {
-            message: 'Are you sure you want to delete this tag?',
-            onOkay: deleteSubmit,
-            closeButton: false,
-            closeOnOuterClick: false,
+        modalStore.trigger({
+            type: 'confirm',
+            title: 'Please Confirm',
+            body: 'Are you sure you want to delete this tag?',
+            response: (r) => r && router.delete(route('tag.destroy', tag)),
         });
-    }
-    function deleteSubmit() {
-        router.delete(route('tag.destroy', tag));
     }
 </script>
 

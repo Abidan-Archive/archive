@@ -1,6 +1,6 @@
 <script>
     import Oddment from '@/lib/oddment.js';
-    import cn from '@/lib/cn';
+    import Card from '@/components/Card.svelte';
     import isValidUrl from '@/lib/url';
     import route from '@/lib/route';
     import { Link } from '@/components/icons';
@@ -28,9 +28,7 @@
     export { className as class };
 </script>
 
-<article
-    id={event.id}
-    class={cn('md-shadow rounded-lg bg-base-700 p-4', className)}>
+<Card is="article" id={event.id} class={className}>
     <section class="mb-4 flex justify-between">
         <div>
             <h3>
@@ -68,4 +66,4 @@
             {event.reports || 0} reports
         </span>
     </section>
-</article>
+</Card>

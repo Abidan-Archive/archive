@@ -59,6 +59,10 @@ class AclSeeder extends Seeder
             'name' => 'admin_manage_permissions',
             'label' => 'Manage Permissions',
         ]);
+        $banPermissions = Permission::create([
+            'name' => 'admin_ban',
+            'label' => 'Create Bans'
+        ]);
         $assumeUser = Permission::create([
             'name' => 'admin_assume_user',
             'label' => 'Assume the Identify of a User',

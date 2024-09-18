@@ -21,7 +21,7 @@
 
     const drawerStore = getDrawerStore();
 
-    const links = [
+    $: links = [
         $page.props.auth?.user?.roles.includes('admin')
             ? {
                   label: 'Admin',

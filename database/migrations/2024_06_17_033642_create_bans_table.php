@@ -14,6 +14,8 @@ return new class extends Migration
     {
         Schema::create('bans', function (Blueprint $table) {
             $table->id();
+            $table->string('type', 15);
+            $table->string('reason')->nullable();
             $table->timestamp('expires')->nullable();
             $table->softDeletes();
             $table->timestamps();
