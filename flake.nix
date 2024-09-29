@@ -44,6 +44,7 @@
                 # Development
                 phpactor # LSP
                 vscode-langservers-extracted
+                emmet-language-server
               ];
 
               scripts.art.exec = ''php artisan "$@"'';
@@ -65,6 +66,11 @@
                 ];
               };
 
+              processes = {
+                server.exec = "php artisan serve";
+                vite.exec = "npm run dev";
+              };
+
               services.meilisearch = {
                 enable = true;
               };
@@ -73,15 +79,17 @@
                 enable = true;
               };
 
-              env.DB_HOST = "localhost";
               services.mysql = {
                 enable = true;
-                initialDatabases = [{name = "abidan"; }];
+                initialDatabases = [
+                  {name = "abidan";}
+                  {name = "testing";}
+                ];
                 ensureUsers = [
                   {
                     name = "sail";
                     password = "password";
-                    ensurePermissions = {"abidan.*" = "ALL PRIVILEGES";};
+                    ensurePermissions = {"*.*" = "ALL PRIVILEGES";};
                   }
                 ];
               };
