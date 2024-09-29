@@ -42,11 +42,13 @@
                 audiowaveform
 
                 # Development
-                phpactor # LSP
+                # LSP
+                phpactor
                 vscode-langservers-extracted
                 emmet-language-server
               ];
 
+              env.DIRENV_LOG_FORMAT = "";
               scripts.art.exec = ''php artisan "$@"'';
 
               languages.php = {
