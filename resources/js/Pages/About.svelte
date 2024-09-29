@@ -27,7 +27,7 @@
         </p>
         <p>It's main contributors are:</p>
         <ul class="list-disc pl-5">
-            <li>🍑 - Railalis</li>
+            <li>🍑 - pchpchpchpch</li>
             <li>Entropy - Decadakon</li>
             <li>Lil'Blue - Shadowsaber</li>
         </ul>
