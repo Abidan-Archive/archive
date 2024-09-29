@@ -1,9 +1,9 @@
 <script>
     import Oddment from '@/lib/oddment.js';
-    import Card from '@/components/Card.svelte';
+    import Card from '@/Components/Card.svelte';
     import isValidUrl from '@/lib/url';
     import route from '@/lib/route';
-    import { Link } from '@/components/icons';
+    import { Link } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
 

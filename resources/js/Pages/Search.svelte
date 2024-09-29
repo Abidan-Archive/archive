@@ -1,8 +1,8 @@
 <script>
-    import Report from '@/components/Report.svelte';
-    import SearchForm from '@/components/SearchForm.svelte';
-    import Paginator from '@/components/Paginator.svelte';
-    import Page from '@/components/Page.svelte';
+    import Report from '@/Components/Report.svelte';
+    import SearchForm from '@/Components/SearchForm.svelte';
+    import Paginator from '@/Components/Paginator.svelte';
+    import Page from '@/Components/Page.svelte';
 
     export let reports;
     export let tags;

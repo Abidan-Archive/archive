@@ -2,10 +2,10 @@
     import { router } from '@inertiajs/svelte';
     import { fade } from 'svelte/transition';
 
-    import Page from '@/components/Page.svelte';
-    import SortBy from '@/components/SortBy.svelte';
-    import Input from '@/components/forms/Input.svelte';
-    import Tag from '@/components/Tag.svelte';
+    import Page from '@/Components/Page.svelte';
+    import SortBy from '@/Components/SortBy.svelte';
+    import Input from '@/Components/forms/Input.svelte';
+    import Tag from '@/Components/Tag.svelte';
 
     export let tags;
     let filter = '';

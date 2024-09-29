@@ -1,7 +1,7 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import Card from '@/components/Card.svelte';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import Page from '@/Components/Page.svelte';
+    import Card from '@/Components/Card.svelte';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
 
     export let stub = undefined;
     let dialogues = [

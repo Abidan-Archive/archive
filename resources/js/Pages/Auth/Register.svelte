@@ -1,8 +1,8 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import Card from '@/components/Card.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Card from '@/Components/Card.svelte';
     import { cn, route, recaptcha } from '@/lib';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm('Register', {

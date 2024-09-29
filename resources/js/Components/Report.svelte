@@ -1,9 +1,9 @@
 <script>
     import { inertia, router } from '@inertiajs/svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
-    import { Copy, Heart, Link } from '@/components/icons';
-    import Card from '@/components/Card.svelte';
-    import Tag from '@/components/Tag.svelte';
+    import { Copy, Heart, Link } from '@/Components/icons';
+    import Card from '@/Components/Card.svelte';
+    import Tag from '@/Components/Tag.svelte';
     import { cn, route, Oddment } from '@/lib';
 
     const toastStore = getToastStore();

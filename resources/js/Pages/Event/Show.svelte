@@ -1,9 +1,9 @@
 <script>
     import { page } from '@inertiajs/svelte';
     import route from '@/lib/route';
-    import Page from '@/components/Page.svelte';
-    import Paginator from '@/components/Paginator.svelte';
-    import Report from '@/components/Report.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Paginator from '@/Components/Paginator.svelte';
+    import Report from '@/Components/Report.svelte';
     import isValidUrl from '@/lib/url';
 
     export let event;

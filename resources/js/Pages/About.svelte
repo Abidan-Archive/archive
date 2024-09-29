@@ -1,6 +1,6 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import { Discord, Github } from '@/components/icons';
+    import Page from '@/Components/Page.svelte';
+    import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/lib/route';
 

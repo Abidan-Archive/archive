@@ -1,10 +1,10 @@
 <script>
     import { getContrastText } from '@/lib/color.js';
     import { router, useForm } from '@inertiajs/svelte';
-    import Page from '@/components/Page.svelte';
+    import Page from '@/Components/Page.svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { getModalStore } from '@skeletonlabs/skeleton';
 
     const modalStore = getModalStore();

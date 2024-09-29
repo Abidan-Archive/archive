@@ -18,10 +18,10 @@
     } from '@floating-ui/dom';
 
     import AppShell from '@/Layouts/AppShell.svelte';
-    import Footer from '@/components/footer/Footer.svelte';
-    import Header from '@/components/Header.svelte';
-    import Navigation from '@/components/Navigation.svelte';
-    import BanModal from '@/components/modals/BanModal.svelte';
+    import Footer from '@/Components/footer/Footer.svelte';
+    import Header from '@/Components/Header.svelte';
+    import Navigation from '@/Components/Navigation.svelte';
+    import BanModal from '@/Components/modals/BanModal.svelte';
 
     storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
     initializeStores();

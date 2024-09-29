@@ -1,6 +1,6 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import Report from '@/components/Report.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Report from '@/Components/Report.svelte';
 
     export let user;
     export let likes;

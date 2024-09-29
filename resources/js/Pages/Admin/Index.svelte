@@ -1,6 +1,6 @@
 <script>
     import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
-    import Page from '@/components/Page.svelte';
+    import Page from '@/Components/Page.svelte';
 </script>
 
 <svelte:head>
