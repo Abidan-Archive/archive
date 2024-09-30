@@ -9,7 +9,7 @@
         House,
         Tag,
         Scale,
-    } from '@/components/icons';
+    } from '@/Components/icons';
     import { getDrawerStore } from '@skeletonlabs/skeleton';
 
     // External links through use:inertia feels bad, see if we can get a change

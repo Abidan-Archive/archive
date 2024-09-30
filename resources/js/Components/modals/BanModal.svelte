@@ -5,10 +5,10 @@
         getToastStore,
         popup,
     } from '@skeletonlabs/skeleton';
-    import Card from '@/components/Card.svelte';
+    import Card from '@/Components/Card.svelte';
     import cn from '@/lib/cn';
     import route from '@/lib/route';
-    import { Button, ErrorMessage, Input, Label } from '@/components/forms';
+    import { Button, ErrorMessage, Input, Label } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
     import axios from 'axios';
 

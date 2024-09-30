@@ -1,6 +1,6 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import { Discord, Github } from '@/components/icons';
+    import Page from '@/Components/Page.svelte';
+    import { Discord, Github } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import route from '@/lib/route';
 
@@ -27,7 +27,7 @@
         </p>
         <p>It's main contributors are:</p>
         <ul class="list-disc pl-5">
-            <li>🍑 - Railalis</li>
+            <li>🍑 - pchpchpchpch</li>
             <li>Entropy - Decadakon</li>
             <li>Lil'Blue - Shadowsaber</li>
         </ul>

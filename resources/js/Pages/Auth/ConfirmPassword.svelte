@@ -1,9 +1,9 @@
 <script>
-    import Page from '@/components/Page.svelte';
-    import Card from '@/components/Card.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
     import recaptcha from '@/lib/recaptcha';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({

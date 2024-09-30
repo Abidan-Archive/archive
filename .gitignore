@@ -20,3 +20,15 @@ yarn-error.log
 docker-compose.override.yml
 report_*.json
 todo
+docker-compose.override.yml# Devenv
+
+# devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+.devenv
+
+# pre-commit
+.pre-commit-config.yaml

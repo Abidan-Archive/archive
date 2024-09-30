@@ -1,8 +1,8 @@
 <script>
-    import Card from '@/components/Card.svelte';
-    import CircleX from '@/components/icons/CircleX.svelte';
+    import Card from '@/Components/Card.svelte';
+    import CircleX from '@/Components/icons/CircleX.svelte';
     import { formatToInputDateString, route } from '@/lib';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { router, useForm, page } from '@inertiajs/svelte';
     import {
         FileDropzone,

@@ -19,6 +19,7 @@ export default defineConfig({
     resolve: {
         alias: {
             ziggy: resolve(projectRoot, 'vendor/tightenco/ziggy/dist/index.es'),
+            '@': resolve('./resources/js/'),
         },
         dedupe: ['svelte', 'svelte/transition', 'svelte/internal'],
         extensions: ['.js', '.svelte', '.json'],

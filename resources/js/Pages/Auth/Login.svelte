@@ -1,9 +1,9 @@
 <script>
-    import DiscordLogo from '@/components/DiscordLogo.svelte';
-    import Page from '@/components/Page.svelte';
-    import Card from '@/components/Card.svelte';
+    import DiscordLogo from '@/Components/DiscordLogo.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Card from '@/Components/Card.svelte';
     import { cn, recaptcha, route } from '@/lib';
-    import { ErrorMessage, Label, Button, Input } from '@/components/forms';
+    import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm({

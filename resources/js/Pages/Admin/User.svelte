@@ -1,9 +1,9 @@
 <script>
     import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
-    import ChevronDown from '@/components/icons/ChevronDown.svelte';
-    import Page from '@/components/Page.svelte';
+    import ChevronDown from '@/Components/icons/ChevronDown.svelte';
+    import Page from '@/Components/Page.svelte';
     import route from '@/lib/route';
-    import { XMark } from '@/components/icons';
+    import { XMark } from '@/Components/icons';
     import { inertia, router } from '@inertiajs/svelte';
     import { popup } from '@skeletonlabs/skeleton';
     import { getModalStore } from '@skeletonlabs/skeleton';

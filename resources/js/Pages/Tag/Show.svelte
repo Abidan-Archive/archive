@@ -1,8 +1,8 @@
 <script>
     import { page } from '@inertiajs/svelte';
-    import Page from '@/components/Page.svelte';
-    import Paginator from '@/components/Paginator.svelte';
-    import Report from '@/components/Report.svelte';
+    import Page from '@/Components/Page.svelte';
+    import Paginator from '@/Components/Paginator.svelte';
+    import Report from '@/Components/Report.svelte';
     import route from '@/lib/route';
 
     export let tag;

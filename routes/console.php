@@ -45,9 +45,10 @@ Artisan::command('consume {jsonPath}', function (string $jsonPath) {
                     $report->tags()->attach($tag);
                 }
             } catch (Exception $e) {
-                $this->newLine();
-                $this->error('Error on '.$r['id']);
-                $this->newLine();
+                // $this->newLine();
+                // $this->error('Error on '.$r['id']);
+                // $this->newLine();
+                throw $e;
             }
         });
     }

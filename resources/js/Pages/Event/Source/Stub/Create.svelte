@@ -3,11 +3,11 @@
     import { page, router } from '@inertiajs/svelte';
     import Peaks from 'peaks.js';
 
-    import { Button, IconButton } from '@/components/forms';
-    import { Play, Pause, Trash } from '@/components/icons';
-    import Card from '@/components/Card.svelte';
-    import MediaControls from '@/components/audio/MediaControls.svelte';
-    import Page from '@/components/Page.svelte';
+    import { Button, IconButton } from '@/Components/forms';
+    import { Play, Pause, Trash } from '@/Components/icons';
+    import Card from '@/Components/Card.svelte';
+    import MediaControls from '@/Components/audio/MediaControls.svelte';
+    import Page from '@/Components/Page.svelte';
     import route from '@/lib/route.js';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
 

@@ -1,10 +1,10 @@
 <script>
     import { inertia, page, router } from '@inertiajs/svelte';
     import { AppBar, popup } from '@skeletonlabs/skeleton';
-    import Logo from '@/components/Logo.svelte';
-    import { Hamburger, User } from '@/components/icons';
+    import Logo from '@/Components/Logo.svelte';
+    import { Hamburger, User } from '@/Components/icons';
     import route from '@/lib/route';
-    import Navigation from '@/components/Navigation.svelte';
+    import Navigation from '@/Components/Navigation.svelte';
     import { getDrawerStore } from '@skeletonlabs/skeleton';
 
     const drawerStore = getDrawerStore();

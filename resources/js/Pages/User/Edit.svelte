@@ -1,10 +1,10 @@
 <script>
     import { TabGroup, Tab } from '@skeletonlabs/skeleton';
-    import Page from '@/components/Page.svelte';
+    import Page from '@/Components/Page.svelte';
     import { useForm, page } from '@inertiajs/svelte';
     import { route, recaptcha } from '@/lib';
-    import { ErrorMessage, Label, Input } from '@/components/forms';
-    import CircleInfo from '@/components/icons/CircleInfo.svelte';
+    import { ErrorMessage, Label, Input } from '@/Components/forms';
+    import CircleInfo from '@/Components/icons/CircleInfo.svelte';
 
     export let user;
 

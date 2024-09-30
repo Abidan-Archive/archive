@@ -2,9 +2,9 @@
     import { router } from '@inertiajs/svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
-    import Lens from '@/components/icons/Lens.svelte';
-    import SortBy from '@/components/SortBy.svelte';
-    import TagFilter from '@/components/TagFilter.svelte';
+    import Lens from '@/Components/icons/Lens.svelte';
+    import SortBy from '@/Components/SortBy.svelte';
+    import TagFilter from '@/Components/TagFilter.svelte';
     import pickBy from 'lodash/pickBy';
 
     let className;
