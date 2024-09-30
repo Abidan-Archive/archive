@@ -1,0 +1,43 @@
+name: TEST
+
+on:
+  workflow_dispatch
+
+jobs:
+  check_nix:
+    name: Check the config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic/nix/cache-action@main
+      - uses: Check Nixpkgs inputs
+        uses: DeterminateSystems/flake-checker-action@main
+        with:
+          fail-mode: true
+
+  build:
+    name: Build & Server
+    needs: check_nix
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic/nix/cache-action@main
+      - name: Build
+        run: nix build -L ./nixos#nixosConfigurations.abidan.config.system.build.toplevel
+      - name: Deploy
+        env:
+          USERNAME: ${{ secrets.HOST_USER }}
+          HOSTNAME: ${{ vars.HOST_UP }}
+        run: nix copy --to ssh-ng://${USERNAME}@${HOSTNAME} ./result
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ vars.HOST_IP}}
+          username: ${{ secrets.HOST_USER }}
+          key: ${{ secrets.HOST_KEY }}
+          script: |
+            nix-env -p /nix/var/nix/profiles/system --set $(readlink ./result)
+            /nix/var/profiles/system/bin/switch-to-configuration switch

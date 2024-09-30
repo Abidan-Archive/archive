@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, vars, ... }: with vars;
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -17,13 +17,15 @@
   # Linode region is Atlanta
   time.timeZone = "America/New_York";
 
-  users.users.HOSTUSER = {
+  users.users."${username}"= {
     isNormalUser = true;
-    home = "/home/HOSTUSER";
+    home = "/home/${username}";
     extraGroups = [ "wheel" "networkmanager" "acme" "nginx" ];
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a HOSTUSER" ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHJbtlS3h7escz5e1Jgdgc4ZHfH4adAxNq9AwXPWw0+a ${username}" ];
   };
-
+  # /var/lib/acme.challenges must be writable by the ACME user
+  # and readable by the nginx user.
+  users.users.nginx.extraGroups = [ "acme" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -47,8 +49,7 @@
         tokenizer
         xml
       ]));
-      extraConfig = ''
-      '';
+      extraConfig = "";
     })
     php83Packages.composer
     ffmpeg # Required by app for audio snips
@@ -57,7 +58,7 @@
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
+  programs.mtr.enable = true;
   # programs.gnupg.agent = {
   #   enable = true;
   #   enableSSHSupport = true;
@@ -76,24 +77,26 @@
   # Linode: metric gathering service
   services.longview = {
     enable = true;
-    apiKeyFile = "/run/keys/longview-api-key";
+    apiKeyFile = "${config.sops.longview-key.path}";
   };
 
   services.nginx = {
     enable = true;
+    # Patch SSL to avoid 2022 OpenSSL Spooky SSL Vun
+    # https://github.com/NCSC-NL/OpenSSL-2022
+    package = pkgs.nginxStable.override { openssl = pkgs.libressl; };
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     virtualHosts = {
-      # "abidanarchive.com" = {
-      "peach.abidanarchive.com" = {
+      "${domain}" = {
         default = true;
         forceSSL = true;
         enableACME = true;
 
         # serverName = "abidanarchive.com";
-        root = "/home/HOSTUSER/www/abidanarchive.com/current/public";
+        root = "/home/${username}/www/abidanarchive.com/current/public";
 
         locations."/".tryFiles = "$uri $uri/ /index.php?$query_string";
         locations."= /favicon.ico".extraConfig = ''
@@ -123,33 +126,29 @@
       };
 
       # Redirect 'www' to 'non-www'
-      # "www.abidanarchive.com" = {
+      # "www.${domain}" = {
       #   forceSSL = true;
       #   enableACME = true;
-      #   globalRedirect = "abidanarchive.com";
+      #   globalRedirect = domain;
       # };
     };
   };
 
-  # SSL certificate renawl settings
+  # SSL certificate renewal settings
   security.acme = {
     acceptTerms = true;
-    defaults.email = "hey@manning390.com";
+    defaults.email = useremail;
     defaults.group = "nginx";
     certs = {
-      "peach.abidanarchive.com" = {
+      "${domain}" = {
         dnsProvider = "linode";
         webroot = null;
         credentialFiles = {
-          "LINODE_TOKEN_FILE" = "/run/keys/linode-acme-key";
+          "LINODE_TOKEN_FILE" = "${config.sops.linode-acme-key.path}";
         };
       };
     };
   };
-
-  # /var/lib/acme.challenges must be writable by the ACME user
-  # and readable by the nginx user.
-  users.users.nginx.extraGroups = [ "acme" ];
 
   services.phpfpm.pools.mypool = {
     user = config.services.nginx.user;
@@ -174,17 +173,44 @@
 
     ensureDatabases = [ "abidan" ];
     ensureUsers = [{
-        name = "HOSTUSER";
-        ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
+      name = username;
+      ensurePermissions = { "abidan.*" = "ALL PRIVILEGES"; };
     }];
   };
+
+  # services.mysqlBackup = {
+  #   enable = true;
+  #   databases = [ "abidan" ];
+  # };
 
   services.meilisearch = {
     enable = true;
     environment = "production";
-    masterKeyEnvironmentFile = "/run/keys/meilisearch-key";
-    # The format for the key file is the following:
-    # MEILI_MASTER_KEY=my_secret_key
+    masterKeyEnvironmentFile = "${config.sops.templates.meilisearch.path}";
+  };
+
+  sops = {
+    defaultSopsFile = ./secrets/secrets.yaml;
+    defaultSopsFormat = "yaml";
+
+    age.keyFile = "/home/${config.users.users."${username}".name}/.config/sops/age/keys.txt";
+
+    secrets = {
+      meilisearch-key = {};
+      linode-acme-key = {};
+      longview-key = {};
+      laravel-env = {
+        mode = "0444";
+        owner = config.users.users."${username}".name;
+      };
+    };
+
+    templates = {
+      meilisearch = {
+        content = "MEILI_MASTER_KEY=${config.sops.secrets.meilisearch-key}";
+        path = "/run/keys/meilisearch";
+      };
+    };
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
@@ -204,6 +230,5 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
 

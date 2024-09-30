@@ -9,12 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Create server provision artifact
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: tar -czf nixos-"${GITHUB_SHA}".tar.gz nixos/*
       - name: Store artifact for distribution
         uses: actions/upload-artifact@v4
         with:
           name: server-build
-          # Our singular config file <3
-          path: nixos/configuration.nix
+          path: nixos-${{ github.sha }}.tar.gz
 
   prepare-provision-on-server:
     name: Prepare Provision
@@ -29,7 +32,7 @@ jobs:
         uses: burnett01/rsync-deployments@6.0.0
         with:
           switches: --mkpath
-          path: configuration.nix
+          path: nixos-${{github.sha}}.tar.gz
           remote_path: ${{ vars.HOST_PATH }}/artifacts
           remote_host: ${{ vars.HOST_IP }}
           remote_user: ${{ secrets.HOST_USER }}
@@ -47,8 +50,6 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
           script: |
-            echo "${{ secrets.HOST_PASS }}" | sudo -S bash -c 'echo "${{ secrets.LONGVIEW_KEY }}" > /run/keys/longview-api-key'
-            echo "${{ secrets.HOST_PASS }}" | sudo -S bash -c 'echo "${{ secrets.MEILISEARCH_KEY }}" > /run/keys/meilisearch-key'
             mkdir -p ${{ vars.HOST_PATH }}/storage/{app,public,framework,logs}
             mkdir -p ${{ vars.HOST_PATH }}/storage/framework/{cache,sessions,testing,views}
             echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 0777 ${{ vars.HOST_PATH }}/storage
