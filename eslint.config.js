@@ -34,8 +34,8 @@ export default [
         settings: {
             tailwindcss: {
                 callees: ['class', 'clsx', 'cn'],
-                config: 'tailwind.config.js',
-                cssFiles: ['!**/*.js'],
+                // config: 'tailwind.config.js',
+                cssFiles: ['!**/*.{js,ts}'],
             },
         },
         rules: {
