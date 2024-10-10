@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
     import { Button } from '@/Components/forms';
     import { page, router } from '@inertiajs/svelte';
@@ -14,7 +13,7 @@
 </script>
 
 <Page class="w-1/2" header="Email Verification">
-    <Card>
+    <div class="card">
         <div class="mb-4 text-sm text-gray-400">
             Thanks for signing up! Before getting started, could you verify your
             email address by clicking on the link we just emailed to you? If you
@@ -43,5 +42,5 @@
                 </button>
             </form>
         </div>
-    </Card>
+    </div>
 </Page>

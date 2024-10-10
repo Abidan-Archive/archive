@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import { cn, route, recaptcha } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
@@ -23,7 +22,7 @@
 </script>
 
 <Page class="w-1/2" header="Register">
-    <Card>
+    <div class="card">
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="username" value="Username" />
@@ -99,5 +98,5 @@
                 <Button class="ml-4">Register</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </Page>

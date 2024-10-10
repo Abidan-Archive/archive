@@ -5,7 +5,6 @@
         getToastStore,
         popup,
     } from '@skeletonlabs/skeleton';
-    import Card from '@/Components/Card.svelte';
     import cn from '@/lib/cn';
     import route from '@/lib/route';
     import { Button, ErrorMessage, Input, Label } from '@/Components/forms';
@@ -73,7 +72,7 @@
     }
 </script>
 
-<Card is="section" class={cn('', parent.width)}>
+<section class={cn('card', parent.width)}>
     <h3 class="pb-2 font-bold">Create Ban</h3>
     <form
         method="POST"
@@ -148,4 +147,4 @@
             <Button type="submit">Ban</Button>
         </div>
     </form>
-</Card>
+</section>

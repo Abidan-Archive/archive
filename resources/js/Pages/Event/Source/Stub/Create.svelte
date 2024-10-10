@@ -5,7 +5,6 @@
 
     import { Button, IconButton } from '@/Components/forms';
     import { Play, Pause, Trash } from '@/Components/icons';
-    import Card from '@/Components/Card.svelte';
     import MediaControls from '@/Components/audio/MediaControls.svelte';
     import Page from '@/Components/Page.svelte';
     import route from '@/lib/route.js';
@@ -276,9 +275,9 @@
         <form method="POST" on:submit|preventDefault={submit}>
             <div class="mb-8 flex flex-col justify-center gap-2">
                 {#each segments as segment}
-                    <Card
+                    <div
                         id={'segment-' + segment.id}
-                        class="flex items-center justify-start gap-2">
+                        class="card flex items-center justify-start gap-2">
                         <IconButton
                             style={`background-color:${segment.color}`}
                             light
@@ -344,7 +343,7 @@
                             }}>
                             <Trash />
                         </IconButton>
-                    </Card>
+                    </div>
                 {/each}
             </div>
             <hr />

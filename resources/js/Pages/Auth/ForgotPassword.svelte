@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm, page } from '@inertiajs/svelte';
@@ -32,7 +31,7 @@
 </script>
 
 <Page class="w-1/2" header="Forgot Password">
-    <Card>
+    <div class="card">
         <div class="mb-4 text-sm text-gray-400">
             Forgot your password? No problem. Just let us know your email
             address and we will email you a password reset link that will allow
@@ -57,5 +56,5 @@
                 <Button>Email Password Reset Link</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </Page>

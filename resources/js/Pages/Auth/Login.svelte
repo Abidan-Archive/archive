@@ -4,7 +4,6 @@
     import Button3D from '@/Components/Button3D.svelte';
     import DiscordLogo from '@/Components/DiscordLogo.svelte';
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import { cn, recaptcha, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
 
@@ -24,7 +23,7 @@
 </script>
 
 <Page class="w-full md:w-1/2" header="Login">
-    <Card>
+    <div class="card">
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email">Email</Label>
@@ -100,5 +99,5 @@
                 <DiscordLogo />
             </Button3D>
         </div>
-    </Card>
+    </div>
 </Page>

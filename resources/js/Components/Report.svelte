@@ -2,7 +2,6 @@
     import { inertia, router } from '@inertiajs/svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { Copy, Heart, Link } from '@/Components/icons';
-    import Card from '@/Components/Card.svelte';
     import Tag from '@/Components/Tag.svelte';
     import { cn, route, Oddment } from '@/lib';
 
@@ -82,7 +81,7 @@
     }
 </script>
 
-<Card is="article" id={report.id} class={className}>
+<article id={report.id} class={cn('card', className)}>
     <section class="flex justify-between">
         <div>
             <h3>
@@ -148,4 +147,4 @@
             {/each}
         </section>
     </div>
-</Card>
+</article>

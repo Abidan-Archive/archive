@@ -1,6 +1,5 @@
 <script>
     import Waveform from '@components/Waveform.svelte';
-    import Card from '@components/Card.svelte';
     import { Play, Trash } from '@components/icons';
     import { secondsToDuration, durationToSeconds } from '@/lib';
 
@@ -29,7 +28,7 @@
 <div class="container mx-auto mt-10 flex flex-col justify-center gap-4">
     <Waveform bind:this={scrubber} bind:regions src="/testaudio" title="Test Scrubber"/>
     {#each Object.entries(regions) as [id, region], idx}
-        <Card {id} class="flex items-center justify-start gap-2">
+        <div {id} class="card flex items-center justify-start gap-2">
             <button
                 class="h-10 w-10 rounded-full border p-2"
                 style={`background-color:${region.color}`}><Play /></button>
@@ -66,6 +65,6 @@
             <button
                 class="h-10 w-10 rounded-full border bg-typo-500 p-2 text-black"
                 ><Trash /></button>
-        </Card>
+        </div>
     {/each}
 </div>

@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
     import recaptcha from '@/lib/recaptcha';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
@@ -20,7 +19,7 @@
 </script>
 
 <Page class="w-1/2" header="Confirm Password">
-    <Card>
+    <div class="card">
         <div class="mb-4 text-sm text-gray-400">
             This is a secure area of the application. Please confirm password
             before continuing.
@@ -43,5 +42,5 @@
                 <Button>Confirm</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </Page>
