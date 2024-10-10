@@ -1,10 +1,12 @@
 <script>
+    import { useForm, inertia } from '@inertiajs/svelte';
+
+    import Button3D from '@/Components/Button3D.svelte';
     import DiscordLogo from '@/Components/DiscordLogo.svelte';
     import Page from '@/Components/Page.svelte';
     import Card from '@/Components/Card.svelte';
     import { cn, recaptcha, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
-    import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm({
         email: null,
@@ -94,66 +96,9 @@
         <hr />
         <div class="flex flex-col items-center gap-2">
             <p>Sign in with a third-party provider</p>
-            <a href={route('oauth.discord')} class="discord-sso">
-                <span class="shadow" />
-                <span class="edge" />
-                <span class="front"><DiscordLogo /></span>
-            </a>
+            <Button3D href={route('oauth.discord')} themeDeg="235deg">
+                <DiscordLogo />
+            </Button3D>
         </div>
     </Card>
 </Page>
-
-<style lang="postcss">
-    .discord-sso {
-        @apply relative cursor-pointer rounded-sm bg-transparent;
-        transition: filter 250ms;
-        user-select: none;
-        -webkit-tap-highlight-color: transparent;
-    }
-    .discord-sso:hover {
-        filter: brightness(110%);
-    }
-    .discord-sso:focus:not(:focus-visible) {
-        outline: none;
-    }
-    .discord-sso > .front {
-        @apply relative block rounded-sm bg-[#5865F2] px-4 py-2;
-        will-change: transform;
-        transform: translateY(-4px);
-        transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-    }
-    .discord-sso:hover > .front {
-        transform: translateY(-6px);
-        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
-    }
-    .discord-sso:active > .front {
-        transform: translateY(-2px);
-        transition: transform 34ms;
-    }
-    .discord-sso > .edge {
-        @apply absolute left-0 top-0 h-full w-full rounded-sm;
-        background: linear-gradient(
-            to left,
-            hsl(235deg, 85%, 52%) 0%,
-            hsl(235deg, 85%, 60%) 8%,
-            hsl(235deg, 85%, 60%) 92%,
-            hsl(235deg, 85%, 52%) 100%
-        );
-    }
-    .discord-sso > .shadow {
-        @apply absolute left-0 top-0 h-full w-full rounded-sm;
-        will-change: transform;
-        background: hsl(0deg 0% 0% / 0.25);
-        transform: translateY(2px);
-        transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-        filter: blur(4px);
-    }
-    .discord-sso:hover > .shadow {
-        transform: translateY(4px);
-        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
-    }
-    .discord-sso:active > .shadow {
-        transform: translateY(1px);
-        transition: transform 34ms;
-    }
-</style>
