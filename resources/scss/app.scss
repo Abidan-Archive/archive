@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 // @import "stars";
+@layer components {
+    .card {
+        @apply w-full rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md;
+    }
+}

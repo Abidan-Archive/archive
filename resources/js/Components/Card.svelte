@@ -6,12 +6,6 @@
     export let is = 'div'; // Change the container html tag type
 </script>
 
-<svelte:element
-    this={is}
-    class={cn(
-        'w-full rounded-lg border border-surface-400 bg-base-700 p-4 shadow-md',
-        className
-    )}
-    {...$$restProps}>
+<svelte:element this={is} class={cn('card', className)} {...$$restProps}>
     <slot />
 </svelte:element>
