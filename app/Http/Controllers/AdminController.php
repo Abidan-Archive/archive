@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BanType;
-use App\Http\Requests\StoreBanRequest;
 use App\Models\Ban;
 use App\Models\Ip;
 use App\Models\User;
@@ -35,6 +34,9 @@ class AdminController extends Controller
         return inertia('Admin/Index');
     }
 
+    /**
+    * Manage users
+    */
     public function user(): Response
     {
         $users = User::all();
@@ -42,6 +44,9 @@ class AdminController extends Controller
         return inertia('Admin/User', compact('users'));
     }
 
+    /**
+    * Api endpoint for form autocomplete
+    */
     public function query(Request $request): JsonResponse {
         $request->validate([
             'q' => 'required',
@@ -59,8 +64,15 @@ class AdminController extends Controller
         return response()->json(compact('results'));
     }
 
+    /**
+    * Store Ban on a User or IP
+    */
     public function ban(Request $request): RedirectResponse
     {
+        if (Auth::user()->cannot('admin_ban')) {
+            abort(403);
+        }
+
         // Basic
         $validator = Validator::make($request->all(), [
             'type' => ['bail', 'required', Rule::enum(BanType::class)],
@@ -105,6 +117,9 @@ class AdminController extends Controller
             ->with('flash', ['message' => "You've successfully assumed the user!"]);
     }
 
+    /**
+    * Reset a users password
+    */
     public function resetPassword(User $user): RedirectResponse
     {
         if (Auth::user()->cannot('admin_reset_password')) {
