@@ -46,6 +46,7 @@
                 phpactor
                 vscode-langservers-extracted
                 emmet-language-server
+                nodePackages.intelephense
               ];
 
               env.DIRENV_LOG_FORMAT = "";
