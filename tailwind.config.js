@@ -49,17 +49,9 @@ export default {
                 3: '3px',
                 5: '5px',
             },
-            addComponents: {
-                card: {
-                    width: '100%',
-                    borderRadius: defaultTheme.borderRadius.lg,
-                    border: defaultTheme.borderWidth[1],
-                    // borderColor: abidanTheme.colors.surface[400],
-                    backgroundColor: '#25282a', // theme.colors.base[700], defined above
-                    padding: defaultTheme.spacing[4],
-                    boxShadow: defaultTheme.boxShadow.md,
-                },
-            },
+            borderColor: ({ theme }) => ({
+                DEFAULT: theme('colors.surface')[400],
+            }),
         },
     },
 

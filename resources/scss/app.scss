@@ -2,4 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .card {
+        @apply w-full;
+        @apply shadow-md;
+        @apply p-4;
+        @apply bg-base-700 dark:bg-base-700;
+        @apply border;
+    }
+}
+
 // @import "stars";
