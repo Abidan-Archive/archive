@@ -65,7 +65,7 @@
                                     <CircleInfo class="inline" /> Hey Boss
                                 </h3>
                                 <p>
-                                    This account is using SSO to sign.<br />
+                                    This account is using SSO to sign in.<br />
                                     Your account details are managed by your third-party
                                     account.
                                 </p>
@@ -149,7 +149,7 @@
                                         </h3>
                                         <p>
                                             This field is still required, use
-                                            your own account's password.
+                                            your own account password.
                                         </p>
                                     </div>
                                 </aside>

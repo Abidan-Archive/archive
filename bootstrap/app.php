@@ -35,12 +35,16 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
-            $inertiaEnvs = ['local', 'testing'];
-            if (! app()->environment($inertiaEnvs) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+            // Inertia to handle some errors for custom error pages
+            $disabledInertiaErrorHandlingEnvs = ['local', 'testing'];
+            if (! app()->environment($disabledInertiaErrorHandlingEnvs) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
                 return Inertia::render('Error', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
-            } elseif ($response->getStatusCode() === 419) {
+            }
+
+            // CSRF token expired with inertia
+            if ($response->getStatusCode() === 419) {
                 return back()->with([
                     'flash' => [
                         'message' => 'The page expired, please try again.',

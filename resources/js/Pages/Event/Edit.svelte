@@ -1,5 +1,4 @@
 <script>
-    import Card from '@/Components/Card.svelte';
     import CircleX from '@/Components/icons/CircleX.svelte';
     import { formatToInputDateString, route } from '@/lib';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
@@ -104,7 +103,7 @@
 
 <section class="contianer mx-auto mt-10">
     <h2 class="my-5 text-2xl">Edit Event</h2>
-    <Card>
+    <div class="card">
         <form method="POST" on:submit|preventDefault={handleEventSubmit}>
             <div class="block">
                 <Label for="name">Name</Label>
@@ -177,14 +176,14 @@
                 <Button type="submit">Update</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </section>
 
 <section>
     <h3 class="my-4 text-xl">Manage Sources</h3>
     <div class="flex flex-col gap-5">
         {#each event.sources as source}
-            <Card class="flex items-center justify-between">
+            <div class="card flex items-center justify-between">
                 <form
                     method="PATCH"
                     on:submit|preventDefault={() =>
@@ -210,7 +209,7 @@
                         })}>
                     Delete
                 </Button>
-            </Card>
+            </div>
         {/each}
     </div>
 </section>

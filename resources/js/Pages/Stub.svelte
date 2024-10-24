@@ -1,7 +1,6 @@
 <script>
     import { inertia } from '@inertiajs/svelte';
 
-    import Card from '@/Components/Card.svelte';
     import Page from '@/Components/Page.svelte';
     import Paginator from '@/Components/Paginator.svelte';
     import route from '@/lib/route';
@@ -21,7 +20,7 @@
         {:else}
             <Paginator {...stubs} />
             {#each stubs.data as stub}
-                <Card>
+                <div class="card">
                     <a
                         use:inertia
                         href={route('event.source.stub.show', [
@@ -32,7 +31,7 @@
                         {stub.prompt || 'No Prompt Given'} &dash; {stub.event
                             .name}
                     </a>
-                </Card>
+                </div>
             {/each}
             <Paginator {...stubs} />
         {/if}

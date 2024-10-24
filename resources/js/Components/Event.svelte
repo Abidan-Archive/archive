@@ -1,11 +1,11 @@
 <script>
     import Oddment from '@/lib/oddment.js';
-    import Card from '@/Components/Card.svelte';
     import isValidUrl from '@/lib/url';
     import route from '@/lib/route';
     import { Link } from '@/Components/icons';
     import { inertia } from '@inertiajs/svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
+    import cn from '@/lib/cn';
 
     const toastStore = getToastStore();
 
@@ -28,7 +28,7 @@
     export { className as class };
 </script>
 
-<Card is="article" id={event.id} class={className}>
+<article id={event.id} class={cn('card', className)}>
     <section class="mb-4 flex justify-between">
         <div>
             <h3>
@@ -66,4 +66,4 @@
             {event.reports || 0} reports
         </span>
     </section>
-</Card>
+</article>

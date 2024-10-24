@@ -55,6 +55,22 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Returns properties that are shared across all inertia responses
+     *
+     * @return array<string,mixed>
+     */
+    public function sharedInertiaProps(): array {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'email' => $this->email,
+            'is_sso' => $this->is_sso,
+            'roles' => $this->roles->pluck('name'),
+            'permissions' => $this->permissions->pluck('name'),
+        ];
+    }
+
+    /**
     * Used for responding to autocomplete searches
     */
     public static function autocomplete(string $q): Collection {

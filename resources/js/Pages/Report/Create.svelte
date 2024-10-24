@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
 
     export let stub = undefined;
@@ -26,7 +25,7 @@
     {/if}
     <form method="POST" on:submit|preventDefault={submit}>
         {#each dialogues as dialogue, idx}
-            <Card>
+            <div class="card">
                 <div>
                     <Label for={'speaker-' + idx}>Speaker</Label>
                     <Input
@@ -44,7 +43,7 @@
                         bind:value={dialogue.line} />
                     <ErrorMessage message={'idk'} class="mt-2" />
                 </div>
-            </Card>
+            </div>
         {/each}
         <div class="flex items-baseline justify-end">
             <Button>Create</Button>

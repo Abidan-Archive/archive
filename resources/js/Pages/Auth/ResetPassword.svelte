@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     import route from '@/lib/route';
     import recaptcha from '@/lib/recaptcha';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
@@ -23,7 +22,7 @@
 </script>
 
 <Page class="w-1/2" header="Reset Password">
-    <Card>
+    <div class="card">
         <form method="POST" on:submit|preventDefault={submit}>
             <div>
                 <Label for="email" value="Email" />
@@ -66,5 +65,5 @@
                 <Button>Reset Password</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </Page>

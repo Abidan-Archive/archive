@@ -1,6 +1,5 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import Card from '@/Components/Card.svelte';
     // import CircleX from '@/Components/icons/CircleX.svelte';
     import route from '@/lib/route';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
@@ -42,7 +41,7 @@
 </script>
 
 <Page header="Create Event">
-    <Card>
+    <div class="card">
         <form
             method="POST"
             on:submit|preventDefault={submit}
@@ -126,7 +125,7 @@
                 <Button type="submit" class="ml-3">Create</Button>
             </div>
         </form>
-    </Card>
+    </div>
 </Page>
 
 <style lang="postcss">
