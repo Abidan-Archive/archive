@@ -54,7 +54,7 @@
     <AdminSidebar />
     <Page header="User Management" class="flex-1">
         <div class="table-container">
-            <table class="table table-hover table-compact">
+            <table class="table table-hover table-compact w-full">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -79,9 +79,9 @@
                                     {user.email}
                                 </a>
                                 {#if !user.email_verified_at}
-                                    <user title="Email not verified">
-                                        <XMark />
-                                    </user>
+                                    <span title="Email not verified">
+                                        <XMark class="inline" />
+                                    </span>
                                 {/if}
                             </td>
                             <td>{user.is_sso ? 'discord' : 'password'}</td>
