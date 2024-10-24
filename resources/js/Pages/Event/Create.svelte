@@ -1,6 +1,6 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import CircleX from '@/Components/icons/CircleX.svelte';
+    // import CircleX from '@/Components/icons/CircleX.svelte';
     import route from '@/lib/route';
     import { ErrorMessage, Label, Button, Input } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
@@ -14,24 +14,26 @@
     });
     let rejectedFiles = [];
 
-    $: console.log($form.sources);
-
-    // Todo Add Skeleton UI dropzone
     // eslint-disable-next-line no-unused-vars
     function handleFilesSelect(e) {
         const { acceptedFiles, fileRejections } = e.detail;
+        console.log(e);
         $form.sources = [...$form.sources, ...acceptedFiles];
         rejectedFiles = [...rejectedFiles, ...fileRejections];
     }
 
-    function handleRemoveFile(index) {
-        $form.sources.splce(index, 1);
-        $form.sources = [...$form.sources];
+    function fileOnChange(e) {
+        console.log(e);
     }
 
-    function handleRemoveAllFiles() {
-        $form.sources = [];
-    }
+    // function handleRemoveFile(index) {
+    //     const fileListArr = [...$form.sources].splice(index, 1);
+    //     $form.sources = [...$form.sources];
+    // }
+    //
+    // function handleRemoveAllFiles() {
+    //     $form.sources = [];
+    // }
 
     function submit() {
         $form.post(route('event.store'), { forceFormData: true });
@@ -80,15 +82,11 @@
                 <FileDropzone
                     name="sources"
                     accept="audio/*"
-                    bind:files={$form.sources}>
+                    bind:files={$form.sources}
+                    on:change={fileOnChange}>
                     <svelte:fragment slot="meta"
                         >Audio files accepted</svelte:fragment>
                 </FileDropzone>
-                <!-- <Dropzone accept="audio/*" on:drop={handleFilesSelect} multiple> -->
-                <!--     <button>Choose audio files to upload</button> -->
-                <!--     <p>or</p> -->
-                <!--     <p>Drag and drop them here</p> -->
-                <!-- </Dropzone> -->
                 {#each $form.sources as item, i}
                     <ErrorMessage
                         message={($form.errors['sources.' + i] || '').replace(
@@ -99,24 +97,24 @@
                 {/each}
                 {#if $form.sources.length > 0}
                     <div class="mt-1">
-                        <div class="flex justify-between">
-                            <span>Files</span>
-                            <Button
-                                type="button"
-                                variant="destructive"
-                                on:click={handleRemoveAllFiles}
-                                aria-label="Remove all files"
-                                >Remove All</Button>
-                        </div>
+                        <!-- <div class="flex justify-between"> -->
+                        <!--     <span>Files</span> -->
+                        <!--     <Button -->
+                        <!--         type="button" -->
+                        <!--         variant="destructive" -->
+                        <!--         on:click={handleRemoveAllFiles} -->
+                        <!--         aria-label="Remove all files" -->
+                        <!--         >Remove All</Button> -->
+                        <!-- </div> -->
                         {#each $form.sources as item, i}
                             <div class="mt-2 flex gap-2">
-                                <span>{item.name}</span>
-                                <button
-                                    type="button"
-                                    class="text-red-400"
-                                    aria-label="Remove File"
-                                    on:click={() => handleRemoveFile(i)}
-                                    ><CircleX /></button>
+                                <span>{item.name} {i}</span>
+                                <!-- <button -->
+                                <!--     type="button" -->
+                                <!--     class="text-red-400" -->
+                                <!--     aria-label="Remove File" -->
+                                <!--     on:click={() => handleRemoveFile(i)} -->
+                                <!--     ><CircleX /></button> -->
                             </div>
                         {/each}
                     </div>
@@ -129,3 +127,9 @@
         </form>
     </div>
 </Page>
+
+<style lang="postcss">
+    input[type='date']::-webkit-calendar-picker-indicator {
+        @apply dark:invert;
+    }
+</style>
