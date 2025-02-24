@@ -149,15 +149,21 @@
         </div>
     </section>
     <section class="flex flex-col gap-4 md:pb-4">
-        {#each report.dialogues as dialogue}
-            <dl>
-                <dt class="text-lg font-bold">{dialogue.speaker}</dt>
-                <dd class="whitespace-pre-line">
-                    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                    {@html dialogue.line_html.trim()}
-                </dd>
-            </dl>
-        {/each}
+        {#if !report.dialogues.length}
+            <div class="text-center">
+                <p>Nothing was said.</p>
+            </div>
+        {:else}
+            {#each report.dialogues as dialogue}
+                <dl>
+                    <dt class="text-lg font-bold">{dialogue.speaker}</dt>
+                    <dd class="whitespace-pre-line">
+                        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+                        {@html dialogue.line_html.trim()}
+                    </dd>
+                </dl>
+            {/each}
+        {/if}
     </section>
     <div class="flex flex-col justify-between gap-4 md:flex-row">
         <section>

@@ -34,7 +34,7 @@ class SearchController extends Controller
         $reports = $search->paginate(20);
 
         // We always pass all the tags
-        $tags = Tag::select('name')->get()->pluck('name');
+        $tags = Tag::allNames();
 
         return inertia('Search', compact('reports', 'tags'));
     }

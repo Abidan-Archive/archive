@@ -39,8 +39,10 @@
     </div>
     <div class="flex flex-col items-center gap-5">
         {#if !reports.data.length}
-            No reports within this Event.<br />
-            How very very mysterious, yes.
+            <p class="text-center">
+                No reports within this Event.<br />
+                How very very mysterious, yes.
+            </p>
         {:else}
             <Paginator {...reports} />
             {#each reports.data as report}

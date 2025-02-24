@@ -1,5 +1,5 @@
 <script>
-    import { inertia, useForm } from '@inertiajs/svelte';
+    import { inertia, useForm, router } from '@inertiajs/svelte';
     import { getModalStore } from '@skeletonlabs/skeleton';
 
     import route from '@/lib/route';
@@ -22,16 +22,13 @@
         isEditVisible = !isEditVisible;
     }
 
-    let approveForm = useForm('review', {
-        report: null,
-    });
+    let approveForm = useForm('review-' + report.id, {});
 
     function onApprove(e) {
         e.preventDefault();
 
         const submit = () => {
-            $approveForm.report = e.target.dataset.report;
-            $approveForm.patch(route('admin.review'));
+            $approveForm.post(route('admin.approve', e.target.dataset.report));
         };
 
         // Do a quick validation for my tag loving sanity
@@ -47,19 +44,24 @@
         submit();
     }
 
-    let patchForm = useForm('patch', {
+    let patchForm = useForm('patch-' + report.id, {
         event_id: report.event_id,
         dialogues: report.dialogues,
         date: report.date,
-        source_label: report.source_label,
-        source_href: report.source_href,
-        footnote: report.footnote,
+        source_label: report.source_label ?? undefined,
+        source_href: report.source_href ?? undefined,
+        footnote: report.footnote ?? undefined,
         tags: report.tags.map((t) => t.name),
         recaptcha: null,
     });
+
     function onPatch(e) {
         e.preventDefault();
-        console.log($patchForm);
+        $patchForm.dialogues = $patchForm.dialogues.filter((d) =>
+            (d.speaker + d.line).trim()
+        );
+
+        $patchForm.patch(route('admin.report.update', report));
     }
 
     function getCompareDate(value) {

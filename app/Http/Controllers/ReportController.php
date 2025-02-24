@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateReportRequest;
 use App\Http\Requests\StoreReportRequest;
 use App\Models\Event;
 use App\Models\Report;
 use App\Models\Stub;
 use App\Models\Source;
 use App\Models\Tag;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 
 class ReportController extends Controller
@@ -45,7 +46,7 @@ class ReportController extends Controller
     public function create()
     {
         $events = Event::select(['id', 'name', 'date'])->get();
-        $tags = Tag::select('name')->get()->pluck('name');
+        $tags = Tag::allNames();
         return inertia('Report/Create', compact('events', 'tags'));
     }
 
@@ -57,7 +58,7 @@ class ReportController extends Controller
     public function createFromStub(Event $event, Source $source, Stub $stub)
     {
         $stub->load('source.event');
-        $tags = Tag::select('name')->get()->pluck('name');
+        $tags = Tag::allNames();
         return inertia('Report/Transcribe', compact('stub', 'tags'));
     }
 
@@ -76,10 +77,8 @@ class ReportController extends Controller
             $report->dialogues()->create($d);
         }
 
-        foreach ($request->tags as $t) {
-            $tag = Tag::where('name', $t)->firstOrFail();
-            $report->tags()->attach($tag);
-        }
+        $tags = Tag::select('id')->whereIn('name', $request->tags)->get()->pluck('id');
+        $report->tags()->attach($tags);
 
         if ($request->stub_id !== null) {
             Stub::findOrFail($request->stub_id)->attach($report);
@@ -103,17 +102,19 @@ class ReportController extends Controller
      */
     public function edit(Report $report)
     {
-        //
+        $events = Event::select(['id', 'name', 'date'])->get();
+        return inertia('Report/Edit', compact('report', 'events'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @return \Inertia\Response
+     * @return RedirectResponse
      */
-    public function update(Request $request, Report $report)
+    public function update(UpdateReportRequest $request, Report $report): RedirectResponse
     {
-        //
+        $report->patch($request);
+        return back()->with('flash', ['message' => 'Report successfully updated!']);
     }
 
     /**

@@ -51,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected function isSso(): Attribute
     {
-        return Attribute::make(get: fn ($value, $attr): bool => ! is_null($this->discord_id));
+        return Attribute::make(get: fn ($value, $attr): bool => !is_null($this->discord_id));
     }
 
     /**
@@ -59,25 +59,27 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return array<string,mixed>
      */
-    public function sharedInertiaProps(): array {
-        return [
+    public function sharedInertiaProps(): array
+    {
+        return cache()->remember('inertiaUser-' . $this->id, 3600, fn () => [
             'id' => $this->id,
             'username' => $this->username,
             'email' => $this->email,
             'is_sso' => $this->is_sso,
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->permissions->pluck('name'),
-        ];
+        ]);
     }
 
     /**
-    * Used for responding to autocomplete searches
-    */
-    public static function autocomplete(string $q): Collection {
+     * Used for responding to autocomplete searches
+     */
+    public static function autocomplete(string $q): Collection
+    {
         return self::select('id', 'username', 'email')
             ->whereAny(['id', 'username', 'email'], 'LIKE', $q)
             ->get()
-            ->map(fn(User $user) => [
+            ->map(fn (User $user) => [
                 'value' => $user->id,
                 'label' => $user->username,
                 'keywords' => implode(', ', [$user->id, $user->email])

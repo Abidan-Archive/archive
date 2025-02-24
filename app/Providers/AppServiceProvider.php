@@ -46,9 +46,12 @@ class AppServiceProvider extends ServiceProvider
     public function bootAuth(): void
     {
 
-        if (! $this->app->environment('deployment') && Schema::hasTable('permissions')) {
+        if (
+            !$this->app->environment('deployment')
+            && cache()->rememberForever('hasPermissions', fn () => Schema::hasTable('permissions'))
+        ) {
             // Get all the permissions
-            $permissions = Permission::with('roles')->get();
+            $permissions = cache()->remember('permissions', 3600, fn () => Permission::with('roles')->get());
             // Dynamically register permissions with Laravel's Gate
             foreach ($permissions as $permission) {
                 Gate::define($permission->name, function (User $user) use ($permission) {
@@ -65,10 +68,10 @@ class AppServiceProvider extends ServiceProvider
 
             return $this->app->isProduction()
                 ? $rule->letters()
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
                 : $rule;
         });
     }
@@ -85,6 +88,5 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
-
     }
 }

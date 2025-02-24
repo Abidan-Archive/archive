@@ -29,6 +29,8 @@ class Inspiring
             // Last Horizon
             'To survive in this galaxy, you need a wand in one hand and a gun in the other.',
             "Would you like to compete for control of\nThe Last Horizon?",
+            // Misc
+            '!sam'
         ])->random();
     }
 }

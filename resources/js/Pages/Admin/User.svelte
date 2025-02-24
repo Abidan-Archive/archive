@@ -1,6 +1,7 @@
 <script>
     import { inertia, router } from '@inertiajs/svelte';
     import { getModalStore, popup } from '@skeletonlabs/skeleton';
+    import { TableHandler } from '@vincjo/datatables';
 
     import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
     import ChevronDown from '@/Components/icons/ChevronDown.svelte';
@@ -9,6 +10,10 @@
     import { XMark } from '@/Components/icons';
 
     let { users, auth } = $props();
+
+    let table = $derived(new TableHandler(users.data, { rowsPerPage: 20 }));
+    let rows = $derived(table.getRows());
+    let searchTerm = $state('');
 
     /** @type {import('@skeletonlabs/skeleton').PopupSettings} */
     const actionPopup = {
@@ -60,8 +65,15 @@
 <div class="container mt-8 flex h-full flex-row gap-4 px-4">
     <AdminSidebar />
     <Page header="User Management" class="flex-1">
-        <div class="table-container">
-            <table class="table table-hover table-compact w-full">
+        <div class="table-container space-y-2 overflow-x-auto">
+            <header class="flex justify-between gap-4">
+                <input
+                    bind:value={searchTerm}
+                    type="search"
+                    placeholder="Search..."
+                    class="input" />
+            </header>
+            <table class="table table-hover table-compact w-full table-auto">
                 <thead>
                     <tr>
                         <th>Id</th>
@@ -73,7 +85,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {#each users as user}
+                    {#each table.rows as user}
                         <tr>
                             <td>{user.id}</td>
                             <td>

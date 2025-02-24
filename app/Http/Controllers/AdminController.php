@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BanType;
+use App\Http\Requests\UpdateReportRequest;
 use App\Models\Ban;
 use App\Models\Ip;
 use App\Models\Report;
@@ -39,11 +40,41 @@ class AdminController extends Controller
 
     public function reviewIndex(): Response
     {
+        if (Auth::user()->cannot('review_report')) {
+            abort(403);
+        }
+
         $reports = Report::with(['stub', 'stub.source'])
             ->withoutGlobalScope(ReviewedScope::class)
+            ->whereNull('reviewed_at')
             ->orderBy('created_at', 'ASC')
             ->paginate(20);
         return inertia('Admin/Review', compact('reports'));
+    }
+
+    public function reviewApprove(int $id): RedirectResponse
+    {
+        if (Auth::user()->cannot('review_report')) {
+            abort(403);
+        }
+        $report = Report::withoutGlobalScope(ReviewedScope::class)->findOrFail($id);
+        $report->update(['reviewed_at' => now()]);
+        return back()->with('flash', ['message' => "Report $report->id approved! Now Public."]);
+    }
+
+    /**
+     * Updates a report prior to it being reviewed
+     */
+    public function updateReport(UpdateReportRequest $request, int $id): RedirectResponse
+    {
+        if (Auth::user()->cannot('edit_report')) {
+            abort(403);
+        }
+
+        $report = Report::withoutGlobalScope(ReviewedScope::class)->firstOrFail($id);
+        $report->patch($request);
+
+        return back()->with('flash', ['message' => "Report $report->id updated. Still needs to be approved."]);
     }
 
     /**
@@ -51,7 +82,7 @@ class AdminController extends Controller
      */
     public function user(): Response
     {
-        $users = User::all();
+        $users = User::paginate(20);
 
         return inertia('Admin/User', compact('users'));
     }
@@ -70,6 +101,10 @@ class AdminController extends Controller
      */
     public function query(Request $request): JsonResponse
     {
+        if (Auth::user()->cannot('admin_ban')) {
+            abort(403);
+        }
+
         $request->validate([
             'q' => 'required',
             'type' => ['required', Rule::in(['user', 'ip'])],

@@ -13,12 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dialogues', function (Blueprint $table) {
-            $table->id();
+            $table->integer('order')->unsigned();
+            $table->foreignIdFor(Report::class)->cascadeOnDelete();
+            $table->primary(['order', 'report_id']);
+
             $table->string('speaker');
             $table->longText('line');
-            $table->integer('order')->unsigned();
 
-            $table->foreignIdFor(Report::class);
             $table->fullText('line')->language('english');
 
             $table->timestamps();

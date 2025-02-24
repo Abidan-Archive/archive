@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Contracts\Likeable as LikeableContract;
+use App\Http\Requests\UpdateReportRequest;
 use App\Models\Concerns\InertiaPaginate;
 use App\Models\Concerns\Likeable;
 use App\Models\Scopes\ReviewedScope;
@@ -90,5 +91,38 @@ class Report extends Model implements LikeableContract
             'tags' => $this->tags->pluck('name')->toArray(),
             'likes' => $this->likes_count,
         ];
+    }
+
+    /**
+     * Patching logic for this Model. Used multiple times so abstracted to here.
+     */
+    public function patch(UpdateReportRequest $request)
+    {
+        $data = $request->validated();
+
+        $this->fill($data);
+        // dd($data);
+
+        // Update event if need be
+        if ($request->has('event_id')) {
+            $this->event_id = $data['event_id'];
+        }
+
+        // Put dialogs
+        if ($request->has('dialogues')) {
+            $this->dialogues()->delete();
+            foreach($data['dialogues'] as $i => $d) {
+                $d['order'] = $i;
+                $this->dialogues()->create($d);
+            }
+        }
+
+        // Update tags
+        if ($request->has('tags')) {
+            $tags = Tag::select('id')->whereIn('name', $request->tags)->get()->pluck('id');
+            $this->tags()->sync($tags);
+        }
+
+        return $this->save();
     }
 }
