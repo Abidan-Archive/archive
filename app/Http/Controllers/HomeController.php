@@ -15,15 +15,18 @@ class HomeController extends Controller
     {
         $quote = Inspiring::quote();
         $events = Event::select('id', 'name')
-            ->orderBy('date', 'desc')
+            ->orderBy('date', 'desc') // When event happened, not created
             ->take(5)
             ->get();
         $mostLiked = Report::with('likes')
             ->orderBy('likes_count', 'desc')
+            ->having('likes_count', '>', 0)
             ->latest()
             ->take(5)
             ->get()
-            ->filter(fn ($m) => $m->likes_count > 0);
+            ->map
+            ->only(['id', 'likes_count']);
+
         $contributors = [];
 
         return inertia('Home', compact('events', 'mostLiked', 'quote', 'contributors'));

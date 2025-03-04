@@ -101,7 +101,6 @@ class Report extends Model implements LikeableContract
         $data = $request->validated();
 
         $this->fill($data);
-        // dd($data);
 
         // Update event if need be
         if ($request->has('event_id')) {
