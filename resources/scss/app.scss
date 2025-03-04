@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.grecaptcha-badge {
-    visibility: hidden;
-}
-
 @layer base {
     html, body, #app {
         @apply h-full overflow-hidden;

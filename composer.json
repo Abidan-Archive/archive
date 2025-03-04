@@ -21,6 +21,7 @@
         "mailersend/laravel-driver": "^2.7",
         "marvinlabs/laravel-discord-logger": "^1.4",
         "meilisearch/meilisearch-php": "^1.5",
+        "ryangjchandler/laravel-cloudflare-turnstile": "^2.0",
         "socialiteproviders/discord": "^4.2",
         "staudenmeir/eloquent-has-many-deep": "^1.20",
         "symfony/process": "^7.0",

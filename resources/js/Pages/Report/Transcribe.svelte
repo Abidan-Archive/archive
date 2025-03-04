@@ -1,6 +1,6 @@
 <script>
     import { useForm } from '@inertiajs/svelte';
-    import { route, recaptcha } from '@/lib';
+    import { route } from '@/lib';
 
     import Page from '@/Components/Page.svelte';
     import {
@@ -31,19 +31,15 @@
         source_href: undefined,
         footnote: undefined,
         tags: [],
-        recaptcha: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('report/create', (token) => {
-            $form.recaptcha = token;
-            $form.stub_id = stub.id;
-            $form.dialogues = $form.dialogues.filter((d) =>
-                (d.speaker + d.line).trim()
-            );
-            $form.post(route('report.store'));
-        });
+        $form.stub_id = stub.id;
+        $form.dialogues = $form.dialogues.filter((d) =>
+            (d.speaker + d.line).trim()
+        );
+        $form.post(route('report.store'));
     }
 </script>
 
@@ -72,8 +68,6 @@
             <ErrorMessage message={$form.errors.event_id} />
             <ErrorMessage message={$form.errors.stub_id} />
         {/snippet}
-
-        <ErrorMessage message={$form.errors.recaptcha} />
 
         <div class="flex items-baseline justify-end">
             <Button>Create</Button>

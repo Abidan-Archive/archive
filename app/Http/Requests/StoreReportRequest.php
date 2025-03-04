@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\ReCaptchaV3;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReportRequest extends FormRequest
@@ -24,7 +23,7 @@ class StoreReportRequest extends FormRequest
             'source_href' => 'sometimes|url|max:255',
             'date' => 'date',
             'tags' => 'array|exists:tags,name',
-            'recaptcha' => ['required', new ReCaptchaV3('report/create', 0.5)],
+            'turnstile' => ['required', 'turnstile'],
         ];
     }
 

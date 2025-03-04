@@ -1,6 +1,6 @@
 <script>
     import { useForm } from '@inertiajs/svelte';
-    import { route, recaptcha } from '@/lib';
+    import { route } from '@/lib/route';
 
     import Page from '@/Components/Page.svelte';
     import {
@@ -22,25 +22,21 @@
             ...report.dialogues.map((d) => ({
                 speaker: d.speaker,
                 line: d.line,
-            }))
+            })),
         ],
         date: report.date,
         source_label: undefined,
         source_href: undefined,
         footnote: undefined,
         tags: [],
-        recaptcha: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('report/create', (token) => {
-            $form.recaptcha = token;
-            $form.dialogues = $form.dialogues.filter((d) =>
-                (d.speaker + d.line).trim()
-            );
-            $form.post(route('report.update'));
-        });
+        $form.dialogues = $form.dialogues.filter((d) =>
+            (d.speaker + d.line).trim()
+        );
+        $form.post(route('report.update'));
     }
 
     function getCompareDate(value) {
@@ -74,7 +70,7 @@
     }
 </script>
 
-<Page header={"Edit Report - " + report.id}>
+<Page header={'Edit Report - ' + report.id}>
     <form method="POST" onsubmit={submit} class="flex flex-col gap-4">
         <ErrorBanner {form} />
 
@@ -90,8 +86,6 @@
                 bind:searchOptions />
             <ErrorMessage message={$form.errors.event_id} />
         {/snippet}
-
-        <ErrorMessage message={$form.errors.recaptcha} />
 
         <div class="flex items-baseline justify-end">
             <Button>Update</Button>

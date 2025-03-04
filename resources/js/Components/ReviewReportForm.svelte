@@ -1,5 +1,5 @@
 <script>
-    import { inertia, useForm, router } from '@inertiajs/svelte';
+    import { inertia, useForm } from '@inertiajs/svelte';
     import { getModalStore } from '@skeletonlabs/skeleton';
 
     import route from '@/lib/route';
@@ -52,7 +52,6 @@
         source_href: report.source_href ?? undefined,
         footnote: report.footnote ?? undefined,
         tags: report.tags.map((t) => t.name),
-        recaptcha: null,
     });
 
     function onPatch(e) {

@@ -1,21 +1,17 @@
 <script>
     import Page from '@/Components/Page.svelte';
     import route from '@/lib/route';
-    import recaptcha from '@/lib/recaptcha';
-    import { Field, Button } from '@/Components/forms';
+    import { Field, Button, Turnstile } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm({
         password: null,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('password.confirm', (token) => {
-            $form.recaptcha = token;
-            $form.post(route('password.confirm'));
-        });
+        $form.post(route('password.confirm'));
     }
 </script>
 
@@ -30,8 +26,9 @@
                 {form}
                 name="password"
                 type="password"
-                autocomplete="current-password"
-                recaptcha />
+                autocomplete="current-password" />
+
+            <Turnstile {form} />
 
             <div class="flex justify-end">
                 <Button>Confirm</Button>

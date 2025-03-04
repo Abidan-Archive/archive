@@ -1,8 +1,7 @@
 <script>
     import Page from '@/Components/Page.svelte';
     import route from '@/lib/route';
-    import recaptcha from '@/lib/recaptcha';
-    import { Field, Button } from '@/Components/forms';
+    import { Field, Button, Turnstile } from '@/Components/forms';
     import { useForm } from '@inertiajs/svelte';
 
     let form = useForm('ResetPassword', {
@@ -10,22 +9,19 @@
         email: route().params.email,
         password: null,
         password_confirmation: null,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('password/update', (token) => {
-            $form.recaptcha = token;
-            $form.post(route('password.update'));
-        });
+        $form.post(route('password.update'));
     }
 </script>
 
 <Page class="w-full md:w-1/2" header="Reset Password">
     <div class="card">
         <form method="POST" onsubmit={submit} class="flex flex-col gap-4">
-            <Field {form} name="email" autofocus required recaptcha />
+            <Field {form} name="email" autofocus required />
             <Field {form} name="password" type="password" required />
             <Field
                 {form}
@@ -33,6 +29,8 @@
                 type="password"
                 label="Confirm Password"
                 required />
+
+            <Turnstile {form} />
 
             <div class="flex items-center justify-end">
                 <Button>Reset Password</Button>

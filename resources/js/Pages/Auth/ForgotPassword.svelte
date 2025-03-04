@@ -1,10 +1,9 @@
 <script>
     import Page from '@/Components/Page.svelte';
     import route from '@/lib/route';
-    import { Field, Button } from '@/Components/forms';
+    import { Field, Button, Turnstile } from '@/Components/forms';
     import { useForm, page } from '@inertiajs/svelte';
     import { onMount } from 'svelte';
-    import recaptcha from '@/lib/recaptcha';
     import { getToastStore } from '@skeletonlabs/skeleton';
 
     const toastStore = getToastStore();
@@ -19,15 +18,12 @@
 
     let form = useForm({
         email: null,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('password/email', (token) => {
-            $form.recaptcha = token;
-            $form.post(route('password.email'));
-        });
+        $form.post(route('password.email'));
     }
 </script>
 
@@ -40,13 +36,9 @@
                 allow you to choose a new one.
             </div>
 
-            <Field
-                {form}
-                name="email"
-                type="email"
-                required
-                autofocus
-                recaptcha />
+            <Field {form} name="email" type="email" required autofocus />
+
+            <Turnstile {form} />
 
             <div class="flex items-center justify-end">
                 <Button>Email Password Reset Link</Button>

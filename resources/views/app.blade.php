@@ -7,10 +7,10 @@
     <script>
         window.turnstile_sitekey = "{{config('services.turnstile.sitekey')}}";
     </script>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     @include('favicons')
     @vite('resources/js/app.js')
     @inertiaHead
+    @turnstileScripts()
   </head>
   {{-- Set background twice, one for ref, style is there so body is dark while app boots when ssr down --}}
   <body data-theme="abidan" class="bg-surface-900" style="background-color: rgb(13, 19, 26);">

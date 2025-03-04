@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Rules\ReCaptchaV3;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -31,7 +30,7 @@ class PasswordResetLinkController extends Controller
     {
         $request->validate([
             'email' => ['required', 'email'],
-            'recaptcha' => ['required', new ReCaptchaV3('password/email')],
+            'turnstile' => ['required', 'turnstile'],
         ]);
 
         // We will send the password reset link to this user. Once we have attempted

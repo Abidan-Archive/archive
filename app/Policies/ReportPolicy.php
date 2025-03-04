@@ -44,7 +44,6 @@ class ReportPolicy
      */
     public function update(User $user, Report $report): bool
     {
-        dd($user, $report);
         return $user->can('edit_report');
     }
 

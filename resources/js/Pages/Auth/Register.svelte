@@ -1,7 +1,7 @@
 <script>
     import Page from '@/Components/Page.svelte';
-    import { cn, route, recaptcha } from '@/lib';
-    import { Button, Field } from '@/Components/forms';
+    import { cn, route } from '@/lib';
+    import { Button, Field, Turnstile } from '@/Components/forms';
     import { useForm, inertia } from '@inertiajs/svelte';
 
     let form = useForm('Register', {
@@ -10,22 +10,19 @@
         email_confirmation: null,
         password: null,
         password_confirmation: null,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('register', (token) => {
-            $form.recaptcha = token;
-            $form.post(route('register'));
-        });
+        $form.post(route('register'));
     }
 </script>
 
 <Page class="w-full md:w-1/2" header="Register">
     <div class="card">
         <form method="POST" onsubmit={submit} class="flex flex-col gap-4">
-            <Field {form} name="username" required autofocus recaptcha />
+            <Field {form} name="username" required autofocus />
             <Field {form} name="email" required />
             <Field
                 {form}
@@ -44,6 +41,9 @@
                 name="password_confirmation"
                 type="password"
                 label="Confirm Password" />
+
+            <Turnstile {form} />
+
             <div class="flex items-center justify-end gap-2">
                 <a
                     use:inertia

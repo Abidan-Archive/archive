@@ -1,4 +1,4 @@
-export default class Oddment {
+export class Oddment {
     items;
     oddment;
     constructor(items = {}) {
@@ -23,3 +23,4 @@ export default class Oddment {
         return keys[keys.length - 1];
     }
 }
+export default Oddment;

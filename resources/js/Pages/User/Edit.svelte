@@ -2,8 +2,8 @@
     import { TabGroup, Tab } from '@skeletonlabs/skeleton';
     import Page from '@/Components/Page.svelte';
     import { useForm, page } from '@inertiajs/svelte';
-    import { route, recaptcha } from '@/lib';
-    import { ErrorMessage, Label, Input } from '@/Components/forms';
+    import { route } from '@/lib/route';
+    import { ErrorMessage, Label, Input, Turnstile } from '@/Components/forms';
     import CircleInfo from '@/Components/icons/CircleInfo.svelte';
 
     let { user } = $props();
@@ -19,7 +19,7 @@
         new_password: null,
         new_password_confirmation: null,
         password: null,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function removeEmptyAndSame(obj) {
@@ -30,16 +30,10 @@
 
     function accountSubmit(e) {
         e.preventDefault();
-        recaptcha('user/update', (token) => {
-            $accountForm.recaptcha = token;
-            $accountForm
-                .transform(removeEmptyAndSame)
-                .patch(route('user.update', user));
-            $accountForm.reset(
-                'email_confirmation',
-                'new_password_confirmation'
-            );
-        });
+        $accountForm
+            .transform(removeEmptyAndSame)
+            .patch(route('user.update', user));
+        $accountForm.reset('email_confirmation', 'new_password_confirmation');
     }
     function settingsSubmit(e) {
         e.preventDefault();
@@ -136,7 +130,9 @@
                                 class="mt-1 block w-full"
                                 type="password"
                                 name="new_password_confirmation"
-                                bind:value={$accountForm.new_password_confirmation} />
+                                bind:value={
+                                    $accountForm.new_password_confirmation
+                                } />
                             <ErrorMessage
                                 message={$accountForm.errors
                                     .new_password_confirmation}
@@ -169,6 +165,7 @@
                                 message={$accountForm.errors.password}
                                 class="mt-2" />
                         </div>
+                        <Turnstile form={accountForm} />
                         <div class="text-right">
                             <button class="variant-filled btn">Save</button>
                         </div>

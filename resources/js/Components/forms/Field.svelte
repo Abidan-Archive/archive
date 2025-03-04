@@ -7,7 +7,6 @@
      * @property {any} form
      * @property {string} [type]
      * @property {string} [label]
-     * @property {boolean} [recaptcha]
      * @property {string} [class]
      * @property {import('svelte').Snippet} [children]
      */
@@ -18,7 +17,6 @@
         form,
         label = undefined,
         type = undefined,
-        recaptcha = false,
         class: className = '',
         children,
         ...rest
@@ -35,10 +33,6 @@
         class={cn('input block w-full', className)}
         {...rest} />
     <ErrorMessage message={$form.errors[name]} />
-
-    {#if recaptcha}
-        <ErrorMessage message={$form.errors.recaptcha} />
-    {/if}
 
     {@render children?.()}
 </div>

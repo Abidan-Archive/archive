@@ -4,29 +4,26 @@
     import Button3D from '@/Components/Button3D.svelte';
     import DiscordLogo from '@/Components/DiscordLogo.svelte';
     import Page from '@/Components/Page.svelte';
-    import { cn, recaptcha, route } from '@/lib';
-    import { Button, Field, Label } from '@/Components/forms';
+    import { cn, route } from '@/lib';
+    import { Button, Field, Label, Turnstile } from '@/Components/forms';
 
     let form = useForm({
         email: null,
         password: null,
         remember: false,
-        recaptcha: null,
+        turnstile: null,
     });
 
     function submit(e) {
         e.preventDefault();
-        recaptcha('login', (token) => {
-            $form.recaptcha = token;
-            $form.post(route('login'));
-        });
+        $form.post(route('login'));
     }
 </script>
 
 <Page class="w-full md:w-1/2" header="Login">
     <div class="card">
         <form method="POST" onsubmit={submit} class="flex flex-col gap-4">
-            <Field {form} name="email" autofocus required recaptcha />
+            <Field {form} name="email" autofocus required />
 
             <Field
                 {form}
@@ -49,6 +46,8 @@
                     <span class="text-sm text-gray-400">Remember Me</span>
                 </Label>
             </div>
+
+            <Turnstile {form} />
 
             <div class="flex items-baseline justify-between">
                 <a

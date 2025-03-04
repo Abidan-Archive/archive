@@ -6,7 +6,6 @@ x make report review dashboard / process
   x approve reports
   - update reports -- Ensure when changing the dialogues that we smartly update via comparing differences with toArray, if there is a difference, just put the dialogue. Ensure order.
 
-- remove recaptcha and use cloudfair turnstile(?)
-- adjust recaptcha to lazy load
+x remove recaptcha and use cloudfair turnstile(?)
 x add favicon
 - add passkey auth
