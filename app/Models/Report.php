@@ -54,12 +54,6 @@ class Report extends Model implements LikeableContract
         return $this->hasMany(Dialogue::class);
     }
 
-    /** Depreciated */
-    public function proffers(): HasMany
-    {
-        return $this->hasMany(Proffer::class);
-    }
-
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
