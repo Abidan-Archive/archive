@@ -59,6 +59,7 @@ class AdminController extends Controller
         }
         $report = Report::withoutGlobalScope(ReviewedScope::class)->findOrFail($id);
         $report->update(['reviewed_at' => now()]);
+        $report->stub?->delete(); // Approved, so now delete stub
         return back()->with('flash', ['message' => "Report $report->id approved! Now Public."]);
     }
 
