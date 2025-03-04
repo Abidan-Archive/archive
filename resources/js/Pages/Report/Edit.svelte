@@ -14,8 +14,6 @@
 
     let { report, events, tags } = $props();
 
-    $inspect(report);
-
     let form = useForm({
         event_id: report.event_id,
         dialogues: [
