@@ -58,6 +58,12 @@
     $effect(() => {
         if (typeof window === 'undefined') return;
         window.page = $page;
+
+        // Inform turnstile we're loaded, async defer loading the deps
+        window.onTurnstileLoad = () => {
+            window.turnstileLoaded = true;
+            document.dispatchEvent(new Event('turnstileLoaded'));
+        };
     });
 
     const modalRegistry = {
