@@ -35,9 +35,9 @@ Route::get('event/{event}/source/{source}/scrub', [StubController::class, 'creat
 Route::resource('event.source.stub', StubController::class)->only(['store', 'destroy']);
 Route::get('event/{event}/source/{source}/stub/{stub}/transcribe', [ReportController::class, 'createFromStub'])->name('stub.transcribe');
 
-Route::resource('tag', TagController::class);
+Route::resource('tag', TagController::class)->scoped(['tag' => 'name']);
 
-Route::resource('user', UserController::class)->only(['show', 'edit', 'update', 'destroy']);
+Route::resource('user', UserController::class)->only(['show', 'edit', 'update', 'destroy'])->scoped(['user' => 'username']);
 Route::post('like', [LikeController::class, 'like'])->name('like');
 Route::delete('like', [LikeController::class, 'unlike'])->name('unlike');
 

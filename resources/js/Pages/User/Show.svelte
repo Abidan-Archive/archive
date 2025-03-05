@@ -14,14 +14,14 @@
         </dl>
         <dl>
             <dt class="font-semibold">Likes:</dt>
-            <dd>{likes.length}</dd>
+            <dd>{likes.data.length}</dd>
         </dl>
         <dl>
-            <dt class="font-semibold">Points:</dt>
-            <dd>0</dd>
+            <!-- <dt class="font-semibold">Points:</dt> -->
+            <!-- <dd>0</dd> -->
         </dl>
     </div>
-    {#if likes.length > 0}
+    {#if likes.data.length > 0}
         <h3 class="text-2xl">Likes</h3>
         <hr />
         <div class="flex flex-col gap-5">

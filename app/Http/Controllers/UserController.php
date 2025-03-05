@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Models\Like;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Response;
@@ -21,7 +22,10 @@ class UserController extends Controller
      */
     public function show(User $user): Response
     {
-        $likes = $user->likes->map->likeable->paginate(20);
+        $likes = Like::with('likeable')
+            ->where('user_id', $user->id)
+            ->paginate(20)
+            ->through(fn ($like) => $like->likeable);
 
         return inertia('User/Show', compact('user', 'likes'));
     }
