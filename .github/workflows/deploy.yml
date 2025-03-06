@@ -103,7 +103,6 @@ jobs:
             cd ${{ vars.DATA_DIR }}/releases/${GITHUB_SHA}
             php artisan env:decrypt --env=prod --key="$(cat /run/secrets/ENV_KEY)"
             mv .env.prod .env
-            php artisan migrate --force
 
   activate-release:
     name: Activate release
@@ -147,10 +146,9 @@ jobs:
           envs: ACTIVE_RELEASE_PATH
           script: |
             cd $ACTIVE_RELEASE_PATH
+            php artisan optimize
+            php artisan migrate --force
             php artisan scout:sync-index-settings
-            php artisan config:cache
-            php artisan route:cache
-            php artisan view:cache
             #php artisan inertia:stop-ssr
 
   clean-up:
