@@ -1,5 +1,5 @@
 import { createInertiaApp } from '@inertiajs/svelte';
-import { mount } from 'svelte';
+import { hydrate, mount } from 'svelte';
 
 import '../scss/app.scss';
 import Layout from './Layouts/Layout.svelte';
@@ -13,7 +13,11 @@ createInertiaApp({
         return { default: page.default, layout: page.layout || Layout };
     },
     setup({ el, App, props }) {
-        mount(App, { target: el, props, hydrate: true });
+        if (el.dataset.serverRendered === 'true') {
+            hydrate(App, { target: el, props });
+        } else {
+            mount(App, { target: el, props });
+        }
     },
     progress: {
         color: '#326695',

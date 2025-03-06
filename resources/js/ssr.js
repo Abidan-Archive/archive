@@ -18,7 +18,6 @@ createServer((page) =>
         setup({ App, props }) {
             return render(App, { props });
         },
-        dedupe: ['svelte', 'svelte/transition', 'svelte/internal'], // Is this even real?
         progress: {
             color: '#326695',
         },
