@@ -17,7 +17,7 @@ class OAuthController extends Controller
         return to_route('login')->with('flash', [
             'message' => $message ?? __('auth.oauth.error'),
             'type' => 'error',
-            'timeout' => null,
+            'autohide' => false,
         ]);
     }
 
@@ -43,7 +43,7 @@ class OAuthController extends Controller
                 return to_route('login')->with('flash', [
                     'message' => __('auth.oauth.email'),
                     'type' => 'warn',
-                    'timeout' => null,
+                    'autohide' => false,
                 ]);
             }
             $user = User::create([

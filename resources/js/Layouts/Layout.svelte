@@ -44,7 +44,7 @@
         $page.props.flash &&
             toastStore.trigger({
                 background: flashType[$page.props.flash?.type || 'success'],
-                autohide: !!$page.props.flash?.timeout,
+                autohide: true,
                 ...$page.props.flash,
             });
     });

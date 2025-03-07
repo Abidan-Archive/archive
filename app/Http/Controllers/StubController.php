@@ -74,7 +74,8 @@ class StubController extends Controller
             CreateStubFileJob::dispatch($stub);
         }
 
-        return redirect()->back()->with('flash', ['message' => 'Created '.$stubs->count().' stubs successfully! Processing audio files in background.']);
+        return redirect()->back()->with('flash', [
+            'message' => 'Created '.$stubs->count().' stubs successfully! Processing audio files in background.']);
     }
 
     /**

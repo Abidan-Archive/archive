@@ -203,7 +203,11 @@ class AdminController extends Controller
 
         if ($user->email_verified_at == null) {
             return back()
-                ->with('flash', ['message' => 'User has not verified their email, cannot reset password until verified.', 'type' => 'warn', 'autohide' => false]);
+                ->with('flash', [
+                    'message' => 'User has not verified their email, cannot reset password until verified.',
+                    'type' => 'warn',
+                    'autohide' => false
+                ]);
         }
 
         Log::info('Admin reset user password', ['admin' => Auth::user()->username, 'user' => $user->username]);
@@ -240,7 +244,7 @@ class AdminController extends Controller
             Log::info("$auth->username tried to change $assignee->username admin role.", [
                 "roles" => $data['roles']
             ]);
-            return back()->with('flash', ['message' => "I'm sorry Dave, I'm afraid I can't do that. This action has been reported.", 'type' => 'error']);
+            return back()->with('flash', ['message' => "I'm sorry Dave, I'm afraid I can't do that. This action has been reported.", 'type' => 'error', 'autohide' => false]);
         }
 
         $roles = Role::select('id')->whereIn('name', $data['roles'])->get();
