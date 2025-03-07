@@ -148,6 +148,7 @@ jobs:
             cd $ACTIVE_RELEASE_PATH
             php artisan optimize
             php artisan migrate --force
+            php artisan cache:clear
             php artisan scout:sync-index-settings
             #php artisan inertia:stop-ssr
 
