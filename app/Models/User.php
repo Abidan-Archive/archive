@@ -61,14 +61,15 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function sharedInertiaProps(): array
     {
-        return cache()->remember('inertiaUser-' . $this->id, 3600, fn () => [
+        // return cache()->remember('inertiaUser-' . $this->id, 3600, fn () =>
+        return [
             'id' => $this->id,
             'username' => $this->username,
             'email' => $this->email,
             'is_sso' => $this->is_sso,
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->permissions->pluck('name'),
-        ]);
+        ];
     }
 
     /**

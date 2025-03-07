@@ -27,7 +27,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'role:admin']);
+        $this->middleware(['auth', 'can:admin_view']);
     }
 
     /**
@@ -83,7 +83,16 @@ class AdminController extends Controller
      */
     public function user(): Response
     {
-        $users = User::paginate(20);
+        if (Auth::user()->cannot('admin_manage_user')) {
+            abort(403);
+        }
+
+        $users = User::paginate(20)
+            ->through(function($user) {
+                if (!Auth::user()->hasRole('admin'))
+                    $user->email = maskEmail($user->email);
+                return $user;
+            });
 
         return inertia('Admin/User', compact('users'));
     }

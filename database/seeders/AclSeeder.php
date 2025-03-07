@@ -55,6 +55,10 @@ class AclSeeder extends Seeder
             'name' => 'admin_view',
             'label' => 'View Administration Pages',
         ]);
+        $manageUser = Permission::create([
+            'name' => 'admin_manage_user',
+            'label' => 'View User Management Pages',
+        ]);
         $managePermissions = Permission::create([
             'name' => 'admin_manage_permissions',
             'label' => 'Manage Permissions',
@@ -79,6 +83,7 @@ class AclSeeder extends Seeder
         // Role Permissions
         $mod->permissions()->saveMany([
             $viewAdministration,
+            $manageUser,
             $editEvent,
             $editReport,
             $reviewReport,

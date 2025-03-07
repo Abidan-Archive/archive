@@ -67,3 +67,16 @@ if (! function_exists('get_class_short')) {
         return substr(strrchr(get_class($class), '\\'), 1);
     }
 }
+
+if (! function_exists('maskEmail')) {
+    function maskEmail($email) {
+        $parts = explode('@', $email);
+        $name = $parts[0];
+        $domain = $parts[1];
+
+        $nameLength = strlen($name);
+        $maskedName = str_repeat('*', $nameLength - 3) . substr($name, -3);
+
+        return $maskedName . '@' . $domain;
+    }
+}

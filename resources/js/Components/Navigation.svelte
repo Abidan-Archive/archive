@@ -28,7 +28,7 @@
 
     let links = $derived(
         [
-            $page.props.auth?.user?.roles.includes('admin')
+            $page.props.auth?.user?.permissions.includes('admin_view')
                 ? {
                       label: 'Admin',
                       href: route('admin.index'),

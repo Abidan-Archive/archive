@@ -9,9 +9,8 @@
     let { event, reports } = $props();
 
     const edit =
-        ['admin', 'moderator'].some((role) =>
-            $page.props.auth.user?.roles.includes(role)
-        ) && route('event.edit', event);
+        $page.props.auth.user?.permissions.includes('edit_report') &&
+        route('event.edit', event);
 </script>
 
 <Page header={event.name + ' - Event'} {edit}>
