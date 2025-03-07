@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateReportRequest;
 use App\Models\Ban;
 use App\Models\Ip;
 use App\Models\Report;
+use App\Models\Role;
 use App\Models\Scopes\ReviewedScope;
 use App\Models\Source;
 use App\Models\User;
@@ -88,7 +89,7 @@ class AdminController extends Controller
         }
 
         $users = User::paginate(20)
-            ->through(function($user) {
+            ->through(function ($user) {
                 if (!Auth::user()->hasRole('admin'))
                     $user->email = maskEmail($user->email);
                 return $user;
@@ -214,5 +215,36 @@ class AdminController extends Controller
         return $status == Password::RESET_LINK_SENT
             ? back()->with('flash', ['message' => 'Set the users password, reset link sent.'])
             : back()->with('flash', ['message' => __($status), 'autohide' => false]);
+    }
+
+    public function assignRole(Request $request): RedirectResponse
+    {
+        $auth = Auth::user();
+        if ($auth->cannot('admin_manage_permissions')) {
+            abort(403);
+        }
+
+        $data = $request->validate([
+            'user' => ['required', 'exists:App\Models\User,id'],
+            'roles' => ['required', 'list'],
+            'roles.*' => ['exists:App\Models\Role,name'],
+        ]);
+        dd($data);
+
+        $assignee = User::findOrFail($data['user']);
+
+        // Don't allow users below the role of admin change admins
+        if (($assignee->hasRole('admin') || in_array('admin', $data['roles'])) && !$auth->hasRole('admin')) {
+            // You thought I'm not going to log this?
+            Log::info("$auth->username tried to change $assignee->username admin role.", [
+                "roles" => $data['roles']
+            ]);
+            return back()->with('flash', ['message' => "I'm sorry Dave, I'm afraid I can't do that. This action has been reported.", 'type' => 'error']);
+        }
+
+        $roles = Role::select('id')->whereIn('name', $data['roles'])->get();
+        $assignee->roles()->sync($roles);
+
+        return back()->with('flash', ['message' => 'Updated user role successfully.']);
     }
 }
