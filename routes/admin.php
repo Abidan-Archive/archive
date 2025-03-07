@@ -15,7 +15,8 @@ Route::prefix('admin')->controller(AdminController::class)->group(function () {
     Route::post('/assume/{user}', 'assume')->name('admin.assume');
     Route::post('/query', 'query')->name('admin.query');
     Route::post('/ban', 'ban')->name('admin.ban');
-    Route::post('/role', 'assignRole')->name('admin.role');
+    Route::post('/reset-password', 'resetPassword')->name('admin.resetpassword');
+    Route::post('/assign-role', 'assignRole')->name('admin.assignrole');
 
     Route::get('/source', 'source')->name('admin.source');
     // Route::get('/report', 'report')->name('admin.report');

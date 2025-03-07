@@ -31,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $hidden = [
+        'email',
         'password',
         'remember_token',
         'discord_id',
@@ -65,7 +66,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'id' => $this->id,
             'username' => $this->username,
-            'email' => $this->email,
             'is_sso' => $this->is_sso,
             'roles' => $this->roles->pluck('name'),
             'permissions' => $this->permissions->pluck('name'),

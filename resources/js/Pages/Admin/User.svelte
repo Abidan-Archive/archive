@@ -12,7 +12,7 @@
     let { users, auth } = $props();
 
     let table = $derived(new TableHandler(users.data, { rowsPerPage: 20 }));
-    let rows = $derived(table.getRows());
+    // let rows = $derived(table.getRows());
     let searchTerm = $state('');
 
     /** @type {import('@skeletonlabs/skeleton').PopupSettings} */
@@ -28,7 +28,7 @@
             label: 'Reset Password',
             criteria: (user, permissions) =>
                 !user.is_sso && permissions.includes('admin_reset_password'),
-            handler: (user) => console.log('Reset Password', user),
+            handler: (user) => router.post(route('admin.resetpassword', user)),
         },
         {
             label: 'Assume',

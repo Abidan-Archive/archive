@@ -90,6 +90,7 @@ class AdminController extends Controller
 
         $users = User::paginate(20)
             ->through(function ($user) {
+                $user->makeVisible('email');
                 if (!Auth::user()->hasRole('admin'))
                     $user->email = maskEmail($user->email);
                 return $user;
@@ -205,7 +206,7 @@ class AdminController extends Controller
                 ->with('flash', ['message' => 'User has not verified their email, cannot reset password until verified.', 'type' => 'warn', 'autohide' => false]);
         }
 
-        Log::info('Admin reset user password', ['admin' => Auth::user()->id, 'user' => $user->id]);
+        Log::info('Admin reset user password', ['admin' => Auth::user()->username, 'user' => $user->username]);
 
         $user->password = Hash::make(Str::password());
         $user->save();
