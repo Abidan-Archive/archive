@@ -2,7 +2,7 @@
 
 // Diffs from...
 // https://github.com/paulgb/simplediff/blob/5bfe1d2a8f967c7901ace50f04ac2d9308ed3169/simplediff.php
-if (! function_exists('diff')) {
+if (!function_exists('diff')) {
     function diff($old, $new)
     {
         $maxlen = 0;
@@ -25,21 +25,22 @@ if (! function_exists('diff')) {
         return array_merge(
             diff(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
             array_slice($new, $nmax, $maxlen),
-            diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
+            diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen))
+        );
     }
 }
 
-if (! function_exists('htmlDiff')) {
+if (!function_exists('htmlDiff')) {
     function htmlDiff($old, $new): string
     {
         $diff = diff(explode(' ', $old), explode(' ', $new));
         $ret = '';
         foreach ($diff as $k) {
             if (is_array($k)) {
-                $ret .= (! empty($k['d']) ? '<del>'.implode(' ', $k['d']).'</del> ' : '').
-                    (! empty($k['i']) ? '<ins>'.implode(' ', $k['i']).'</ins> ' : '');
+                $ret .= (!empty($k['d']) ? '<del>' . implode(' ', $k['d']) . '</del> ' : '') .
+                    (!empty($k['i']) ? '<ins>' . implode(' ', $k['i']) . '</ins> ' : '');
             } else {
-                $ret .= $k.' ';
+                $ret .= $k . ' ';
             }
         }
 
@@ -48,7 +49,7 @@ if (! function_exists('htmlDiff')) {
 }
 
 // https://www.codexworld.com/how-to/get-domain-name-from-url-php/
-if (! function_exists('getDomain')) {
+if (!function_exists('getDomain')) {
     function getDomain($url): string
     {
         $pieces = parse_url($url);
@@ -61,15 +62,17 @@ if (! function_exists('getDomain')) {
     }
 }
 
-if (! function_exists('get_class_short')) {
+if (!function_exists('get_class_short')) {
     function get_class_short($class): string
     {
         return substr(strrchr(get_class($class), '\\'), 1);
     }
 }
 
-if (! function_exists('maskEmail')) {
-    function maskEmail($email) {
+// Extremely basic obfuscation of emails
+if (!function_exists('maskEmail')) {
+    function maskEmail($email)
+    {
         $parts = explode('@', $email);
         $name = $parts[0];
         $domain = $parts[1];
