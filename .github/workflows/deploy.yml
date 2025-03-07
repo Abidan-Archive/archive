@@ -127,6 +127,7 @@ jobs:
             echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 755 -R $RELEASE_PATH/*
             echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 775 -R $STORAGE_PATH
             echo "${{ secrets.HOST_PASS }}" | sudo -S chown -R $APP:$APP $ACTIVE_RELEASE_PATH
+            php artisan storage:link
             ln -snf $RELEASE_PATH $ACTIVE_RELEASE_PATH
             echo "${{ secrets.HOST_PASS }}" | sudo -S systemctl reload phpfpm-abidan.service
 
