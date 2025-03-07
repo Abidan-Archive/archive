@@ -10,7 +10,6 @@
     } = $props();
 
     let widgetId = $state();
-    $inspect(siteKey, $form);
 
     function renderTurnstile() {
         if (!window.turnstile) {
