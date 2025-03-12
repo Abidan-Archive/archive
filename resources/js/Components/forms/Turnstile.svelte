@@ -1,5 +1,6 @@
 <script>
     import { onMount } from 'svelte';
+    import { router } from '@inertiajs/svelte';
     import ErrorMessage from '@/Components/forms/ErrorMessage.svelte';
 
     let {
@@ -28,12 +29,18 @@
         } else {
             document.addEventListener('turnstileLoaded', renderTurnstile);
         }
+        // Listen if we got an error, and reset the widget if we did
+        let removeErrorListener = router.on('error', () =>
+            window.turnstile.reset(widgetId)
+        );
 
         return () => {
-            // Cleanup: Remove widget on unmount
+            // Cleanup: Remove widget on unmount and listener
             if (widgetId) {
                 window.turnstile.remove(widgetId);
             }
+            document.removeEventListener('turnstileLoaded', renderTurnstile);
+            removeErrorListener();
         };
     });
 </script>
