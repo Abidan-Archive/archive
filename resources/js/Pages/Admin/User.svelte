@@ -6,7 +6,7 @@
     import ChevronDown from '@/Components/icons/ChevronDown.svelte';
     import Page from '@/Components/Page.svelte';
     import route from '@/lib/route';
-    import { XMark } from '@/Components/icons';
+    import { XMark, CircleX } from '@/Components/icons';
     import Search from '@/Components/datatables/Search.svelte';
     import ThSort from '@/Components/datatables/ThSort.svelte';
     import ThFilter from '@/Components/datatables/ThFilter.svelte';
@@ -85,6 +85,9 @@
             },
         };
     }
+    function resetFilters() {
+        filters = {};
+    }
     let initialized = false;
     $effect(() => {
         if (!initialized) {
@@ -140,6 +143,9 @@
         <div class="space-y-2 overflow-y-auto">
             <header class="flex justify-between gap-4">
                 <Search handler={onSearch} {filters} />
+                <button onclick={resetFilters} class="flex items-center gap-1">
+                    <CircleX /> Clear Filters
+                </button>
             </header>
             <table class="table table-compact w-full table-auto">
                 <thead>

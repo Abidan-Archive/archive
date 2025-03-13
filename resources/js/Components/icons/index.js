@@ -6,6 +6,7 @@ export { default as ChevronUpDown } from './ChevronUpDown.svelte';
 export { default as CircleCheck } from './CircleCheck.svelte';
 export { default as CircleExclamation } from './CircleExclamation.svelte';
 export { default as CircleInfo } from './CircleInfo.svelte';
+export { default as CircleX } from './CircleX.svelte';
 export { default as Copy } from './Copy.svelte';
 export { default as Discord } from './Discord.svelte';
 export { default as Facebook } from './Facebook.svelte';
