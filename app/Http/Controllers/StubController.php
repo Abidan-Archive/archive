@@ -30,22 +30,6 @@ class StubController extends Controller
     }
 
     /**
-     * Show the form to create a report from a stub
-     * audio playback
-     */
-    public function show(Event $event, Source $source, Stub $stub): Response
-    {
-        $tags = Tag::select('id', 'name')->get();
-
-        return inertia('Event/Source/Stub/Show', [
-            'event' => $event->only('id', 'date'),
-            'source' => $source->only('id', 'url'),
-            'stub' => $stub,
-            'tags' => $tags,
-        ]);
-    }
-
-    /**
      * Show the form for creating a new resource.
      * aka audio scrub
      */
