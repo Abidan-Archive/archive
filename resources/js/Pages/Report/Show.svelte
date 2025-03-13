@@ -1,9 +1,13 @@
 <script>
+    import route from '@/lib/route';
     import Page from '@/Components/Page.svelte';
     import Report from '@/Components/Report.svelte';
 
-    let { report } = $props();
+    let { report, auth } = $props();
     let desc = $derived(report.dialogues[0]?.line || 'description');
+    const edit =
+        auth.user?.permissions.includes('edit_report') &&
+        route('report.edit', report);
 </script>
 
 <svelte:head>
@@ -18,6 +22,6 @@
     <meta name="twitter:description" content={desc} />
 </svelte:head>
 
-<Page header={`Report #${report.id}`}>
+<Page header={`Report #${report.id}`} {edit}>
     <Report {report} />
 </Page>

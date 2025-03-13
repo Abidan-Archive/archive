@@ -1,15 +1,14 @@
 <script>
-    import { page } from '@inertiajs/svelte';
     import route from '@/lib/route';
     import Page from '@/Components/Page.svelte';
     import Paginator from '@/Components/Paginator.svelte';
     import Report from '@/Components/Report.svelte';
     import isValidUrl from '@/lib/url';
 
-    let { event, reports } = $props();
+    let { event, reports, auth } = $props();
 
     const edit =
-        $page.props.auth.user?.permissions.includes('edit_report') &&
+        auth.user?.permissions.includes('edit_event') &&
         route('event.edit', event);
 </script>
 
