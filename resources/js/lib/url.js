@@ -11,3 +11,15 @@ export default function isValidUrl(value) {
     ); // fragment locator
     return !!pattern.test(value);
 }
+
+export function parseNestedParams(params) {
+    return Object.keys(params).reduce((result, key) => {
+        const parts = key.replace(/\]/g, '').split('[');
+        parts
+            .slice(0, -1)
+            .reduce((acc, part) => (acc[part] = acc[part] || {}), result)[
+            parts[parts.length - 1]
+        ] = params[key];
+        return result;
+    }, {});
+}

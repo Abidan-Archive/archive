@@ -1,0 +1,33 @@
+<script>
+    import { createRawSnippet } from 'svelte';
+    import { inertia, router } from '@inertiajs/svelte';
+    import { getModalStore, popup } from '@skeletonlabs/skeleton';
+    import { TableHandler } from '@vincjo/datatables';
+
+    import AdminSidebar from '@/Pages/Admin/components/AdminSidebar.svelte';
+    import ChevronDown from '@/Components/icons/ChevronDown.svelte';
+    import Page from '@/Components/Page.svelte';
+    import route from '@/lib/route';
+    import { XMark } from '@/Components/icons';
+    import Datatable from '@/Components/datatables/Datatable.svelte';
+
+    let { users, auth } = $props();
+</script>
+
+<AdminSidebar />
+<Page header="User Management" class="flex-1">
+    <Datatable
+        data={users.data}
+        columns={[
+            { field: 'id', label: 'ID' },
+            { field: 'username', label: 'Username' },
+            { field: 'email', label: 'Email' },
+            { field: 'is_sso', label: 'Login Method' },
+            { field: 'login_at', label: 'Last Login' },
+            { field: null, label: 'Action', render: 'action' },
+        ]}>
+        {#snippet action()}
+            yay!
+        {/snippet}
+    </Datatable>
+</Page>

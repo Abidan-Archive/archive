@@ -82,13 +82,43 @@ class AdminController extends Controller
     /**
      * Manage users
      */
-    public function user(): Response
+    public function user(Request $request): Response
     {
         if (Auth::user()->cannot('admin_manage_user')) {
             abort(403);
         }
 
-        $users = User::paginate(20)
+        $query = User::query();
+
+        // Allow generic searching
+        if ($request->has('search')) {
+            $searchTerm = $request->search;
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('id', 'like', "%{$searchTerm}%")
+                    ->orWhere('username', 'like', "%{$searchTerm}%")
+                    ->orWhere('email', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        // Handle filtering
+        if ($request->has('column')) {
+            $columns = $request->input('column');
+            foreach($columns as $column => $value) {
+                if (!empty($value)) {
+                    $query->where($column, 'like', "%{$value}%");
+                }
+            }
+        }
+
+        // Handle sorting
+        if ($request->has('sort') && $request->has('direction')) {
+            $sortColumn = $request->input('sort', 'id');
+            $sortDirection = $request->input('direction', 'asc');
+            $query->orderBy($sortColumn, $sortDirection);
+        }
+
+        $users = $query->paginate(20)
+            ->withQueryString()
             ->through(function ($user) {
                 $user->makeVisible('email');
                 if (!Auth::user()->hasRole('admin'))
