@@ -126,6 +126,8 @@
                             </button>
                         </li>
                     {/if}
+                {:else}
+                    <li>No actions available</li>
                 {/each}
             </ul>
         </nav>
