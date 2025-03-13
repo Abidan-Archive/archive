@@ -22,13 +22,7 @@
             label: 'Reset Password',
             criteria: (user, permissions) =>
                 !user.is_sso && permissions.includes('admin_reset_password'),
-            handler: (user) => router.post(route('admin.resetpassword', user)),
-        },
-        {
-            label: 'Assume',
-            criteria: (_, permissions) =>
-                permissions.includes('admin_assume_user'),
-            handler: (user) => router.post(route('admin.assume', user)),
+            handler: (user) => router.post(route('admin.reset-password', user)),
         },
         {
             label: 'Ban',
@@ -39,6 +33,23 @@
                     component: 'banModal',
                     meta: { bannable: user, type: 'user' },
                 }),
+        },
+        {
+            label: 'Assign Role',
+            criteria: (_, permissions) =>
+                permissions.includes('admin_manage_permissions'),
+            handler: (user) =>
+                modalStore.trigger({
+                    type: 'component',
+                    component: 'changeUserRoleModal',
+                    meta: { user },
+                }),
+        },
+        {
+            label: 'Assume',
+            criteria: (_, permissions) =>
+                permissions.includes('admin_assume_user'),
+            handler: (user) => router.post(route('admin.assume', user)),
         },
         {
             label: 'Delete',

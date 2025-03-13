@@ -14,7 +14,6 @@
         class: className = '',
         type = 'text',
         value = $bindable(),
-        readonly = false,
         ...rest
     } = $props();
 
@@ -24,10 +23,10 @@
 <input
     bind:value
     use:setType
-    {readonly}
     class={cn(
-        'rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm',
-        'focus:border-indigo-600 focus:ring-indigo-600',
+        'input',
+        // 'rounded-md border-gray-700 bg-gray-900 text-gray-300 shadow-sm',
+        // 'focus:border-indigo-600 focus:ring-indigo-600',
         className
     )}
     {...rest} />

@@ -88,7 +88,7 @@ class AdminController extends Controller
             abort(403);
         }
 
-        $query = User::query();
+        $query = User::query()->with(['roles:id,name']);
 
         // Allow generic searching
         if ($request->has('search')) {
@@ -100,10 +100,10 @@ class AdminController extends Controller
             });
         }
 
-        // Handle filtering
+        // Handle column filtering
         if ($request->has('column')) {
             $columns = $request->input('column');
-            foreach($columns as $column => $value) {
+            foreach ($columns as $column => $value) {
                 if (!empty($value)) {
                     $query->where($column, 'like', "%{$value}%");
                 }
@@ -126,7 +126,13 @@ class AdminController extends Controller
                 return $user;
             });
 
-        return inertia('Admin/User', compact('users'));
+
+        return inertia('Admin/User', [
+            'users' => $users,
+            'roles' => fn () => Role::select(['id','name','label'])
+                ->with('permissions:id,label')
+                ->get()
+        ]);
     }
 
     /**
@@ -260,13 +266,12 @@ class AdminController extends Controller
         }
 
         $data = $request->validate([
-            'user' => ['required', 'exists:App\Models\User,id'],
-            'roles' => ['required', 'list'],
+            'user_id' => ['required', 'exists:App\Models\User,id'],
+            'roles' => ['list'],
             'roles.*' => ['exists:App\Models\Role,name'],
         ]);
-        dd($data);
 
-        $assignee = User::findOrFail($data['user']);
+        $assignee = User::findOrFail($data['user_id']);
 
         // Don't allow users below the role of admin change admins
         if (($assignee->hasRole('admin') || in_array('admin', $data['roles'])) && !$auth->hasRole('admin')) {

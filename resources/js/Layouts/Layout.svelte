@@ -22,6 +22,7 @@
     import Header from '@/Components/Header.svelte';
     import Navigation from '@/Components/Navigation.svelte';
     import BanModal from '@/Components/modals/BanModal.svelte';
+    import ChangeUserRoleModal from '@/Components/modals/ChangeUserRoleModal.svelte';
     /**
      * @typedef {Object} Props
      * @property {import('svelte').Snippet} [children]
@@ -68,6 +69,7 @@
 
     const modalRegistry = {
         banModal: { ref: BanModal },
+        changeUserRoleModal: { ref: ChangeUserRoleModal },
     };
 </script>
 
