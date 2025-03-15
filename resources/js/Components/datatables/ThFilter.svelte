@@ -2,7 +2,6 @@
     import { cn } from '@/lib/cn';
     let { filters, handler, filterBy, class: className = '' } = $props();
     let value = $state(filters?.column?.[filterBy]);
-    $inspect(value, filters);
     let timeout;
     const debounce = 400;
 
