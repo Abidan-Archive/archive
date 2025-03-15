@@ -26,6 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->throttleApi();
 
         $middleware->appendToGroup('web', [
+            \App\Http\Middleware\EnsureBansRejectAccess::class,
             \App\Http\Middleware\EnsureLowercaseUri::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \App\Http\Middleware\AddContentSecurityPolicyHeaders::class,
