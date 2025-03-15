@@ -5,7 +5,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single']
+            'channels' => ['single', 'discord'],
         ],
         'ban' => [
             'driver' => 'stack',
