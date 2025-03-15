@@ -169,5 +169,5 @@ jobs:
           key: ${{ secrets.HOST_KEY }}
           envs: RELEASES_PATH,ARTIFACTS_PATH
           script: |
-            cd $RELEASE_PATH && ls -t -1 | tail -n +5 | xargs rm -rf
-            echo "${{ secrets.HOST_PASS }}" | sudo -S sh -c 'cd $ARTIFACTS_PATH && ls -t -1 | tail -n +5 | xargs rm -rf'
+            echo "${{ secrets.HOST_PASS }}" | sudo -S sh -c 'cd $RELEASE_PATH && ls -t -1 | tail -n +4 | xargs rm -rf'
+            echo "${{ secrets.HOST_PASS }}" | sudo -S sh -c 'cd $ARTIFACTS_PATH && ls -t -1 | tail -n +4 | xargs rm -rf'
