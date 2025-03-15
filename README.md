@@ -36,11 +36,10 @@ Thank you for considering contributing to the Abidan Archive Project! Reach out 
     ├── scss            # Scss style files
     ├── views           # Blade templating files
     └── js              # Frontend logic files
-
-        ├── components  # Custom components used throughout frontend
+        ├── Components  # Custom components used throughout frontend
         ├── Layouts     # Layouts that pages inherit
-        ├── lib         # Various functional utility files
-        └── Pages       # Frontend pages that controllers direct to
+        ├── Pages       # Frontend pages that controllers direct to
+        └── lib         # Various functional utility files
 ```
 
 
