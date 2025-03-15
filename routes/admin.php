@@ -12,7 +12,7 @@ Route::prefix('admin')->controller(AdminController::class)->group(function () {
     Route::post('/review/{id}', 'reviewApprove')->name('admin.approve');
     Route::patch('/admin/review/update/{id}', 'updateReport')->name('admin.report.update');
 
-    Route::post('/assume/{user}', 'assume')->name('admin.assume');
+    Route::post('/assume', 'assume')->name('admin.assume');
     Route::post('/query', 'query')->name('admin.query');
     Route::post('/ban', 'ban')->name('admin.ban');
     Route::post('/reset-password', 'resetPassword')->name('admin.reset-password');

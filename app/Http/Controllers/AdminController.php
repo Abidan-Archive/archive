@@ -215,11 +215,16 @@ class AdminController extends Controller
     /**
      * Log in as another user within the system
      */
-    public function assume(User $user): RedirectResponse
+    public function assume(Request $request): RedirectResponse
     {
         if (Auth::user()->cannot('admin_assume_user')) {
             abort(403);
         }
+
+        $data = $request->validate([
+            'user_id' => ['required', 'exists:App\Models\User,id']
+        ]);
+        $user = User::findOrFail($data['user_id']);
 
         Log::info('Admin assumed user', ['admin' => Auth::user()->id, 'user' => $user->id]);
         Auth::login($user);
@@ -231,11 +236,16 @@ class AdminController extends Controller
     /**
      * Reset a users password
      */
-    public function resetPassword(User $user): RedirectResponse
+    public function resetPassword(Request $request): RedirectResponse
     {
         if (Auth::user()->cannot('admin_reset_password')) {
             abort(403);
         }
+
+        $data = $request->validate([
+            'user_id' => ['required', 'exists:App\Models\User,id']
+        ]);
+        $user = User::findOrFail($data['user_id']);
 
         if ($user->email_verified_at == null) {
             return back()
@@ -246,12 +256,12 @@ class AdminController extends Controller
                 ]);
         }
 
-        Log::info('Admin reset user password', ['admin' => Auth::user()->username, 'user' => $user->username]);
+        Log::info('Staff reset user password', ['staff' => Auth::user()->username, 'user' => $user->username]);
 
         $user->password = Hash::make(Str::password());
         $user->save();
 
-        $status = Password::sendResetLink($user->email);
+        $status = Password::sendResetLink($user->only('email'));
 
         return $status == Password::RESET_LINK_SENT
             ? back()->with('flash', ['message' => 'Set the users password, reset link sent.'])
