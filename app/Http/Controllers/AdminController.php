@@ -217,7 +217,8 @@ class AdminController extends Controller
      */
     public function assume(Request $request): RedirectResponse
     {
-        if (Auth::user()->cannot('admin_assume_user')) {
+        $auth = Auth::user();
+        if ($auth->cannot('admin_assume_user')) {
             abort(403);
         }
 
@@ -226,7 +227,10 @@ class AdminController extends Controller
         ]);
         $user = User::findOrFail($data['user_id']);
 
-        Log::info('Admin assumed user', ['admin' => Auth::user()->id, 'user' => $user->id]);
+        Log::info('Admin assumed user', [
+            'admin' => "$auth->username ($auth->id)",
+            'user' => "$user->username ($user->id)"
+        ]);
         Auth::login($user);
 
         return to_route('home')
