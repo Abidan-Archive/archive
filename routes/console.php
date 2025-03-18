@@ -65,4 +65,8 @@ Artisan::command('killReports', function () {
     Dialogue::truncate();
     Tag::truncate();
     $this->info('All dead :)');
-})->purpose('Truncate all tables for scraped data import.');
+})->purpose('Truncate all tables for scraped data mport.');
+
+Artisan::command('notify-backup {context?}', function(string $context = NULL) {
+    Log::notice('Database backup job ran.', $context !== NULL ? compact('context') : []);
+})->purpose('Just logs that the database backup job ran. Runs on exit.');
