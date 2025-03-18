@@ -16,7 +16,7 @@ class EnsureBansRejectAccess
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $ip = Ip::first(['ip', $request->ip()]);
+        $ip = Ip::where('ip', $request->ip())->first();
         if ($ip !== null && $ip->bans()->active()->exists()) {
             abort(403);
         }
