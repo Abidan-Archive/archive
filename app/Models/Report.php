@@ -34,7 +34,9 @@ class Report extends Model implements LikeableContract
 
     protected static function booted(): void
     {
-        static::addGlobalScope(new ReviewedScope);
+        // Removing ReviewedScope so the site is usable until we finish reviewing the backlog.
+        // Tracked under issue #68
+        // static::addGlobalScope(new ReviewedScope);
     }
 
     protected function casts(): array
