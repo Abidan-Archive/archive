@@ -21,6 +21,7 @@ class CompressResponse
             $response->header('Content-Encoding', $compression);
             $response->header('Vary', 'Accept-Encoding');
         }
+
         return $response;
     }
 }

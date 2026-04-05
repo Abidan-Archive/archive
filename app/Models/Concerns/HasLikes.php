@@ -26,14 +26,14 @@ trait HasLikes
         if ($this->cachedLikes === null) {
             $this->cachedLikes = $this->likes()
                 ->get()
-                ->keyBy(fn ($like) => $like->likeable_type . ':' . $like->likeable_id)
+                ->keyBy(fn ($like) => $like->likeable_type.':'.$like->likeable_id)
                 ->toArray();
         }
     }
 
     public function hasLiked(Likeable $likeable): bool
     {
-        if (!$likeable->exists) {
+        if (! $likeable->exists) {
             return false;
         }
 
@@ -48,8 +48,7 @@ trait HasLikes
             return $this;
         }
 
-
-        (new Like())
+        (new Like)
             ->user()->associate($this)
             ->likeable()->associate($likeable)
             ->save();
@@ -65,7 +64,7 @@ trait HasLikes
 
     public function unlike(Likeable $likeable): self
     {
-        if (!$this->hasLiked($likeable)) {
+        if (! $this->hasLiked($likeable)) {
             return $this;
         }
 

@@ -12,7 +12,8 @@ trait HasBans
         return $this->morphToMany(Ban::class, 'bannable')->withTimestamps();
     }
 
-    public function isBanned(): bool {
+    public function isBanned(): bool
+    {
         return $this->morphToMany(Ban::class, 'bannable')->active()->exists();
     }
 }

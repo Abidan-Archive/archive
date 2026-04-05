@@ -65,7 +65,7 @@ class AclSeeder extends Seeder
         ]);
         $banPermissions = Permission::create([
             'name' => 'admin_ban',
-            'label' => 'Create Bans'
+            'label' => 'Create Bans',
         ]);
         $assumeUser = Permission::create([
             'name' => 'admin_assume_user',
@@ -77,7 +77,7 @@ class AclSeeder extends Seeder
         ]);
         $deleteUser = Permission::create([
             'name' => 'admin_delete_user',
-            'label' => 'Deletes a Users account'
+            'label' => 'Deletes a Users account',
         ]);
 
         // Role Permissions

@@ -19,11 +19,14 @@ class AddContentSecurityPolicyHeaders
     {
         // Laravel debugbar thows tons of errors because of bug in nonce application
         // Just skip if we're local
-        if (app()->isLocal()) return $next($request);
+        if (app()->isLocal()) {
+            return $next($request);
+        }
 
         $nonce = Vite::useCspNonce();
+
         return $next($request)->withHeaders([
-            'Content-Security-Policy' => "script-src 'self' 'nonce-$nonce' https://challenges.cloudflare.com;"
+            'Content-Security-Policy' => "script-src 'self' 'nonce-$nonce' https://challenges.cloudflare.com;",
         ]);
     }
 }

@@ -32,7 +32,7 @@ class Tag extends Model
     protected function color(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => '#' . $value,
+            get: fn (string $value) => '#'.$value,
             set: fn (string $value) => trim($value, ' #'),
         );
     }

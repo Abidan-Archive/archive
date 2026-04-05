@@ -6,7 +6,6 @@ use App\Models\Concerns\HasBans;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
 
 /**
@@ -35,18 +34,19 @@ class Ip extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public static function autocomplete(string $q): Collection {
+    public static function autocomplete(string $q): Collection
+    {
         return self::whereAny(['id', 'ip'], 'LIKE', $q)
             ->get()
-            ->map(fn(Ip $ip) => [
+            ->map(fn (Ip $ip) => [
                 'value' => $ip->id,
                 'label' => $ip->ip,
                 'keywords' => implode(', ', [
                     $ip->id,
                     str_contains($ip->ip, ':')
                     ? 'ipv6'
-                    : 'ipv4'
-                ])
+                    : 'ipv4',
+                ]),
             ]);
     }
 }

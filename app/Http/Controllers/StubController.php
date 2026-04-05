@@ -7,7 +7,6 @@ use App\Jobs\CreateStubFileJob;
 use App\Models\Event;
 use App\Models\Source;
 use App\Models\Stub;
-use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
 

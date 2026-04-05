@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Log;
 use Staudenmeir\EloquentHasManyDeep\HasOneDeep;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Log;
 
 /**
  * @mixin IdeHelperStub
@@ -72,7 +72,7 @@ class Stub extends Model
 
     private function createStubFile(): void
     {
-        Log::info('Creating Stub', ['stub'=>$this->id, 'from' => $this->from, 'to'=> $this->to, 'source'=>$this->source->toArray()]);
+        Log::info('Creating Stub', ['stub' => $this->id, 'from' => $this->from, 'to' => $this->to, 'source' => $this->source->toArray()]);
         // Generate the string params for ffmpeg
         $input = Storage::disk('public')->path(Source::DIRECTORY).'/'.$this->source->filename;
         // stub_<source_id>_<stub_id>_<random_hash>.<ext>

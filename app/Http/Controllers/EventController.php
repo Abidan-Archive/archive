@@ -28,7 +28,7 @@ class EventController extends Controller
      */
     public function index(): Response
     {
-        $events = Event::select(['id', 'name', 'location', 'date' ])->withCount('reports')->paginate(20);
+        $events = Event::select(['id', 'name', 'location', 'date'])->withCount('reports')->paginate(20);
 
         return inertia('Event/Index', compact('events'));
     }

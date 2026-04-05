@@ -106,7 +106,7 @@ class Report extends Model implements LikeableContract
         // Put dialogs
         if ($request->has('dialogues')) {
             $this->dialogues()->delete();
-            foreach($data['dialogues'] as $i => $d) {
+            foreach ($data['dialogues'] as $i => $d) {
                 $d['order'] = $i;
                 $this->dialogues()->create($d);
             }

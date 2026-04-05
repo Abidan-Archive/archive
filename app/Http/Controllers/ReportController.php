@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateReportRequest;
 use App\Http\Requests\StoreReportRequest;
+use App\Http\Requests\UpdateReportRequest;
 use App\Models\Event;
 use App\Models\Report;
-use App\Models\Stub;
 use App\Models\Source;
+use App\Models\Stub;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
@@ -47,6 +47,7 @@ class ReportController extends Controller
     {
         $events = Event::select(['id', 'name', 'date'])->get();
         $tags = Tag::allNames();
+
         return inertia('Report/Create', compact('events', 'tags'));
     }
 
@@ -59,6 +60,7 @@ class ReportController extends Controller
     {
         $stub->load('source.event');
         $tags = Tag::allNames();
+
         return inertia('Report/Transcribe', compact('stub', 'tags'));
     }
 
@@ -84,7 +86,7 @@ class ReportController extends Controller
             Stub::findOrFail($request->stub_id)->attach($report);
         }
 
-        return to_route('report.show', compact('report'))->with('flash', ['message'=> 'Report successfully created!']);
+        return to_route('report.show', compact('report'))->with('flash', ['message' => 'Report successfully created!']);
     }
 
     /**
@@ -103,17 +105,17 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         $events = Event::select(['id', 'name', 'date'])->get();
+
         return inertia('Report/Edit', compact('report', 'events'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return RedirectResponse
      */
     public function update(UpdateReportRequest $request, Report $report): RedirectResponse
     {
         $report->patch($request);
+
         return back()->with('flash', ['message' => 'Report successfully updated!']);
     }
 

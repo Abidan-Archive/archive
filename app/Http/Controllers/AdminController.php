@@ -50,6 +50,7 @@ class AdminController extends Controller
             ->whereNull('reviewed_at')
             ->orderBy('created_at', 'ASC')
             ->paginate(20);
+
         return inertia('Admin/Review', compact('reports'));
     }
 
@@ -61,6 +62,7 @@ class AdminController extends Controller
         $report = Report::withoutGlobalScope(ReviewedScope::class)->findOrFail($id);
         $report->update(['reviewed_at' => now()]);
         $report->stub?->delete(); // Approved, so now delete stub
+
         return back()->with('flash', ['message' => "Report $report->id approved! Now Public."]);
     }
 
@@ -104,7 +106,7 @@ class AdminController extends Controller
         if ($request->has('column')) {
             $columns = $request->input('column');
             foreach ($columns as $column => $value) {
-                if (!empty($value)) {
+                if (! empty($value)) {
                     $query->where($column, 'like', "%{$value}%");
                 }
             }
@@ -121,17 +123,18 @@ class AdminController extends Controller
             ->withQueryString()
             ->through(function ($user) {
                 $user->makeVisible('email');
-                if (!Auth::user()->hasRole('admin'))
+                if (! Auth::user()->hasRole('admin')) {
                     $user->email = maskEmail($user->email);
+                }
+
                 return $user;
             });
 
-
         return inertia('Admin/User', [
             'users' => $users,
-            'roles' => fn () => Role::select(['id','name','label'])
+            'roles' => fn () => Role::select(['id', 'name', 'label'])
                 ->with('permissions:id,label')
-                ->get()
+                ->get(),
         ]);
     }
 
@@ -141,6 +144,7 @@ class AdminController extends Controller
     public function source(): Response
     {
         $sources = Source::with('event')->with('stub')->all();
+
         return inertia('Admin/Source', compact('source'));
     }
 
@@ -183,7 +187,7 @@ class AdminController extends Controller
             'type' => ['bail', 'required', Rule::enum(BanType::class)],
             'bannable_id' => ['required'],
             'expires' => ['sometimes', 'date', 'after:now'],
-            'reason' => ['required', 'max:255']
+            'reason' => ['required', 'max:255'],
         ]);
         // Complex validation
         $validator->sometimes(
@@ -209,7 +213,7 @@ class AdminController extends Controller
             $input->expires
         );
 
-        return back()->with('flash', ['message' => "Ban successfully hammered."]);
+        return back()->with('flash', ['message' => 'Ban successfully hammered.']);
     }
 
     /**
@@ -223,13 +227,13 @@ class AdminController extends Controller
         }
 
         $data = $request->validate([
-            'user_id' => ['required', 'exists:App\Models\User,id']
+            'user_id' => ['required', 'exists:App\Models\User,id'],
         ]);
         $user = User::findOrFail($data['user_id']);
 
         Log::info('Admin assumed user', [
             'admin' => "$auth->username ($auth->id)",
-            'user' => "$user->username ($user->id)"
+            'user' => "$user->username ($user->id)",
         ]);
         Auth::login($user);
 
@@ -247,7 +251,7 @@ class AdminController extends Controller
         }
 
         $data = $request->validate([
-            'user_id' => ['required', 'exists:App\Models\User,id']
+            'user_id' => ['required', 'exists:App\Models\User,id'],
         ]);
         $user = User::findOrFail($data['user_id']);
 
@@ -256,7 +260,7 @@ class AdminController extends Controller
                 ->with('flash', [
                     'message' => 'User has not verified their email, cannot reset password until verified.',
                     'type' => 'warn',
-                    'autohide' => false
+                    'autohide' => false,
                 ]);
         }
 
@@ -288,11 +292,12 @@ class AdminController extends Controller
         $assignee = User::findOrFail($data['user_id']);
 
         // Don't allow users below the role of admin change admins
-        if (($assignee->hasRole('admin') || in_array('admin', $data['roles'])) && !$auth->hasRole('admin')) {
+        if (($assignee->hasRole('admin') || in_array('admin', $data['roles'])) && ! $auth->hasRole('admin')) {
             // You thought I'm not going to log this?
             Log::info("$auth->username tried to change $assignee->username admin role.", [
-                "roles" => $data['roles']
+                'roles' => $data['roles'],
             ]);
+
             return back()->with('flash', ['message' => "I'm sorry Dave, I'm afraid I can't do that. This action has been reported.", 'type' => 'error', 'autohide' => false]);
         }
 

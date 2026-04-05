@@ -29,7 +29,8 @@ class Ban extends Model
         return $this->morphedByMany(Ip::class, 'bannable')->withTimestamps();
     }
 
-    public function scopeActive(Builder $query): Builder {
+    public function scopeActive(Builder $query): Builder
+    {
         return $query->where('expires', '>', now());
     }
 

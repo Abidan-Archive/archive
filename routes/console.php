@@ -58,7 +58,9 @@ Artisan::command('consume {jsonPath}', function (string $jsonPath) {
 })->purpose('Import all the scraped web data');
 
 Artisan::command('killReports', function () {
-    if (!app()->environment('local')) return;
+    if (! app()->environment('local')) {
+        return;
+    }
     // Clear out everything since we're testing
     Event::truncate();
     Report::truncate();
@@ -67,6 +69,6 @@ Artisan::command('killReports', function () {
     $this->info('All dead :)');
 })->purpose('Truncate all tables for scraped data mport.');
 
-Artisan::command('notify-backup {context?}', function(string $context = NULL) {
-    Log::notice('Database backup job ran.', $context !== NULL ? compact('context') : []);
+Artisan::command('notify-backup {context?}', function (?string $context = null) {
+    Log::notice('Database backup job ran.', $context !== null ? compact('context') : []);
 })->purpose('Just logs that the database backup job ran. Runs on exit.');

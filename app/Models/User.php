@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\HasLikes;
 use App\Models\Concerns\HasBans;
+use App\Models\Concerns\HasLikes;
 use App\Models\Concerns\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -44,7 +44,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-
     public function ips(): BelongsToMany
     {
         return $this->belongsToMany(Ip::class)->withTimestamps();
@@ -52,7 +51,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected function isSso(): Attribute
     {
-        return Attribute::make(get: fn ($value, $attr): bool => !is_null($this->discord_id));
+        return Attribute::make(get: fn ($value, $attr): bool => ! is_null($this->discord_id));
     }
 
     /**
@@ -83,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
             ->map(fn (User $user) => [
                 'value' => $user->id,
                 'label' => $user->username,
-                'keywords' => implode(', ', [$user->id, $user->email])
+                'keywords' => implode(', ', [$user->id, $user->email]),
             ]);
     }
 }

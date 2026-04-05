@@ -144,7 +144,7 @@ return [
                     'typo',
                     'proximity',
                     'attribute',
-                    'exactness'
+                    'exactness',
                 ],
             ],
         ],
