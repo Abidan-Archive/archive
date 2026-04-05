@@ -47,3 +47,4 @@ Route::get('redirect', [HomeController::class, 'handleRedirect'])->name('handleR
 
 require __DIR__.'/admin.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/oauth.php';

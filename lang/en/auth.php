@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'oauth' => [
+    'social' => [
         'error' => 'Interesting, interesting...Yeah Something went wrong. Try again?',
         'email' => 'The email associated with this account already exists. Please log in with your password.',
     ],

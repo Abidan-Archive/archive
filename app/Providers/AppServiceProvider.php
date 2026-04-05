@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->bootAuth();
-        $this->bootSSO();
+        $this->bootSocial();
         $this->bootRoute();
     }
 
@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         if (
-            !$this->app->environment('deployment')
+            ! $this->app->environment('deployment')
             && cache()->rememberForever('hasPermissions', fn () => Schema::hasTable('permissions'))
         ) {
             // Get all the permissions
@@ -68,15 +68,15 @@ class AppServiceProvider extends ServiceProvider
 
             return $this->app->isProduction()
                 ? $rule->letters()
-                ->mixedCase()
-                ->numbers()
-                ->symbols()
-                ->uncompromised()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
                 : $rule;
         });
     }
 
-    public function bootSSO(): void
+    public function bootSocial(): void
     {
         Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
             $event->extendSocialite('discord', \SocialiteProviders\Discord\Provider::class);
@@ -86,6 +86,21 @@ class AppServiceProvider extends ServiceProvider
     public function bootRoute(): void
     {
         RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('oauth:token', function (Request $request) {
+            return [
+                Limit::perMinute(10)->by($request->ip()),
+                Limit::perMinute(20)->by($request->input('client_id', 'unknown')),
+            ];
+        });
+
+        RateLimiter::for('oauth:authorize', function (Request $request) {
+            return Limit::perMinute(30)->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('oauth:userinfo', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
     }

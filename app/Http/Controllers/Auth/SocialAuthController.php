@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
-class OAuthController extends Controller
+class SocialAuthController extends Controller
 {
-    private function redirectWithError(string $message = null): RedirectResponse
+    private function redirectWithError(?string $message = null): RedirectResponse
     {
         return to_route('login')->with('flash', [
-            'message' => $message ?? __('auth.oauth.error'),
+            'message' => $message ?? __('auth.social.error'),
             'type' => 'error',
             'autohide' => false,
         ]);
