@@ -17,7 +17,7 @@ class OAuthProviderController extends Controller
      * OAuth2 Authorization Endpoint
      * External apps redirect users here to authenticate
      */
-    public function authorize(Request $request): RedirectResponse
+    public function authorization(Request $request): RedirectResponse
     {
         $request->validate([
             'client_id' => 'required|string',

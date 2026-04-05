@@ -79,7 +79,7 @@
         <hr class="divider" />
         <div class="flex flex-col items-center gap-2">
             <p>Sign in with a third-party provider</p>
-            <Button3D href={route('oauth.discord')} themeDeg="235deg">
+            <Button3D href={route('social.discord.redirect')} themeDeg="235deg">
                 <DiscordLogo />
             </Button3D>
         </div>
