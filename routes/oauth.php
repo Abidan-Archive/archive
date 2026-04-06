@@ -3,6 +3,9 @@
 use App\Http\Controllers\Auth\OAuthProviderController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('.well-known/openid-configuration', [OAuthProviderController::class, 'discovery'])
+    ->middleware(['throttle:oauth:discovery'])
+    ->name('oauth.discovery');
 Route::prefix('oauth')->name('oauth.')->group(function () {
     Route::get('authorize', [OAuthProviderController::class, 'authorization'])
         ->middleware(['web', 'auth', 'throttle:oauth:authorize'])

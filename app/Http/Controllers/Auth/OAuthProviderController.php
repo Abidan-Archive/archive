@@ -9,10 +9,41 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Str;
 
 class OAuthProviderController extends Controller
 {
+    /**
+     * OpenID Connect Discovery Endpoint
+     * Allows clients to auto-discover OAuth endpoints
+     */
+    public function discovery(Request $request): JsonResponse
+    {
+        $baseUrl = config('app.url');
+        $config = [
+            'issuer' => $baseUrl,
+            'authorization_endpoint' => route('oauth.authorize'),
+            'token_endpoint' => route('oauth.token'),
+            'userinfo_endpoint' => route('oauth.userinfo'),
+            'scopes_supported' => ['openid', 'profile', 'email'],
+            'response_types_supported' => ['code'],
+            'grant_types_supported' => ['authorization_code'],
+            'subject_types_supported' => ['public'],
+            'id_token_signing_alg_values_supported' => ['none'],
+            'token_endpoint_auth_methods_supported' => ['client_secret_post'],
+            'claims_supported' => [
+                'sub',
+                'name',
+                'preferred_username',
+                'email',
+                'email_verified',
+            ],
+        ];
+
+        return response()->json($config)
+            ->header('Cache-Control', 'public, max-age=3600');
+    }
+
     /**
      * OAuth2 Authorization Endpoint
      * External apps redirect users here to authenticate
@@ -20,11 +51,11 @@ class OAuthProviderController extends Controller
     public function authorization(Request $request): RedirectResponse
     {
         $request->validate([
-            'client_id' => 'required|string',
-            'redirect_uri' => 'required|url',
-            'response_type' => 'required|in:code',
-            'state' => 'nullable|string',
-            'scope' => 'nullable|string,',
+            'client_id' => ['required', 'alpha_dash', 'max:100'],
+            'redirect_uri' => ['required', 'url', 'max:500'],
+            'response_type' => ['required', 'in:code'],
+            'state' => ['max:500'],
+            'scope' => ['max:200'],
         ]);
 
         // User is already authenticated via Laravel session from middleware
@@ -45,10 +76,9 @@ class OAuthProviderController extends Controller
             'client_id' => $request->client_id,
             'redirect_uri' => $request->redirect_uri,
             'scope' => $request->scope ?? 'openid profile email',
-            'used' => false,
         ], now()->addMinutes(5));
 
-        $redirectUrl = $request->redirect_url.'?'.http_build_query([
+        $redirectUrl = $request->redirect_uri.'?'.http_build_query([
             'code' => $authorizationCode,
             'state' => $request->state,
         ]);
@@ -57,17 +87,24 @@ class OAuthProviderController extends Controller
     }
 
     /**
-     * OAuth2 Token Endopiont
+     * OAuth2 Token Endpoint
      * External apps exchange authorization code for access token
      */
     public function token(Request $request): JsonResponse
     {
+        Log::info('OAuth token request received', [
+                'client_id' => $request->client_id,
+                'grant_type' => $request->grant_type,
+                'redirect_uri' => $request->redirect_uri,
+                'code' => substr($request->code, 0, 10) . '...', // Don't log full code
+                'ip' => $request->ip(),
+            ]);
         $request->validate([
-            'grant_type' => 'required|in:authorization_code',
-            'code' => 'required|string',
-            'redirect_uri' => 'required|url',
-            'client_id' => 'required|string',
-            'client_secret' => 'required|string',
+            'grant_type' => ['required', 'in:authorization_code'],
+            'code' => ['required', 'alpha_num', 'size:40'],
+            'redirect_uri' => ['required', 'url', 'max:500'],
+            'client_id' => ['required', 'alpha_dash', 'max:100'],
+            'client_secret' => ['required', 'string']//, 'min:40'],
         ]);
 
         // Additional rate protections around client_id
@@ -128,7 +165,7 @@ class OAuthProviderController extends Controller
             'sub' => (string) $user->id,
             'name' => $user->username,
             'preferred_username' => $user->username,
-            'eamil' => $user->eamil,
+            'email' => $user->email,
             'email_verified' => $user->hasVerifiedEmail(),
             'roles' => $user->roles->pluck('name'),
         ]);
