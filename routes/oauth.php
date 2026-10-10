@@ -7,6 +7,9 @@ Route::get('.well-known/openid-configuration', [OAuthProviderController::class, 
     ->middleware(['throttle:oauth:discovery'])
     ->name('oauth.discovery');
 Route::prefix('oauth')->name('oauth.')->group(function () {
+    Route::get('jwks', [OAuthProviderController::class, 'jwks'])
+        ->middleware(['throttle:oauth:discovery'])
+        ->name('jwks');
     Route::get('authorize', [OAuthProviderController::class, 'authorization'])
         ->middleware(['web', 'auth', 'throttle:oauth:authorize'])
         ->name('authorize');

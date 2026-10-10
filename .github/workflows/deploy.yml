@@ -42,7 +42,7 @@ jobs:
       - name: Create deployment artifact
         run: |
           mkdir -p /tmp/artifact
-          tar -czf /tmp/artifact/${{ github.sha }}.tar.gz --exclude=*.git --exclude=tests --exclude=storage --exclude=bin --exclude=docker .
+          tar -czf /tmp/artifact/${{ github.sha }}.tar.gz --exclude=*.git --exclude=tests --exclude=storage --exclude=bin --exclude=docker --exclude=secrets --exclude=.env --exclude=.env.prod --exclude=.env.prod.encrypted .
 
       - name: Store artifact for distribution
         uses: actions/upload-artifact@v4
@@ -101,8 +101,9 @@ jobs:
           script: |
             set -e
             cd ${{ vars.DATA_DIR }}/releases/${GITHUB_SHA}
-            php artisan env:decrypt --env=prod --key="$(cat /run/secrets/ENV_KEY)"
-            mv .env.prod .env
+            # SOPS decrypts on the host; CI and the artifact never need the age key.
+            test -r /etc/abidan/runtime.env
+            ln -sfn /etc/abidan/runtime.env .env
 
   activate-release:
     name: Activate release
@@ -121,14 +122,22 @@ jobs:
           host: ${{ vars.HOST_IP }}
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
-          envs: APP,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH,ENV_PATH
+          envs: APP,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
           script: |
-            ln -snf $STORAGE_PATH $RELEASE_PATH/storage
-            echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 755 -R $RELEASE_PATH/*
-            echo "${{ secrets.HOST_PASS }}" | sudo -S chmod -R 775 -R $STORAGE_PATH
-            echo "${{ secrets.HOST_PASS }}" | sudo -S chown -R $APP:$APP $ACTIVE_RELEASE_PATH
-            ln -snf $RELEASE_PATH $ACTIVE_RELEASE_PATH
-            echo "${{ secrets.HOST_PASS }}" | sudo -S systemctl reload phpfpm-abidan.service
+            set -eu
+            ln -snf "$STORAGE_PATH" "$RELEASE_PATH/storage"
+            # The SSH user owns the release and belongs to the application's group.
+            # Give the service user access to .env links and its cache directory.
+            mkdir -p "$RELEASE_PATH/bootstrap/cache"
+            chgrp -R --no-dereference "$APP" "$RELEASE_PATH"
+            chmod 2775 "$RELEASE_PATH"
+            chmod 2770 "$RELEASE_PATH/bootstrap/cache"
+            for cache in "$RELEASE_PATH/bootstrap/cache"/*.php; do
+              if test -f "$cache"; then chmod 0660 "$cache"; fi
+            done
+            if ! test -L "$RELEASE_PATH/.env"; then chmod 0640 "$RELEASE_PATH/.env"; fi
+            ln -snf "$RELEASE_PATH" "$ACTIVE_RELEASE_PATH.new"
+            mv -Tf "$ACTIVE_RELEASE_PATH.new" "$ACTIVE_RELEASE_PATH"
 
   run-after-hooks:
     name: After hook
@@ -139,18 +148,22 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           ACTIVE_RELEASE_PATH: ${{ vars.DATA_DIR }}/current
+          APP: ${{ vars.PHPFPM_USER }}
         with:
           host: ${{ vars.HOST_IP }}
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
-          envs: ACTIVE_RELEASE_PATH
+          envs: ACTIVE_RELEASE_PATH,APP
           script: |
-            cd $ACTIVE_RELEASE_PATH
+            set -eu
+            cd "$ACTIVE_RELEASE_PATH"
             php artisan storage:link
-            php artisan optimize
             php artisan migrate --force
             php artisan cache:clear
             php artisan scout:sync-index-settings
+            # Let the host service own the atomic configuration-cache rebuild.
+            php artisan optimize --except=config
+            sudo -n /run/current-system/sw/bin/systemctl restart abidan-config-refresh.service
             #php artisan inertia:stop-ssr
 
   clean-up:
@@ -163,11 +176,27 @@ jobs:
         env:
           RELEASES_PATH: ${{ vars.DATA_DIR }}/releases
           ARTIFACTS_PATH: ${{ vars.DATA_DIR }}/artifacts
+          ACTIVE_RELEASE_PATH: ${{ vars.DATA_DIR }}/current
         with:
           host: ${{ vars.HOST_IP }}
           username: ${{ secrets.HOST_USER }}
           key: ${{ secrets.HOST_KEY }}
-          envs: RELEASES_PATH,ARTIFACTS_PATH
+          envs: RELEASES_PATH,ARTIFACTS_PATH,ACTIVE_RELEASE_PATH
           script: |
-            echo "${{ secrets.HOST_PASS }}" | sudo -S sh -c 'cd $RELEASE_PATH && ls -t -1 | tail -n +4 | xargs rm -rf'
-            echo "${{ secrets.HOST_PASS }}" | sudo -S sh -c 'cd $ARTIFACTS_PATH && ls -t -1 | tail -n +4 | xargs rm -rf'
+            set -eu
+            active="$(readlink -f "$ACTIVE_RELEASE_PATH")"
+            # New releases/artifacts are owned by this SSH user; no sudo is needed.
+            # NUL-delimited paths support whitespace, and never remove the active release.
+            count=0
+            while IFS= read -r -d '' entry; do
+              count=$((count + 1))
+              release="${entry#* }"
+              if test "$count" -gt 3 && test "$release" != "$active"; then
+                rm -rf -- "$release"
+              fi
+            done < <(find "$RELEASES_PATH" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\0' | sort -znr)
+            count=0
+            while IFS= read -r -d '' entry; do
+              count=$((count + 1))
+              if test "$count" -gt 3; then rm -f -- "${entry#* }"; fi
+            done < <(find "$ARTIFACTS_PATH" -mindepth 1 -maxdepth 1 -type f -name '*.tar.gz' -printf '%T@ %p\0' | sort -znr)

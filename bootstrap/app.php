@@ -24,6 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectUsersTo(AppServiceProvider::HOME);
 
         $middleware->throttleApi();
+        // The OIDC client authenticates this server-to-server request with its secret.
+        $middleware->validateCsrfTokens(except: ['oauth/token']);
 
         $middleware->appendToGroup('web', [
             \App\Http\Middleware\EnsureBansRejectAccess::class,

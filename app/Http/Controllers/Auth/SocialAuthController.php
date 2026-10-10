@@ -66,6 +66,6 @@ class SocialAuthController extends Controller
 
         Auth::login($user);
 
-        return to_route('verification.notice');
+        return redirect()->intended(route('verification.notice'));
     }
 }

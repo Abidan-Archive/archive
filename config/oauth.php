@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'private_key_path' => env('OAUTH_PRIVATE_KEY_PATH', storage_path('app/oauth-private.pem')),
+
     /*
     |--------------------------------------------------------------------------
     | OAuth Provider Clients
@@ -13,9 +15,10 @@ return [
 
     'clients' => [
         'mediawiki' => [
-            'secret' => env('OAUTH_CLIENT_MEDIAWIKI_SECRET'),
+            'secret' => env('OAUTH_CLIENT_MEDIAWIKI_SECRET_FILE') ? null : env('OAUTH_CLIENT_MEDIAWIKI_SECRET'),
+            'secret_file' => env('OAUTH_CLIENT_MEDIAWIKI_SECRET_FILE'),
             'redirect_uris' => [
-                env('MEDIAWIKI_URL', 'https://wiki.abidanarchive.com').'/wiki/Special:PluggableAuthLogin',
+                env('MEDIAWIKI_REDIRECT_URI') ?: rtrim(env('MEDIAWIKI_URL') ?: 'https://wiki.abidanarchive.com', '/').'/wiki/Special:PluggableAuthLogin',
             ],
             'name' => 'MediaWiki',
         ],
