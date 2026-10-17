@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
-use DB;
 use Illuminate\Database\Seeder;
 
 class AclSeeder extends Seeder
@@ -14,82 +13,73 @@ class AclSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('permissions')->delete();
-        DB::table('roles')->delete();
-
-        // Roles
-        $admin = Role::create([
-            'name' => 'admin',
+        // Keep primary keys and user assignments intact when reseeding.
+        $admin = Role::updateOrCreate(['name' => 'admin'], [
             'label' => 'Administrator',
         ]);
 
-        $mod = Role::create([
-            'name' => 'mod',
+        $mod = Role::updateOrCreate(['name' => 'mod'], [
             'label' => 'Moderator',
         ]);
 
+        Role::updateOrCreate(['name' => 'wiki_admin'], ['label' => 'Wiki Administrator']);
+        Role::updateOrCreate(['name' => 'wiki_moderator'], ['label' => 'Wiki Moderator']);
+
         // Permissions
         // Content Management
-        $editEvent = Permission::create([
-            'name' => 'edit_event',
+        $editEvent = Permission::updateOrCreate(['name' => 'edit_event'], [
             'label' => 'Edit and Create Events',
         ]);
 
-        $editReport = Permission::create([
-            'name' => 'edit_report',
+        $editReport = Permission::updateOrCreate(['name' => 'edit_report'], [
             'label' => 'Edit Reports',
         ]);
 
-        $reviewReport = Permission::create([
-            'name' => 'review_report',
+        $reviewReport = Permission::updateOrCreate(['name' => 'review_report'], [
             'label' => 'Review Reports',
         ]);
 
-        $editTag = Permission::create([
-            'name' => 'edit_tag',
+        $editTag = Permission::updateOrCreate(['name' => 'edit_tag'], [
             'label' => 'Edit Tags',
         ]);
 
         // Administration
-        $viewAdministration = Permission::create([
-            'name' => 'admin_view',
+        $viewAdministration = Permission::updateOrCreate(['name' => 'admin_view'], [
             'label' => 'View Administration Pages',
         ]);
-        $manageUser = Permission::create([
-            'name' => 'admin_manage_user',
+        $manageUser = Permission::updateOrCreate(['name' => 'admin_manage_user'], [
             'label' => 'View User Management Pages',
         ]);
-        $managePermissions = Permission::create([
-            'name' => 'admin_manage_permissions',
+        $managePermissions = Permission::updateOrCreate(['name' => 'admin_manage_permissions'], [
             'label' => 'Manage Permissions',
         ]);
-        $banPermissions = Permission::create([
-            'name' => 'admin_ban',
+        $banPermissions = Permission::updateOrCreate(['name' => 'admin_ban'], [
             'label' => 'Create Bans',
         ]);
-        $assumeUser = Permission::create([
-            'name' => 'admin_assume_user',
+        $assumeUser = Permission::updateOrCreate(['name' => 'admin_assume_user'], [
             'label' => 'Assume the Identify of a User',
         ]);
-        $resetPassword = Permission::create([
-            'name' => 'admin_reset_password',
+        $resetPassword = Permission::updateOrCreate(['name' => 'admin_reset_password'], [
             'label' => 'Initiate a User password reset',
         ]);
-        $deleteUser = Permission::create([
-            'name' => 'admin_delete_user',
+        $deleteUser = Permission::updateOrCreate(['name' => 'admin_delete_user'], [
             'label' => 'Deletes a Users account',
         ]);
 
         // Role Permissions
-        $mod->permissions()->saveMany([
-            $viewAdministration,
-            $manageUser,
-            $editEvent,
-            $editReport,
-            $reviewReport,
-            $editTag,
-            $resetPassword,
+        $mod->permissions()->syncWithoutDetaching([
+            $viewAdministration->id,
+            $manageUser->id,
+            $editEvent->id,
+            $editReport->id,
+            $reviewReport->id,
+            $editTag->id,
+            $resetPassword->id,
         ]);
-        $admin->permissions()->saveMany(Permission::all());
+        $admin->permissions()->syncWithoutDetaching(Permission::all()->modelKeys());
+
+        // Gates cache Permission models with their related Role IDs.
+        cache()->forget('permissions');
+        cache()->forget('hasPermissions');
     }
 }

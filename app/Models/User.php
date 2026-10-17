@@ -49,6 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Ip::class)->withTimestamps();
     }
 
+    /**
+     * Only explicit wiki roles are exported to MediaWiki, never Archive admin/mod.
+     */
+    public function wikiRoles(): array
+    {
+        return $this->roles()->whereIn('name', ['wiki_admin', 'wiki_moderator'])
+            ->orderBy('name')->pluck('name')->all();
+    }
+
     protected function isSso(): Attribute
     {
         return Attribute::make(get: fn ($value, $attr): bool => ! is_null($this->discord_id));

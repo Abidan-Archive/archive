@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -35,6 +37,22 @@ class UserFactory extends Factory
             return [
                 'email_verified_at' => null,
             ];
+        });
+    }
+
+    public function wikiAdmin(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $role = Role::firstOrCreate(['name' => 'wiki_admin'], ['label' => 'Wiki Administrator']);
+            $user->roles()->syncWithoutDetaching([$role->id]);
+        });
+    }
+
+    public function wikiModerator(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            $role = Role::firstOrCreate(['name' => 'wiki_moderator'], ['label' => 'Wiki Moderator']);
+            $user->roles()->syncWithoutDetaching([$role->id]);
         });
     }
 }

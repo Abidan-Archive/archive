@@ -3,13 +3,17 @@
 namespace Tests\Feature\Auth;
 
 use App\Http\Middleware\EnsureBansRejectAccess;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\OpenIdToken;
+use Database\Seeders\AclSeeder;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
@@ -35,7 +39,7 @@ class OpenIdConnectTest extends TestCase
             'oauth.clients.mediawiki.redirect_uris' => [$this->callback],
         ]);
         DB::purge('sqlite');
-        foreach (['2014_10_12_000000_create_users_table', '2019_12_14_000001_create_personal_access_tokens_table'] as $migration) {
+        foreach (['2014_10_12_000000_create_users_table', '2019_12_14_000001_create_personal_access_tokens_table', '2023_03_29_214733_create_acl_tables', '2026_10_17_000000_add_wiki_acl_roles'] as $migration) {
             (require database_path("migrations/{$migration}.php"))->up();
         }
         $this->withoutMiddleware(EnsureBansRejectAccess::class);
@@ -169,6 +173,107 @@ class OpenIdConnectTest extends TestCase
     public function test_guest_authorization_redirects_to_main_site_login(): void
     {
         $this->get('/oauth/authorize')->assertRedirect('/login');
+    }
+
+    public function test_wiki_roles_are_explicit_signed_and_revoked_in_userinfo(): void
+    {
+        $code = $this->authorize();
+        $user = auth()->user();
+        foreach (['admin', 'mod'] as $name) {
+            Role::create(['name' => $name]);
+            $user->assignRole($name);
+        }
+        $this->assertSame([], $user->wikiRoles());
+        $user->assignRole('wiki_admin');
+        $user->assignRole('wiki_moderator');
+        $response = $this->exchange($code)->assertOk();
+        $payload = explode('.', $response->json('id_token'))[1];
+        $claims = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+        $this->assertSame(['wiki_admin', 'wiki_moderator'], $claims['wiki_roles']);
+
+        auth()->forgetGuards();
+        $this->withToken($response->json('access_token'))->getJson('/oauth/userinfo')
+            ->assertOk()->assertJsonPath('wiki_roles', ['wiki_admin', 'wiki_moderator']);
+        $user->unassignRole('wiki_admin');
+        auth()->forgetGuards();
+        $this->getJson('/oauth/userinfo')->assertOk()->assertJsonPath('wiki_roles', ['wiki_moderator']);
+        $user->unassignRole('wiki_moderator');
+        auth()->forgetGuards();
+        $this->getJson('/oauth/userinfo')->assertOk()->assertJsonPath('wiki_roles', []);
+    }
+
+    public function test_wiki_roles_require_profile_scope(): void
+    {
+        $code = $this->authorize(['scope' => 'openid']);
+        auth()->user()->assignRole('wiki_admin');
+        $response = $this->exchange($code)->assertOk();
+        $payload = explode('.', $response->json('id_token'))[1];
+        $claims = json_decode(base64_decode(strtr($payload, '-_', '+/')), true);
+        $this->assertArrayNotHasKey('wiki_roles', $claims);
+        auth()->forgetGuards();
+        $this->withToken($response->json('access_token'))->getJson('/oauth/userinfo')
+            ->assertOk()->assertJsonMissingPath('wiki_roles');
+    }
+
+    public function test_acl_seeder_and_user_factories_support_wiki_roles_without_archive_permissions(): void
+    {
+        $this->seed(AclSeeder::class);
+        $admin = User::factory()->wikiAdmin()->create();
+        $moderator = User::factory()->wikiModerator()->create();
+        $both = User::factory()->wikiAdmin()->wikiModerator()->create();
+        $this->assertSame(['wiki_admin'], $admin->wikiRoles());
+        $this->assertSame(['wiki_moderator'], $moderator->wikiRoles());
+        $this->assertSame(['wiki_admin', 'wiki_moderator'], $both->wikiRoles());
+        $this->assertCount(0, $both->permissions);
+        $this->assertSame(1, Role::whereName('wiki_admin')->count());
+        $this->assertSame(1, Role::whereName('wiki_moderator')->count());
+    }
+
+    public function test_wiki_role_migration_preserves_existing_acl_and_is_repeatable(): void
+    {
+        $user = User::factory()->create();
+        Role::create(['name' => 'admin']);
+        $user->assignRole('admin');
+        $user->assignRole('wiki_admin');
+        $migration = require database_path('migrations/2026_10_17_000000_add_wiki_acl_roles.php');
+        $migration->up();
+        $this->assertSame(1, Role::whereName('wiki_admin')->count());
+        $this->assertTrue($user->fresh()->hasRole('admin'));
+        $this->assertSame(['wiki_admin'], $user->wikiRoles());
+        $migration->down();
+        $this->assertTrue($user->fresh()->hasRole('admin'));
+        $this->assertSame([], $user->wikiRoles());
+    }
+
+    public function test_reseeding_preserves_acl_ids_assignments_and_admin_access(): void
+    {
+        $this->seed(AclSeeder::class);
+        $admin = User::factory()->wikiAdmin()->create();
+        $admin->assignRole('admin');
+        $customRole = Role::create(['name' => 'custom']);
+        $customPermission = Permission::create(['name' => 'custom_permission']);
+        $customRole->givePermissionTo($customPermission);
+        $mod = Role::whereName('mod')->firstOrFail();
+        $mod->givePermissionTo($customPermission);
+        $roleIds = Role::orderBy('id')->pluck('id', 'name')->all();
+        $permissionIds = Permission::orderBy('id')->pluck('id', 'name')->all();
+        $assignments = DB::table('role_user')->where('user_id', $admin->id)->orderBy('role_id')->get()->toArray();
+        cache()->put('permissions', 'stale');
+        cache()->put('hasPermissions', false);
+
+        $this->seed(AclSeeder::class);
+        $this->assertSame($roleIds, Role::orderBy('id')->pluck('id', 'name')->all());
+        $this->assertSame($permissionIds, Permission::orderBy('id')->pluck('id', 'name')->all());
+        $this->assertEquals($assignments, DB::table('role_user')->where('user_id', $admin->id)->orderBy('role_id')->get()->toArray());
+        $this->assertSame(1, $customRole->permissions()->count());
+        $this->assertTrue($mod->permissions()->whereKey($customPermission->id)->exists());
+        $this->assertFalse(cache()->has('permissions'));
+        $this->assertFalse(cache()->has('hasPermissions'));
+
+        // Re-register the same cached Gate definitions used on the next request.
+        $this->app->getProvider(\App\Providers\AppServiceProvider::class)->bootAuth();
+        $this->assertTrue(Gate::forUser($admin->fresh())->allows('admin_view'));
+        $this->assertTrue(Gate::forUser($admin->fresh())->allows('admin_manage_permissions'));
     }
 
     private function authorizationUrl(): string

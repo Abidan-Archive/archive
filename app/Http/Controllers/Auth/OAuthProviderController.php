@@ -41,6 +41,7 @@ class OAuthProviderController extends Controller
                 'preferred_username',
                 'email',
                 'email_verified',
+                'wiki_roles',
             ],
         ];
 
@@ -179,6 +180,9 @@ class OAuthProviderController extends Controller
         if (in_array('profile', explode(' ', $authData['scope']), true)) {
             $claims['name'] = $user->username;
             $claims['preferred_username'] = $user->username;
+            if ($authData['client_id'] === 'mediawiki') {
+                $claims['wiki_roles'] = $user->wikiRoles();
+            }
         }
         if (in_array('email', explode(' ', $authData['scope']), true)) {
             $claims['email'] = $user->email;
@@ -210,6 +214,9 @@ class OAuthProviderController extends Controller
         if ($token->can('profile')) {
             $claims['name'] = $user->username;
             $claims['preferred_username'] = $user->username;
+            if ($token->name === 'oauth_provider:mediawiki') {
+                $claims['wiki_roles'] = $user->wikiRoles();
+            }
         }
         if ($token->can('email')) {
             $claims['email'] = $user->email;
