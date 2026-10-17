@@ -1,5 +1,5 @@
 <script>
-    import { router } from '@inertiajs/svelte';
+    import { page, router } from '@inertiajs/svelte';
     import cn from '@/lib/cn.js';
     import route from '@/lib/route.js';
     import Lens from '@/Components/icons/Lens.svelte';
@@ -17,7 +17,7 @@
     /** @type {Props} */
     let { class: className, advanced = false, tags = [] } = $props();
 
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URL($page.url, 'http://localhost').searchParams;
     let query = $state(urlParams.get('query') || '');
     let includeTags = $state(urlParams.get('includeTags')?.split(',') || []);
     let excludeTags = $state(urlParams.get('excludeTags')?.split(',') || []);

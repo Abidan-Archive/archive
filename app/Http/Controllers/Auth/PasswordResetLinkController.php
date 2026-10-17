@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Inertia\Response;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class PasswordResetLinkController extends Controller
 {
@@ -30,7 +31,7 @@ class PasswordResetLinkController extends Controller
     {
         $request->validate([
             'email' => ['required', 'email'],
-            'turnstile' => ['required', 'turnstile'],
+            'turnstile' => ['required', new Turnstile],
         ]);
 
         // We will send the password reset link to this user. Once we have attempted

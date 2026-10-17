@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+umask 0027
+
+base="$1"
+sha="$2"
+app="$3"
+[[ "$base" =~ ^/srv/http/[a-zA-Z0-9.-]+$ ]]
+[[ "$sha" =~ ^[a-f0-9]{40}$ ]]
+[[ "$app" == abidan ]]
+
+# Serialize with manual deployments as well as GitHub workflow concurrency.
+exec 9>"$base/.deployment.lock"
+flock -x 9
+release="$base/releases/$sha"
+test -r /etc/abidan/runtime.env
+test ! -e "$release"
+mkdir -m 2755 "$release"
+tar -xzf "$base/artifacts/$sha.tar.gz" --no-same-owner -C "$release"
+ln -s /etc/abidan/runtime.env "$release/.env"
+ln -s "$base/storage" "$release/storage"
+chgrp -R --no-dereference "$app" "$release"
+chmod 2755 "$release"
+mkdir -p "$release/bootstrap/cache"
+chmod 2770 "$release/bootstrap/cache"
+
+cd "$release"
+php artisan package:discover --no-interaction
+php artisan storage:link --no-interaction
+php artisan migrate --force --no-interaction
+php artisan cache:clear --no-interaction
+php artisan scout:sync-index-settings --no-interaction
+php artisan optimize --except=config --no-interaction
+# The application user can replace generated caches, but not application code.
+for cache in "$release/bootstrap/cache"/*.php; do
+  if test -f "$cache"; then chmod 0660 "$cache"; fi
+done
+
+ln -snf "$release" "$base/current.new"
+mv -Tf "$base/current.new" "$base/current"
+sudo -n /run/current-system/sw/bin/systemctl restart abidan-config-refresh.service
+
+# Retain the three newest releases and artifacts, always preserving current.
+count=0
+while IFS= read -r -d '' entry; do
+  count=$((count + 1))
+  candidate="${entry#* }"
+  if test "$count" -gt 3 && test "$candidate" != "$release"; then
+    rm -rf -- "$candidate"
+  fi
+done < <(find "$base/releases" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\0' | sort -znr)
+count=0
+while IFS= read -r -d '' entry; do
+  count=$((count + 1))
+  if test "$count" -gt 3; then rm -f -- "${entry#* }"; fi
+done < <(find "$base/artifacts" -mindepth 1 -maxdepth 1 -type f -name '*.tar.gz' -printf '%T@ %p\0' | sort -znr)

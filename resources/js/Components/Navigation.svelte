@@ -35,7 +35,7 @@
                       icon: Scale,
                   }
                 : null,
-            location.pathname !== '/'
+            $page.url.split('?')[0] !== '/'
                 ? {
                       label: 'Home',
                       href: route('home'),

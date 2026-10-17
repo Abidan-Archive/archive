@@ -68,7 +68,7 @@
             <Tag {tag} showCount class="ease-in-out" />
         {:else}
             <div
-                class="flex-shrink-0 self-center align-center w-full text-center"
+                class="align-center w-full flex-shrink-0 self-center text-center"
                 in:fade={{ delay: 400 }}>
                 An Arelius cleaned too much here. Not a speck of tags to be
                 found.

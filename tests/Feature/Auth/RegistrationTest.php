@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -19,14 +19,17 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+        Http::fake(['challenges.cloudflare.com/*' => Http::response(['success' => true, 'error-codes' => []])]);
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'username' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
+            'email_confirmation' => 'test@example.com',
+            'password' => 'test-password',
+            'password_confirmation' => 'test-password',
+            'turnstile' => 'test-turnstile-token',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(AppServiceProvider::HOME);
+        $response->assertRedirect(route('verification.notice'));
     }
 }

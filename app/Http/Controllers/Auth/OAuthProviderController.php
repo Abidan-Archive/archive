@@ -127,8 +127,8 @@ class OAuthProviderController extends Controller
             'code_verifier' => ['required', 'regex:/^[A-Za-z0-9._~-]{43,128}$/'],
         ]);
 
-        // Additional rate protections around client_id
-        $rateLimitKey = 'oauth_token_attempt:'.$request->client_id;
+        // Failed authentication must not lock every caller of a public client ID.
+        $rateLimitKey = 'oauth_token_attempt:'.hash('sha256', $request->ip());
         if (RateLimiter::tooManyAttempts($rateLimitKey, 5)) {
             $seconds = RateLimiter::availableIn($rateLimitKey);
 

@@ -1,9 +1,6 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
     import { inertia, router } from '@inertiajs/svelte';
-    import Peaks from 'peaks.js';
-
-    import CustomSegmentMarker from '@/lib/peaks-custom-marker.js';
     import ScrubControls from '@/Components/audio/ScrubControls.svelte';
     import Oddment from '@/lib/oddment.js';
     import Page from '@/Components/Page.svelte';
@@ -33,6 +30,7 @@
     let overviewWaveformRef = $state();
     let audioElementRef = $state();
     let peaks = $state(null);
+    let destroyed = false;
 
     let currentTime = $state(0);
     let duration = $state();
@@ -52,13 +50,21 @@
     });
 
     onMount(() => {
-        initPeaks();
+        initPeaks().catch(console.error);
     });
     onDestroy(() => {
+        destroyed = true;
         if (peaks) peaks.destroy();
     });
 
-    function initPeaks() {
+    async function initPeaks() {
+        // Canvas/audio dependencies must only load in the browser, never during SSR.
+        const [{ default: Peaks }, { default: CustomSegmentMarker }] =
+            await Promise.all([
+                import('peaks.js'),
+                import('@/lib/peaks-custom-marker.js'),
+            ]);
+        if (destroyed) return;
         const blueColor = 'rgba(50,102,149,1)';
         const greenColor = 'rgba(0, 225, 128, 1)';
         const whiteColor = '#eee';
@@ -106,6 +112,10 @@
                 console.error(
                     'Failed to initialize Peaks instance: ' + err.message
                 );
+                return;
+            }
+            if (destroyed) {
+                instance.destroy();
                 return;
             }
             peaks = instance;
@@ -200,7 +210,10 @@
             if (!peaks || !e.target.value) return;
             let endTime = parseFloat(e.target.value),
                 startTime = segment.startTime;
-            if (endTime < 0) (endTime = 0), (startTime = 0);
+            if (endTime < 0) {
+                endTime = 0;
+                startTime = 0;
+            }
             if (endTime > duration) endTime = duration;
             if (endTime > 0 && endTime < startTime) startTime = endTime;
             segment.update({ startTime, endTime });

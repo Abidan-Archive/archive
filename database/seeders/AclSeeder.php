@@ -78,7 +78,7 @@ class AclSeeder extends Seeder
         ]);
         $admin->permissions()->syncWithoutDetaching(Permission::all()->modelKeys());
 
-        // Gates cache Permission models with their related Role IDs.
+        // Invalidate the cached permission-to-role map.
         cache()->forget('permissions');
         cache()->forget('hasPermissions');
     }

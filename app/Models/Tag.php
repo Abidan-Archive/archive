@@ -44,7 +44,7 @@ class Tag extends Model
      */
     public static function allNames()
     {
-        return Cache::remember('tagNames', 3600, fn () => Tag::select('name')->get()->pluck('name'));
+        return collect(Cache::remember('tagNames', 3600, fn () => Tag::pluck('name')->all()));
     }
 
     private function flushCache(): void

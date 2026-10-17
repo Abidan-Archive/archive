@@ -52,11 +52,14 @@ class AppServiceProvider extends ServiceProvider
             && Schema::hasTable('permissions')
         ) {
             // Get all the permissions
-            $permissions = cache()->remember('permissions', 3600, fn () => Permission::with('roles')->get());
+            // Cache scalar data, compatible with Laravel 13's restricted unserialization.
+            $permissions = cache()->remember('permissions', 3600, fn () => Permission::with('roles')->get()
+                ->mapWithKeys(fn (Permission $permission) => [$permission->name => $permission->roles->modelKeys()])
+                ->all());
             // Dynamically register permissions with Laravel's Gate
-            foreach ($permissions as $permission) {
-                Gate::define($permission->name, function (User $user) use ($permission) {
-                    return $user->hasPermission($permission);
+            foreach ($permissions as $name => $roleIds) {
+                Gate::define($name, function (User $user) use ($roleIds) {
+                    return $user->roles->pluck('id')->intersect($roleIds)->isNotEmpty();
                 });
             }
         }
@@ -95,10 +98,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('oauth:token', function (Request $request) {
-            return [
-                Limit::perMinute(10)->by($request->ip()),
-                Limit::perMinute(20)->by($request->input('client_id', 'unknown')),
-            ];
+            // client_id is public and untrusted until its secret is verified.
+            return Limit::perMinute(10)->by($request->ip());
         });
 
         RateLimiter::for('oauth:authorize', function (Request $request) {

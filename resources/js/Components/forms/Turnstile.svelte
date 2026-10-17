@@ -6,7 +6,9 @@
     let {
         form,
         field = 'turnstile',
-        siteKey = window.turnstile_sitekey,
+        siteKey = typeof window === 'undefined'
+            ? null
+            : window.turnstile_sitekey,
         ...rest
     } = $props();
 

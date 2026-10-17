@@ -1,4 +1,4 @@
-import routeFn from 'ziggy';
+import { route as routeFn } from 'ziggy';
 
 import { Ziggy } from '@/ziggy.js';
 

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Response;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class RegisteredUserController extends Controller
 {
@@ -34,7 +35,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'confirmed', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'turnstile' => ['required', 'turnstile'],
+            'turnstile' => ['required', new Turnstile],
         ]);
 
         $user = User::create([

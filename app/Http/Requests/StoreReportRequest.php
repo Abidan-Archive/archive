@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class StoreReportRequest extends FormRequest
 {
@@ -23,7 +24,7 @@ class StoreReportRequest extends FormRequest
             'source_href' => 'sometimes|url|max:255',
             'date' => 'date',
             'tags' => 'array|exists:tags,name',
-            'turnstile' => ['required', 'turnstile'],
+            'turnstile' => ['required', new Turnstile],
         ];
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Vite;

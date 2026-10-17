@@ -50,9 +50,9 @@
                 phpactor
                 vscode-langservers-extracted
                 emmet-language-server
-                nodePackages.intelephense
+                intelephense
                 # nodePackages.svelte-language-server
-                nodePackages.prettier
+                prettier
                 # eslint_d
               ];
 
@@ -89,8 +89,18 @@
 
               languages.javascript = {
                 enable = true;
+                package = pkgs.nodejs_24;
                 pnpm = {
                   enable = true;
+                  # Corepack runs the JS distribution pinned by packageManager.
+                  # Nixpkgs' newer pnpm otherwise downloads a generic Linux
+                  # executable when switching versions, which fails on NixOS.
+                  package = (pkgs.writeShellScriptBin "pnpm" ''
+                    exec ${pkgs.nodejs_24}/bin/corepack pnpm "$@"
+                  '').overrideAttrs (_: {
+                    version = pkgs.lib.removePrefix "pnpm@"
+                      (builtins.fromJSON (builtins.readFile ./package.json)).packageManager;
+                  });
                   install.enable = true;
                 };
               };

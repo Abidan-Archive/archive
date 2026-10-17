@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
+use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -22,7 +23,7 @@ class UpdateUserRequest extends FormRequest
             'email' => ['sometimes', 'confirmed', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
             'new_password' => ['sometimes', 'confirmed', Rules\Password::defaults()],
             'password' => ['required', 'current_password'],
-            'turnstile' => ['required', 'turnstile'],
+            'turnstile' => ['required', new Turnstile],
         ];
     }
 }

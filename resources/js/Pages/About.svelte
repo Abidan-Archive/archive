@@ -38,9 +38,9 @@
         Don't hesitate to reach out on discord in
         <a href={discord} class="font-bold">{channel}</a> channel. Or, raise an
         issue on
-        <a href={github}>Github</a> if you are familiar with that sort of thing.
-        You may also contact one of the main contributors listed above, just be sure
-        to explain why you're contacting them as we are wary of bots.
+        <a href={github}>Github</a> if you are familiar with that sort of thing. You
+        may also contact one of the main contributors listed above, just be sure to
+        explain why you're contacting them as we are wary of bots.
     </section>
     <section>
         <h3 class="text-xl">How to Contribute?</h3>

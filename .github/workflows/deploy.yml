@@ -2,201 +2,106 @@ name: Deploy Application
 
 on:
   push:
-    branches:
-      - prod
+    branches: [prod]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: abidan-production
+  cancel-in-progress: false
 
 env:
   APP_ENV: deployment
+  APP_DEBUG: 'false'
+  CACHE_STORE: array
+  DB_CONNECTION: sqlite
+  DB_DATABASE: ':memory:'
 
 jobs:
-  create-deployment-artifacts:
-    name: Create deployment artifacts
+  build:
+    name: Test and build release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Configure PHP 8.3
-        uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
         with:
           php-version: '8.3'
-          extensions: ctype, curl, DOM, fileinfo, filter, hash, json, mbstring, openssl, PCRE, PDO, session, tokenizer, xml
-      - name: Install Composer dependencies
-        run: composer install --optimize-autoloader --no-dev --no-progress --no-interaction --prefer-dist
-
-      - name: Generate frontend routes file
+          extensions: ctype, curl, dom, fileinfo, mbstring, openssl, pdo, pdo_sqlite, session, tokenizer, xml
+          coverage: none
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: vendor/bin/phpunit
+      - run: composer audit --locked
+      - name: Install production dependencies
+        run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
+      - name: Generate frontend routes
         env:
           APP_URL: https://${{ vars.DOMAIN }}
-        run: |
-          php artisan ziggy:generate
-
-      - uses: actions/setup-node@v4
+        run: php artisan ziggy:generate
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          node-version: 20
-      - uses: pnpm/action-setup@v4
-        with:
-          run_install: true
-
-      - name: Compile CSS and Javascript
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm build
+      - run: node tests/ssr-smoke.mjs
+      - name: Package release
         run: |
-          pnpm build
-
-      - name: Create deployment artifact
-        run: |
-          mkdir -p /tmp/artifact
-          tar -czf /tmp/artifact/${{ github.sha }}.tar.gz --exclude=*.git --exclude=tests --exclude=storage --exclude=bin --exclude=docker --exclude=secrets --exclude=.env --exclude=.env.prod --exclude=.env.prod.encrypted .
-
-      - name: Store artifact for distribution
-        uses: actions/upload-artifact@v4
+          tar -czf "$RUNNER_TEMP/$GITHUB_SHA.tar.gz" \
+            --exclude='bootstrap/cache/*.php' \
+            app artisan bootstrap config database lang public resources routes vendor \
+            composer.json composer.lock package.json pnpm-lock.yaml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: app-build
-          path: /tmp/artifact/${{ github.sha }}.tar.gz
+          path: ${{ runner.temp }}/${{ github.sha }}.tar.gz
+          retention-days: 7
+          if-no-files-found: error
 
-  prepare-release-on-server:
-    name: Prepare release
+  deploy:
+    name: Deploy as restricted account
+    needs: build
     runs-on: ubuntu-latest
-    needs: create-deployment-artifacts
+    if: github.ref == 'refs/heads/prod'
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           name: app-build
-
-      - name: Upload
-        uses: burnett01/rsync-deployments@6.0.0
-        with:
-          remote_host: ${{ vars.HOST_IP }}
-          remote_user: ${{ secrets.HOST_USER }}
-          remote_key: ${{ secrets.HOST_KEY }}
-          remote_path: ${{ vars.DATA_DIR}}/artifacts
-          switches: "--ipv4"
-          path: ${{github.sha}}.tar.gz
-
-      - name: Extract archive and manage storage
-        uses: appleboy/ssh-action@master
+          path: ${{ runner.temp }}/artifact
+      - name: Upload and activate
         env:
-          GITHUB_SHA: ${{ github.sha }}
-        with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          envs: GITHUB_SHA
-          script: |
-            set -e
-            mkdir -p ${{ vars.DATA_DIR }}/releases/${GITHUB_SHA}
-            tar -xzf ${{ vars.DATA_DIR }}/artifacts/${GITHUB_SHA}.tar.gz -C ${{ vars.DATA_DIR}}/releases/${GITHUB_SHA}
-            rm -rf ${{ vars.DATA_DIR }}/releases/${GITHUB_SHA}/storage
-
-  run-before-hooks:
-    name: Before hook
-    runs-on: ubuntu-latest
-    needs: [ create-deployment-artifacts, prepare-release-on-server ]
-    steps:
-      - name: Run before hooks
-        uses: appleboy/ssh-action@master
-        env:
-          GITHUB_SHA: ${{ github.sha }}
-        with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          envs: GITHUB_SHA
-          script: |
-            set -e
-            cd ${{ vars.DATA_DIR }}/releases/${GITHUB_SHA}
-            # SOPS decrypts on the host; CI and the artifact never need the age key.
-            test -r /etc/abidan/runtime.env
-            ln -sfn /etc/abidan/runtime.env .env
-
-  activate-release:
-    name: Activate release
-    runs-on: ubuntu-latest
-    needs: [ create-deployment-artifacts, prepare-release-on-server, run-before-hooks ]
-    steps:
-      - name: Activate release
-        uses: appleboy/ssh-action@master
-        env:
-          RELEASE_PATH: ${{ vars.DATA_DIR }}/releases/${{ github.sha }}
-          ACTIVE_RELEASE_PATH: ${{ vars.DATA_DIR }}/current
-          STORAGE_PATH: ${{ vars.DATA_DIR }}/storage
-          BASE_PATH: ${{ vars.DATA_DIR }}
+          HOST_IP: ${{ vars.HOST_IP }}
+          HOST_USER: ${{ secrets.HOST_USER }}
+          HOST_KEY: ${{ secrets.HOST_KEY }}
+          HOST_KNOWN_HOSTS: ${{ secrets.HOST_KNOWN_HOSTS }}
+          DATA_DIR: ${{ vars.DATA_DIR }}
           APP: ${{ vars.PHPFPM_USER }}
-        with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          envs: APP,RELEASE_PATH,ACTIVE_RELEASE_PATH,STORAGE_PATH,BASE_PATH
-          script: |
-            set -eu
-            ln -snf "$STORAGE_PATH" "$RELEASE_PATH/storage"
-            # The SSH user owns the release and belongs to the application's group.
-            # Give the service user access to .env links and its cache directory.
-            mkdir -p "$RELEASE_PATH/bootstrap/cache"
-            chgrp -R --no-dereference "$APP" "$RELEASE_PATH"
-            chmod 2775 "$RELEASE_PATH"
-            chmod 2770 "$RELEASE_PATH/bootstrap/cache"
-            for cache in "$RELEASE_PATH/bootstrap/cache"/*.php; do
-              if test -f "$cache"; then chmod 0660 "$cache"; fi
-            done
-            if ! test -L "$RELEASE_PATH/.env"; then chmod 0640 "$RELEASE_PATH/.env"; fi
-            ln -snf "$RELEASE_PATH" "$ACTIVE_RELEASE_PATH.new"
-            mv -Tf "$ACTIVE_RELEASE_PATH.new" "$ACTIVE_RELEASE_PATH"
-
-  run-after-hooks:
-    name: After hook
-    runs-on: ubuntu-latest
-    needs: [ create-deployment-artifacts, prepare-release-on-server, run-before-hooks, activate-release ]
-    steps:
-      - name: Run after hooks
-        uses: appleboy/ssh-action@master
-        env:
-          ACTIVE_RELEASE_PATH: ${{ vars.DATA_DIR }}/current
-          APP: ${{ vars.PHPFPM_USER }}
-        with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          envs: ACTIVE_RELEASE_PATH,APP
-          script: |
-            set -eu
-            cd "$ACTIVE_RELEASE_PATH"
-            php artisan storage:link
-            php artisan migrate --force
-            php artisan cache:clear
-            php artisan scout:sync-index-settings
-            # Let the host service own the atomic configuration-cache rebuild.
-            php artisan optimize --except=config
-            sudo -n /run/current-system/sw/bin/systemctl restart abidan-config-refresh.service
-            #php artisan inertia:stop-ssr
-
-  clean-up:
-    name: Clean up
-    runs-on: ubuntu-latest
-    needs: [ create-deployment-artifacts, prepare-release-on-server, run-before-hooks, activate-release, run-after-hooks ]
-    steps:
-      - name: Removing old releases and artifacts
-        uses: appleboy/ssh-action@master
-        env:
-          RELEASES_PATH: ${{ vars.DATA_DIR }}/releases
-          ARTIFACTS_PATH: ${{ vars.DATA_DIR }}/artifacts
-          ACTIVE_RELEASE_PATH: ${{ vars.DATA_DIR }}/current
-        with:
-          host: ${{ vars.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          key: ${{ secrets.HOST_KEY }}
-          envs: RELEASES_PATH,ARTIFACTS_PATH,ACTIVE_RELEASE_PATH
-          script: |
-            set -eu
-            active="$(readlink -f "$ACTIVE_RELEASE_PATH")"
-            # New releases/artifacts are owned by this SSH user; no sudo is needed.
-            # NUL-delimited paths support whitespace, and never remove the active release.
-            count=0
-            while IFS= read -r -d '' entry; do
-              count=$((count + 1))
-              release="${entry#* }"
-              if test "$count" -gt 3 && test "$release" != "$active"; then
-                rm -rf -- "$release"
-              fi
-            done < <(find "$RELEASES_PATH" -mindepth 1 -maxdepth 1 -type d -printf '%T@ %p\0' | sort -znr)
-            count=0
-            while IFS= read -r -d '' entry; do
-              count=$((count + 1))
-              if test "$count" -gt 3; then rm -f -- "${entry#* }"; fi
-            done < <(find "$ARTIFACTS_PATH" -mindepth 1 -maxdepth 1 -type f -name '*.tar.gz' -printf '%T@ %p\0' | sort -znr)
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          [[ "$HOST_IP" =~ ^[a-zA-Z0-9][a-zA-Z0-9.-]*$ ]]
+          [[ "$HOST_USER" == abidan-deploy ]]
+          [[ "$APP" == abidan ]]
+          [[ "$DATA_DIR" =~ ^/srv/http/[a-zA-Z0-9.-]+$ ]]
+          test -n "$HOST_KEY"
+          test -n "$HOST_KNOWN_HOSTS"
+          ssh_dir="$RUNNER_TEMP/abidan-ssh"
+          install -d -m 0700 "$ssh_dir"
+          trap 'rm -rf -- "$ssh_dir"' EXIT
+          printf '%s\n' "$HOST_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$HOST_KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          options=(-F /dev/null -i "$ssh_dir/key" -o BatchMode=yes -o IdentitiesOnly=yes
+            -o StrictHostKeyChecking=yes -o "UserKnownHostsFile=$ssh_dir/known_hosts")
+          scp "${options[@]}" "$RUNNER_TEMP/artifact/$GITHUB_SHA.tar.gz" \
+            "$HOST_USER@$HOST_IP:$DATA_DIR/artifacts/$GITHUB_SHA.tar.gz"
+          ssh "${options[@]}" "$HOST_USER@$HOST_IP" \
+            bash -s -- "$DATA_DIR" "$GITHUB_SHA" "$APP" < bin/deploy-release

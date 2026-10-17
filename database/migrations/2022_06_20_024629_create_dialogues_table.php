@@ -20,7 +20,10 @@ return new class extends Migration
             $table->string('speaker');
             $table->longText('line');
 
-            $table->fullText('line')->language('english');
+            // SQLite is used by the isolated test suite; production uses MariaDB.
+            if (Schema::getConnection()->getDriverName() !== 'sqlite') {
+                $table->fullText('line')->language('english');
+            }
 
             $table->timestamps();
         });

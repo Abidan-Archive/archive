@@ -366,4 +366,27 @@ class OpenIdConnectTest extends TestCase
         $this->exchange($code)->assertOk();
         $this->postJson('/login', [])->assertStatus(302); // Existing 419 handler redirects back.
     }
+
+    public function test_failed_client_authentication_limits_only_the_abusive_source(): void
+    {
+        $code = $this->authorize();
+        $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.10']);
+        for ($attempt = 0; $attempt < 5; $attempt++) {
+            $this->exchange($code, ['client_secret' => 'wrong'])->assertUnauthorized();
+        }
+        $this->exchange($code)->assertTooManyRequests();
+        $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.20']);
+        $this->exchange($code)->assertOk();
+    }
+
+    public function test_distributed_bad_secrets_cannot_exhaust_the_mediawiki_client_budget(): void
+    {
+        $code = $this->authorize();
+        for ($source = 1; $source <= 21; $source++) {
+            $this->withServerVariables(['REMOTE_ADDR' => '192.0.2.'.$source]);
+            $this->exchange($code, ['client_secret' => 'wrong'])->assertUnauthorized();
+        }
+        $this->withServerVariables(['REMOTE_ADDR' => '198.51.100.1']);
+        $this->exchange($code)->assertOk();
+    }
 }

@@ -20,7 +20,7 @@ class HomeController extends Controller
             ->get();
         $mostLiked = Report::with('likes')
             ->orderBy('likes_count', 'desc')
-            ->having('likes_count', '>', 0)
+            ->has('likes')
             ->latest()
             ->take(5)
             ->get()
