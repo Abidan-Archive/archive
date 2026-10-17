@@ -48,7 +48,8 @@ class AppServiceProvider extends ServiceProvider
 
         if (
             ! $this->app->environment('deployment')
-            && cache()->rememberForever('hasPermissions', fn () => Schema::hasTable('permissions'))
+            // Schema availability can change after migrations or between database connections.
+            && Schema::hasTable('permissions')
         ) {
             // Get all the permissions
             $permissions = cache()->remember('permissions', 3600, fn () => Permission::with('roles')->get());
