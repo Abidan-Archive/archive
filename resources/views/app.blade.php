@@ -6,11 +6,15 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <script nonce="{{Vite::cspNonce()}}">
         window.turnstile_sitekey = "{{config('services.turnstile.sitekey')}}";
+        window.onTurnstileLoad = () => {
+            window.turnstileLoaded = true;
+            document.dispatchEvent(new Event('turnstileLoaded'));
+        };
     </script>
     @include('favicons')
     @vite('resources/js/app.js')
     @inertiaHead
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer nonce="{{Vite::cspNonce()}}"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit" async defer nonce="{{Vite::cspNonce()}}"></script>
   </head>
   {{-- Set background twice, one for ref, style is there so body is dark while app boots when ssr down --}}
   <body data-theme="abidan" class="bg-surface-900" style="background-color: rgb(13, 19, 26);">

@@ -5,9 +5,12 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\AppServiceProvider;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
+use Symfony\Component\Mailer\Exception\TransportException;
 use Tests\TestCase;
 
 class EmailVerificationTest extends TestCase
@@ -44,6 +47,30 @@ class EmailVerificationTest extends TestCase
         Event::assertDispatched(Verified::class);
         $this->assertTrue($user->fresh()->hasVerifiedEmail());
         $response->assertRedirect(AppServiceProvider::HOME.'?verified=1');
+    }
+
+    public function test_verification_email_can_be_resent(): void
+    {
+        Notification::fake();
+        $user = User::factory()->unverified()->create();
+
+        $response = $this->actingAs($user)->from('/verify-email')->post('/email/verification-notification');
+
+        $response->assertRedirect('/verify-email');
+        Notification::assertSentTo($user, VerifyEmail::class);
+    }
+
+    public function test_verification_email_delivery_failure_shows_a_warning(): void
+    {
+        $user = User::factory()->unverified()->create();
+        Notification::shouldReceive('send')->once()->andThrow(new TransportException('Email service unavailable'));
+
+        $response = $this->actingAs($user)->from('/verify-email')->post('/email/verification-notification');
+
+        $response->assertRedirect('/verify-email');
+        $response->assertSessionHas('flash.type', 'warn');
+        $response->assertSessionHas('flash.message', 'We could not send your verification email. Please try again later.');
+        $this->assertFalse($user->fresh()->hasVerifiedEmail());
     }
 
     public function test_email_is_not_verified_with_invalid_hash(): void

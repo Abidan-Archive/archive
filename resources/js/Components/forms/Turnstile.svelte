@@ -13,32 +13,37 @@
     } = $props();
 
     let widgetId = $state();
+    let container;
 
     function renderTurnstile() {
-        if (!window.turnstile) {
-            console.error('Turnstile script not loaded.');
-            return;
-        }
-        widgetId = window.turnstile.render('#turnstile-widget', {
+        if (!window.turnstile || widgetId !== undefined) return;
+
+        widgetId = window.turnstile.render(container, {
             sitekey: siteKey,
+            size: 'flexible',
+            theme: 'dark',
             callback: (tokenResponse) => ($form[field] = tokenResponse),
+            'expired-callback': () => ($form[field] = null),
+            'error-callback': () => ($form[field] = null),
         });
     }
 
     onMount(() => {
+        $form[field] = null;
         if (window.turnstileLoaded) {
             renderTurnstile();
         } else {
             document.addEventListener('turnstileLoaded', renderTurnstile);
         }
         // Listen if we got an error, and reset the widget if we did
-        let removeErrorListener = router.on('error', () =>
-            window.turnstile.reset(widgetId)
-        );
+        let removeErrorListener = router.on('error', () => {
+            $form[field] = null;
+            if (widgetId !== undefined) window.turnstile.reset(widgetId);
+        });
 
         return () => {
             // Cleanup: Remove widget on unmount and listener
-            if (widgetId) {
+            if (widgetId !== undefined) {
                 window.turnstile.remove(widgetId);
             }
             document.removeEventListener('turnstileLoaded', renderTurnstile);
@@ -48,7 +53,6 @@
 </script>
 
 <div>
-    <div id="turnstile-widget" data-size="flexible" data-theme="dark" {...rest}>
-    </div>
+    <div bind:this={container} {...rest}></div>
     <ErrorMessage message={$form.errors[field]} />
 </div>

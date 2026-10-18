@@ -10,8 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Inertia\Response;
 use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class RegisteredUserController extends Controller
 {
@@ -27,7 +29,7 @@ class RegisteredUserController extends Controller
      * Handle an incoming registration request.
      *
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -44,7 +46,17 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
+        try {
+            event(new Registered($user));
+        } catch (TransportExceptionInterface $exception) {
+            report($exception);
+
+            $request->session()->flash('flash', [
+                'type' => 'warn',
+                'message' => 'Your account was created, but we could not send your verification email. Please try resending it later.',
+                'autohide' => false,
+            ]);
+        }
 
         Auth::login($user);
 
