@@ -13,5 +13,8 @@ abstract class TestCase extends BaseTestCase
         // Backend tests run before frontend assets exist in a clean CI checkout.
         $this->withoutVite();
         config(['inertia.ssr.enabled' => false]);
+        // HTTP responses are faked by individual tests; never require a real
+        // Cloudflare credential just to construct the Turnstile client.
+        config(['services.turnstile.secret' => 'test-turnstile-secret']);
     }
 }
