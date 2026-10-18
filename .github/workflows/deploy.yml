@@ -34,6 +34,8 @@ jobs:
           coverage: none
       - run: composer install --no-interaction --prefer-dist --no-progress
       - run: vendor/bin/phpunit
+        env:
+          APP_ENV: testing
       - run: composer audit --locked
       - name: Install production dependencies
         run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --no-progress
